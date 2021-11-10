@@ -2,6 +2,7 @@ package eu.senla.library.injection;
 
 import eu.senla.library.injection.annotation.Autowired;
 import eu.senla.library.injection.annotation.Component;
+import eu.senla.library.injection.annotation.Value;
 import eu.senla.library.injection.exception.InjectionException;
 
 import java.lang.reflect.Field;
@@ -25,7 +26,7 @@ public class ApplicationContext {
         this.factory = factory;
     }
 
-    public void creatContext(Set<Class<?>> classes) throws IllegalAccessException {
+    public void creatContext(Set<Class<?>> classes,Map<String,String> properties) throws IllegalAccessException {
         for (Class<?> clazz : classes) {
             if (!clazz.isAnnotationPresent(Component.class)) {
                 continue;
@@ -44,15 +45,32 @@ public class ApplicationContext {
                 }
             }
         }
-        fillContext();
+        fillContext(properties);
     }
 
-    private void fillContext() throws IllegalAccessException {
+    private void fillContext(Map<String,String> properties) throws IllegalAccessException {
         for (Class<?> clazz : classInterfaceMap.keySet()) {
             Object bean = factory.createBean(clazz);
             context.put(clazz, bean);
-            injectDependencies(clazz, bean);
+        }
 
+        for (Map.Entry<Class<?>, Object> entry : context.entrySet()) {
+            injectDependencies(entry.getKey(), entry.getValue());
+        }
+        for (Map.Entry<Class<?>, Object> entry : context.entrySet()) {
+            injectValues(entry.getKey(), entry.getValue(), properties);
+        }
+    }
+
+    private void injectValues(Class<?> clazz, Object bean, Map<String, String> properties) throws IllegalAccessException {
+        for (Field field : clazz.getDeclaredFields()) {
+            if (!field.isAnnotationPresent(Value.class)) {
+                continue;
+            }
+
+            String value = field.getAnnotation(Value.class).value();
+            field.setAccessible(true);
+            field.set(bean, properties.get(value));
         }
     }
 
@@ -67,8 +85,6 @@ public class ApplicationContext {
             field.setAccessible(true);
 
             field.set(bean, instance);
-            injectDependencies(instance.getClass(), instance);
-
         }
     }
 

@@ -12,6 +12,6 @@ public class RepositoryImpl implements RepositoryInterface {
 
     @Override
     public String print() {
-        return "Работа с БД  проведена не успешна";
+        return value;
     }
 }
