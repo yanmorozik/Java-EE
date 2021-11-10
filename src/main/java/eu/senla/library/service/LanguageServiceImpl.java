@@ -47,11 +47,6 @@ public class LanguageServiceImpl implements LanguageService {
     }
 
     @Override
-    public void delete(LanguageDto languageDto) {
-
-    }
-
-    @Override
     public void deleteById(Long id) {
         languageRepository.deleteById(id);
     }

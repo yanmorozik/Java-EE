@@ -14,7 +14,5 @@ public interface BookingService {
 
     BookingDto update(BookingDto bookingDto);
 
-    void delete(BookingDto bookingDto);
-
     void deleteById(Long id);
 }

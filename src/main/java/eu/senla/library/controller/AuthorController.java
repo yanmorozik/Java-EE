@@ -61,10 +61,6 @@ public class AuthorController {
         }
     }
 
-    public void delete(AuthorDto authorDto) {
-        authorService.delete(authorDto);
-    }
-
     public void deleteById(Long id) {
         authorService.deleteById(id);
     }

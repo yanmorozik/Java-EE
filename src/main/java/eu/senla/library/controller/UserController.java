@@ -61,10 +61,6 @@ public class UserController {
         }
     }
 
-    public void delete(UserDto userDto) {
-        userService.delete(userDto);
-    }
-
     public void deleteById(Long id) {
         userService.deleteById(id);
     }

@@ -61,10 +61,6 @@ public class GenreController{
         }
     }
 
-    public void delete(GenreDto genreDto) {
-        genreService.delete(genreDto);
-    }
-
     public void deleteById(Long id) {
         genreService.deleteById(id);
     }

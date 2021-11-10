@@ -14,7 +14,5 @@ public interface PublisherService {
 
     PublisherDto update(PublisherDto publisherDto);
 
-    void delete(PublisherDto publisherDto);
-
     void deleteById(Long id);
 }

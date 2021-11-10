@@ -14,7 +14,5 @@ public interface GenreService {
 
     GenreDto update(GenreDto genreDto);
 
-    void delete(GenreDto genreDto);
-
     void deleteById(Long id);
 }

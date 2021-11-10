@@ -14,7 +14,5 @@ public interface BookService {
 
     BookDto update(BookDto bookDto);
 
-    void delete(BookDto bookDto);
-
     void deleteById(Long id);
 }

@@ -47,11 +47,6 @@ public class PublisherServiceImpl implements PublisherService {
     }
 
     @Override
-    public void delete(PublisherDto publisherDto) {
-
-    }
-
-    @Override
     public void deleteById(Long id) {
         publisherRepository.deleteById(id);
     }

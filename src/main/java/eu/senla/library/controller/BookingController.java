@@ -61,10 +61,6 @@ public class BookingController {
         }
     }
 
-    public void delete(BookingDto bookDto) {
-        bookingService.delete(bookDto);
-    }
-
     public void deleteById(Long id) {
         bookingService.deleteById(id);
     }

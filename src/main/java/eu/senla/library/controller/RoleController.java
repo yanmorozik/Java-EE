@@ -61,10 +61,6 @@ public class RoleController {
         }
     }
 
-    public void delete(RoleDto roleDto) {
-        roleService.delete(roleDto);
-    }
-
     public void deleteById(Long id) {
         roleService.deleteById(id);
     }

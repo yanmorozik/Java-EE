@@ -14,7 +14,5 @@ public interface LanguageService {
 
     LanguageDto update(LanguageDto languageDto);
 
-    void delete(LanguageDto LanguageDto);
-
     void deleteById(Long id);
 }

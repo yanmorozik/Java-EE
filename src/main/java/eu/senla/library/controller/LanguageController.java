@@ -61,10 +61,6 @@ public class LanguageController {
         }
     }
 
-    public void delete(LanguageDto languageDto) {
-        languageService.delete(languageDto);
-    }
-
     public void deleteById(Long id) {
         languageService.deleteById(id);
     }

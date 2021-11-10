@@ -61,10 +61,6 @@ public class PublisherController {
         }
     }
 
-    public void delete(PublisherDto publisherDto) {
-        publisherService.delete(publisherDto);
-    }
-
     public void deleteById(Long id) {
         publisherService.deleteById(id);
     }

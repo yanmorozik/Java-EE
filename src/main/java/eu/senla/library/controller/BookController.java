@@ -61,10 +61,6 @@ public class BookController {
         }
     }
 
-    public void delete(BookDto bookDto) {
-        bookService.delete(bookDto);
-    }
-
     public void deleteById(Long id) {
         bookService.deleteById(id);
     }
