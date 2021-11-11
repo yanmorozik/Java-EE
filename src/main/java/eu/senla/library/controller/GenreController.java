@@ -17,11 +17,9 @@ public class GenreController{
 
     private final ObjectMapper mapper;
 
-    GenreDto genreDto;
-
     public String create(String requestJson) {
         try {
-            genreDto = mapper.readValue(requestJson, GenreDto.class);
+            GenreDto genreDto = mapper.readValue(requestJson, GenreDto.class);
             GenreDto response = genreService.create(genreDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
@@ -32,7 +30,7 @@ public class GenreController{
 
     public String getById(Long id) {
         try {
-            genreDto = genreService.getById(id);
+            GenreDto genreDto = genreService.getById(id);
             return mapper.writeValueAsString(genreDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -52,7 +50,7 @@ public class GenreController{
 
     public String update(String requestJson) {
         try {
-            genreDto = mapper.readValue(requestJson, GenreDto.class);
+            GenreDto genreDto = mapper.readValue(requestJson, GenreDto.class);
             GenreDto response = genreService.update(genreDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {

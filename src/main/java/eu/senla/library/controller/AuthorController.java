@@ -17,11 +17,9 @@ public class AuthorController {
 
     private final ObjectMapper mapper;
 
-    AuthorDto authorDto;
-
     public String create(String requestJson) {
         try {
-            authorDto = mapper.readValue(requestJson, AuthorDto.class);
+            AuthorDto authorDto = mapper.readValue(requestJson, AuthorDto.class);
             AuthorDto response = authorService.create(authorDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
@@ -32,7 +30,7 @@ public class AuthorController {
 
     public String getById(Long id) {
         try {
-            authorDto = authorService.getById(id);
+            AuthorDto authorDto = authorService.getById(id);
             return mapper.writeValueAsString(authorDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -52,7 +50,7 @@ public class AuthorController {
 
     public String update(String requestJson) {
         try {
-            authorDto = mapper.readValue(requestJson, AuthorDto.class);
+            AuthorDto authorDto = mapper.readValue(requestJson, AuthorDto.class);
             AuthorDto response = authorService.update(authorDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {

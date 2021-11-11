@@ -17,11 +17,9 @@ public class RoleController {
 
     private final ObjectMapper mapper;
 
-    RoleDto roleDto;
-
     public String create(String requestJson) {
         try {
-            roleDto = mapper.readValue(requestJson, RoleDto.class);
+            RoleDto roleDto = mapper.readValue(requestJson, RoleDto.class);
             RoleDto response = roleService.create(roleDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
@@ -32,7 +30,7 @@ public class RoleController {
 
     public String getById(Long id) {
         try {
-            roleDto = roleService.getById(id);
+            RoleDto roleDto = roleService.getById(id);
             return mapper.writeValueAsString(roleDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -52,7 +50,7 @@ public class RoleController {
 
     public String update(String requestJson) {
         try {
-            roleDto = mapper.readValue(requestJson, RoleDto.class);
+            RoleDto roleDto = mapper.readValue(requestJson, RoleDto.class);
             RoleDto response = roleService.update(roleDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {

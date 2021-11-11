@@ -17,11 +17,9 @@ public class PublisherController {
 
     private final ObjectMapper mapper;
 
-    PublisherDto publisherDto;
-
     public String create(String requestJson) {
         try {
-            publisherDto = mapper.readValue(requestJson, PublisherDto.class);
+            PublisherDto publisherDto = mapper.readValue(requestJson, PublisherDto.class);
             PublisherDto response = publisherService.create(publisherDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
@@ -32,7 +30,7 @@ public class PublisherController {
 
     public String getById(Long id) {
         try {
-            publisherDto = publisherService.getById(id);
+            PublisherDto publisherDto = publisherService.getById(id);
             return mapper.writeValueAsString(publisherDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -52,7 +50,7 @@ public class PublisherController {
 
     public String update(String requestJson) {
         try {
-            publisherDto = mapper.readValue(requestJson, PublisherDto.class);
+            PublisherDto publisherDto = mapper.readValue(requestJson, PublisherDto.class);
             PublisherDto response = publisherService.update(publisherDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {

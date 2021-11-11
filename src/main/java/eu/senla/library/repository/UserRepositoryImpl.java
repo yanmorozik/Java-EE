@@ -9,12 +9,20 @@ import java.util.List;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
+
     private final List<User> users = new ArrayList<>();
 
+    private static Long facilitiesIdSequence = 0L;
+
+    private static Long generateFacilitiesId() {
+        return facilitiesIdSequence++;
+    }
+
     @Override
-    public User add(User User) {
-        users.add(User);
-        return User;
+    public User add(User user) {
+        user.setId(generateFacilitiesId());
+        users.add(user);
+        return user;
     }
 
     @Override

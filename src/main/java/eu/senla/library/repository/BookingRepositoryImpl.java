@@ -12,8 +12,15 @@ public class BookingRepositoryImpl implements BookingRepository {
 
     private final List<Booking> bookings = new ArrayList<>();
 
+    private static Long facilitiesIdSequence = 0L;
+
+    private static Long generateFacilitiesId() {
+        return facilitiesIdSequence++;
+    }
+
     @Override
     public Booking add(Booking booking) {
+        booking.setId(generateFacilitiesId());
         bookings.add(booking);
         return booking;
     }

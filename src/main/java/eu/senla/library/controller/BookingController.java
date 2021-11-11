@@ -17,11 +17,9 @@ public class BookingController {
 
     private final ObjectMapper mapper;
 
-    BookingDto bookingDto;
-
     public String create(String requestJson) {
         try {
-            bookingDto = mapper.readValue(requestJson, BookingDto.class);
+            BookingDto bookingDto = mapper.readValue(requestJson, BookingDto.class);
             BookingDto response = bookingService.create(bookingDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
@@ -32,7 +30,7 @@ public class BookingController {
 
     public String getById(Long id) {
         try {
-            bookingDto = bookingService.getById(id);
+            BookingDto bookingDto = bookingService.getById(id);
             return mapper.writeValueAsString(bookingDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -52,7 +50,7 @@ public class BookingController {
 
     public String update(String requestJson) {
         try {
-            bookingDto = mapper.readValue(requestJson, BookingDto.class);
+            BookingDto bookingDto = mapper.readValue(requestJson, BookingDto.class);
             BookingDto response = bookingService.update(bookingDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {

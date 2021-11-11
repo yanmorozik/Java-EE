@@ -9,10 +9,18 @@ import java.util.List;
 
 @Repository
 public class RoleRepositoryImpl implements RoleRepository {
+
     private final List<Role> roles = new ArrayList<>();
+
+    private static Long facilitiesIdSequence = 0L;
+
+    private static Long generateFacilitiesId() {
+        return facilitiesIdSequence++;
+    }
 
     @Override
     public Role add(Role role) {
+        role.setId(generateFacilitiesId());
         roles.add(role);
         return role;
     }

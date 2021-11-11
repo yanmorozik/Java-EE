@@ -12,8 +12,15 @@ public class BookRepositoryImpl implements BookRepository {
 
     private final List<Book> books = new ArrayList<>();
 
+    private static Long facilitiesIdSequence = 0L;
+
+    private static Long generateFacilitiesId() {
+        return facilitiesIdSequence++;
+    }
+
     @Override
     public Book add(Book book) {
+        book.setId(generateFacilitiesId());
         books.add(book);
         return book;
     }

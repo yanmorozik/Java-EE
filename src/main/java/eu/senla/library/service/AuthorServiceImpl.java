@@ -16,11 +16,10 @@ import java.util.List;
 public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
     private final ModelMapper modelMapper;
-    Author author;
 
     @Override
     public AuthorDto create(AuthorDto authorDto) {
-        author = modelMapper.map(authorDto, Author.class);
+        Author author = modelMapper.map(authorDto, Author.class);
         Author response = authorRepository.add(author);
         return modelMapper.map(response, AuthorDto.class);
     }
@@ -41,7 +40,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public AuthorDto update(AuthorDto authorDto) {
-        author = modelMapper.map(authorDto, Author.class);
+        Author author = modelMapper.map(authorDto, Author.class);
         Author response = authorRepository.update(author);
         return modelMapper.map(response, AuthorDto.class);
     }

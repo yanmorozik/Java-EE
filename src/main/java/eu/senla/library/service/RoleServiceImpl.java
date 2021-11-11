@@ -16,11 +16,10 @@ import java.util.List;
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
     private final ModelMapper modelMapper;
-    Role role;
 
     @Override
     public RoleDto create(RoleDto roleDto) {
-        role = modelMapper.map(roleDto, Role.class);
+        Role role = modelMapper.map(roleDto, Role.class);
         Role response = roleRepository.add(role);
         return modelMapper.map(response, RoleDto.class);
     }
@@ -41,7 +40,7 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public RoleDto update(RoleDto roleDto) {
-        role = modelMapper.map(roleDto, Role.class);
+        Role role = modelMapper.map(roleDto, Role.class);
         Role response = roleRepository.update(role);
         return modelMapper.map(response, RoleDto.class);
     }

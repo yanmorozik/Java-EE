@@ -9,10 +9,18 @@ import java.util.List;
 
 @Repository
 public class GenreRepositoryImpl implements GenreRepository {
+
     private final List<Genre> genres = new ArrayList<>();
+
+    private static Long facilitiesIdSequence = 0L;
+
+    private static Long generateFacilitiesId() {
+        return facilitiesIdSequence++;
+    }
 
     @Override
     public Genre add(Genre genre) {
+        genre.setId(generateFacilitiesId());
         genres.add(genre);
         return genre;
     }

@@ -16,11 +16,10 @@ import java.util.List;
 public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final ModelMapper modelMapper;
-    Booking booking;
 
     @Override
     public BookingDto create(BookingDto bookingDto) {
-        booking = modelMapper.map(bookingDto, Booking.class);
+        Booking booking = modelMapper.map(bookingDto, Booking.class);
         Booking response = bookingRepository.add(booking);
         return modelMapper.map(response, BookingDto.class);
     }
@@ -41,7 +40,7 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public BookingDto update(BookingDto bookingDto) {
-        booking = modelMapper.map(bookingDto, Booking.class);
+        Booking booking = modelMapper.map(bookingDto, Booking.class);
         Booking response = bookingRepository.update(booking);
         return modelMapper.map(response, BookingDto.class);
     }

@@ -17,11 +17,9 @@ public class LanguageController {
 
     private final ObjectMapper mapper;
 
-    LanguageDto languageDto;
-
     public String create(String requestJson) {
         try {
-            languageDto = mapper.readValue(requestJson, LanguageDto.class);
+            LanguageDto languageDto = mapper.readValue(requestJson, LanguageDto.class);
             LanguageDto response = languageService.create(languageDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
@@ -32,7 +30,7 @@ public class LanguageController {
 
     public String getById(Long id) {
         try {
-            languageDto = languageService.getById(id);
+            LanguageDto languageDto = languageService.getById(id);
             return mapper.writeValueAsString(languageDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -52,7 +50,7 @@ public class LanguageController {
 
     public String update(String requestJson) {
         try {
-            languageDto = mapper.readValue(requestJson, LanguageDto.class);
+            LanguageDto languageDto = mapper.readValue(requestJson, LanguageDto.class);
             LanguageDto response = languageService.update(languageDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {

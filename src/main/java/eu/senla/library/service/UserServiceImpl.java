@@ -16,11 +16,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-    User user;
 
     @Override
     public UserDto create(UserDto userDto) {
-        user = modelMapper.map(userDto, User.class);
+        User user = modelMapper.map(userDto, User.class);
         User response = userRepository.add(user);
         return modelMapper.map(response, UserDto.class);
     }
@@ -41,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto update(UserDto userDto) {
-        user = modelMapper.map(userDto, User.class);
+        User user = modelMapper.map(userDto, User.class);
         User response = userRepository.update(user);
         return modelMapper.map(response, UserDto.class);
     }

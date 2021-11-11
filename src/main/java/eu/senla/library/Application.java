@@ -23,9 +23,9 @@ public class Application {
 
         //////////////////////////////////////////// book
 
-        String jsonStringBook1 = "{\"id\":0,\"name\":\"some name1\",\"description\":\"description\",\"numberOfPage\":330,\"yearOfPublishing\":2002,\"numberOfCopies\":20,\"authors\":[{\"id\":1,\"firstName\":\"name\",\"surname\":\"surname\"},{\"id\":null,\"firstName\":\"name2\",\"surname\":\"surname2\"}],\"genre\":{\"id\":0,\"nameGenre\":\"detective\"},\"publishers\":[{\"id\":1,\"namePublisher\":\"some name\",\"telephone\":\"+375558336195\"},{\"id\":2,\"namePublisher\":\"some name2\",\"telephone\":\"+375558476196\"}],\"language\":{\"id\":0,\"nameLanguage\":\"English\"}}";
-        String jsonStringBook2 = "{\"id\":1,\"name\":\"some name2\",\"description\":\"description\",\"numberOfPage\":330,\"yearOfPublishing\":2002,\"numberOfCopies\":20,\"authors\":[{\"id\":1,\"firstName\":\"name\",\"surname\":\"surname\"},{\"id\":null,\"firstName\":\"name2\",\"surname\":\"surname2\"}],\"genre\":{\"id\":0,\"nameGenre\":\"detective\"},\"publishers\":[{\"id\":1,\"namePublisher\":\"some name\",\"telephone\":\"+375558336195\"},{\"id\":2,\"namePublisher\":\"some name2\",\"telephone\":\"+375558476196\"}],\"language\":{\"id\":0,\"nameLanguage\":\"English\"}}";
-        String jsonStringBook3 = "{\"id\":0,\"name\":\"some name3\",\"description\":\"description\",\"numberOfPage\":330,\"yearOfPublishing\":2002,\"numberOfCopies\":20,\"authors\":[{\"id\":1,\"firstName\":\"name\",\"surname\":\"surname\"},{\"id\":null,\"firstName\":\"name2\",\"surname\":\"surname2\"}],\"genre\":{\"id\":0,\"nameGenre\":\"detective\"},\"publishers\":[{\"id\":1,\"namePublisher\":\"some name\",\"telephone\":\"+375558336195\"},{\"id\":2,\"namePublisher\":\"some name2\",\"telephone\":\"+375558476196\"}],\"language\":{\"id\":0,\"nameLanguage\":\"English\"}}";
+        String jsonStringBook1 = "{\"name\":\"some name1\",\"description\":\"description\",\"numberOfPage\":330,\"yearOfPublishing\":2002,\"numberOfCopies\":20,\"authors\":[{\"id\":1,\"firstName\":\"name\",\"surname\":\"surname\"},{\"id\":null,\"firstName\":\"name2\",\"surname\":\"surname2\"}],\"genre\":{\"id\":0,\"nameGenre\":\"detective\"},\"publishers\":[{\"id\":1,\"namePublisher\":\"some name\",\"telephone\":\"+375558336195\"},{\"id\":2,\"namePublisher\":\"some name2\",\"telephone\":\"+375558476196\"}],\"language\":{\"id\":0,\"nameLanguage\":\"English\"}}";
+        String jsonStringBook2 = "{\"name\":\"some name2\",\"description\":\"description\",\"numberOfPage\":330,\"yearOfPublishing\":2002,\"numberOfCopies\":20,\"authors\":[{\"id\":1,\"firstName\":\"name\",\"surname\":\"surname\"},{\"id\":null,\"firstName\":\"name2\",\"surname\":\"surname2\"}],\"genre\":{\"id\":0,\"nameGenre\":\"detective\"},\"publishers\":[{\"id\":1,\"namePublisher\":\"some name\",\"telephone\":\"+375558336195\"},{\"id\":2,\"namePublisher\":\"some name2\",\"telephone\":\"+375558476196\"}],\"language\":{\"id\":0,\"nameLanguage\":\"English\"}}";
+        String jsonStringBook3 = "{\"name\":\"some name3\",\"description\":\"description\",\"numberOfPage\":330,\"yearOfPublishing\":2002,\"numberOfCopies\":20,\"authors\":[{\"id\":1,\"firstName\":\"name\",\"surname\":\"surname\"},{\"id\":null,\"firstName\":\"name2\",\"surname\":\"surname2\"}],\"genre\":{\"id\":0,\"nameGenre\":\"detective\"},\"publishers\":[{\"id\":1,\"namePublisher\":\"some name\",\"telephone\":\"+375558336195\"},{\"id\":2,\"namePublisher\":\"some name2\",\"telephone\":\"+375558476196\"}],\"language\":{\"id\":0,\"nameLanguage\":\"English\"}}";
 
         bookController.create(jsonStringBook1);
         bookController.create(jsonStringBook2); //вставляем 2 записи
@@ -42,9 +42,9 @@ public class Application {
 
         //////////////////////////////////////////// author
 
-        String jsonStringAuthor1 = "{\"id\":0,\"firstName\":\"Alex\",\"surname\":\"Goncharov\"}";
-        String jsonStringAuthor2 = "{\"id\":1,\"firstName\":\"Fedya\",\"surname\":\"Pupkin\"}";
-        String jsonStringAuthor3 = "{\"id\":0,\"firstName\":\"Vanya\",\"surname\":\"Markovkin\"}";
+        String jsonStringAuthor1 = "{\"firstName\":\"Alex\",\"surname\":\"Goncharov\"}";
+        String jsonStringAuthor2 = "{\"firstName\":\"Fedya\",\"surname\":\"Pupkin\"}";
+        String jsonStringAuthor3 = "{\"firstName\":\"Vanya\",\"surname\":\"Markovkin\"}";
 
         authorController.create(jsonStringAuthor1);
         authorController.create(jsonStringAuthor2);

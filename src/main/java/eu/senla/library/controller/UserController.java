@@ -17,11 +17,9 @@ public class UserController {
 
     private final ObjectMapper mapper;
 
-    UserDto userDto;
-
     public String create(String requestJson) {
         try {
-            userDto = mapper.readValue(requestJson, UserDto.class);
+            UserDto userDto = mapper.readValue(requestJson, UserDto.class);
             UserDto response = userService.create(userDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
@@ -32,7 +30,7 @@ public class UserController {
 
     public String getById(Long id) {
         try {
-            userDto = userService.getById(id);
+            UserDto userDto = userService.getById(id);
             return mapper.writeValueAsString(userDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -52,7 +50,7 @@ public class UserController {
 
     public String update(String requestJson) {
         try {
-            userDto = mapper.readValue(requestJson, UserDto.class);
+            UserDto userDto = mapper.readValue(requestJson, UserDto.class);
             UserDto response = userService.update(userDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {

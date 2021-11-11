@@ -16,11 +16,10 @@ import java.util.List;
 public class PublisherServiceImpl implements PublisherService {
     private final PublisherRepository publisherRepository;
     private final ModelMapper modelMapper;
-    Publisher publisher;
 
     @Override
     public PublisherDto create(PublisherDto publisherDto) {
-        publisher = modelMapper.map(publisherDto, Publisher.class);
+        Publisher publisher = modelMapper.map(publisherDto, Publisher.class);
         Publisher response = publisherRepository.add(publisher);
         return modelMapper.map(response, PublisherDto.class);
     }
@@ -41,7 +40,7 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Override
     public PublisherDto update(PublisherDto publisherDto) {
-        publisher = modelMapper.map(publisherDto, Publisher.class);
+        Publisher publisher = modelMapper.map(publisherDto, Publisher.class);
         Publisher response = publisherRepository.update(publisher);
         return modelMapper.map(response, PublisherDto.class);
     }

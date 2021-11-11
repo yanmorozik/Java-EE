@@ -16,11 +16,10 @@ import java.util.List;
 public class GenreServiceImpl implements GenreService {
     private final GenreRepository genreRepository;
     private final ModelMapper modelMapper;
-    Genre genre;
 
     @Override
     public GenreDto create(GenreDto genreDto) {
-        genre = modelMapper.map(genreDto, Genre.class);
+        Genre genre = modelMapper.map(genreDto, Genre.class);
         Genre response = genreRepository.add(genre);
         return modelMapper.map(response, GenreDto.class);
     }
@@ -41,7 +40,7 @@ public class GenreServiceImpl implements GenreService {
 
     @Override
     public GenreDto update(GenreDto genreDto) {
-        genre = modelMapper.map(genreDto, Genre.class);
+        Genre genre = modelMapper.map(genreDto, Genre.class);
         Genre response = genreRepository.update(genre);
         return modelMapper.map(response, GenreDto.class);
     }

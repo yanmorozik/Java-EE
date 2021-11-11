@@ -9,10 +9,18 @@ import java.util.List;
 
 @Repository
 public class AuthorRepositoryImpl implements AuthorRepository {
+
     private final List<Author> authors = new ArrayList<>();
+
+    private static Long facilitiesIdSequence = 0L;
+
+    private static Long generateFacilitiesId() {
+        return facilitiesIdSequence++;
+    }
 
     @Override
     public Author add(Author author) {
+        author.setId(generateFacilitiesId());
         authors.add(author);
         return author;
     }

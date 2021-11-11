@@ -16,11 +16,10 @@ import java.util.List;
 public class LanguageServiceImpl implements LanguageService {
     private final LanguageRepository languageRepository;
     private final ModelMapper modelMapper;
-    Language language;
 
     @Override
     public LanguageDto create(LanguageDto languageDto) {
-        language = modelMapper.map(languageDto, Language.class);
+        Language language = modelMapper.map(languageDto, Language.class);
         Language response = languageRepository.add(language);
         return modelMapper.map(response, LanguageDto.class);
     }
@@ -41,7 +40,7 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public LanguageDto update(LanguageDto languageDto) {
-        language = modelMapper.map(languageDto, Language.class);
+        Language language = modelMapper.map(languageDto, Language.class);
         Language response = languageRepository.update(language);
         return modelMapper.map(response, LanguageDto.class);
     }

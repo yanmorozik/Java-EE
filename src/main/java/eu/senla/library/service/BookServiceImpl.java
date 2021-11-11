@@ -17,11 +17,10 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
-    Book book;
 
     @Override
     public BookDto create(BookDto bookDto) {
-        book = modelMapper.map(bookDto, Book.class);// маппим bookDto в book
+        Book book = modelMapper.map(bookDto, Book.class);// маппим bookDto в book
         Book response = bookRepository.add(book);
         return modelMapper.map(response, BookDto.class);//маппи book в bookDto
     }
@@ -43,7 +42,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto update(BookDto bookDto) {
-        book = modelMapper.map(bookDto, Book.class);
+        Book book = modelMapper.map(bookDto, Book.class);
         Book response = bookRepository.update(book);
         return modelMapper.map(response, BookDto.class);
     }

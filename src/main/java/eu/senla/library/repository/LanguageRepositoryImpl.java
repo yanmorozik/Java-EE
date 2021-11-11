@@ -9,10 +9,18 @@ import java.util.List;
 
 @Repository
 public class LanguageRepositoryImpl implements LanguageRepository {
+
     private final List<Language> languages = new ArrayList<>();
+
+    private static Long facilitiesIdSequence = 0L;
+
+    private static Long generateFacilitiesId() {
+        return facilitiesIdSequence++;
+    }
 
     @Override
     public Language add(Language language) {
+        language.setId(generateFacilitiesId());
         languages.add(language);
         return language;
     }
