@@ -9,9 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Language{
-
-    private Long id;
+public class Language extends BaseEntity{
 
     private String nameLanguage;
 

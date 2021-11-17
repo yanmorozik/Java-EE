@@ -20,15 +20,15 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookDto create(BookDto bookDto) {
-        Book book = modelMapper.map(bookDto, Book.class);// маппим bookDto в book
+        Book book = modelMapper.map(bookDto, Book.class);
         Book response = bookRepository.add(book);
-        return modelMapper.map(response, BookDto.class);//маппи book в bookDto
+        return modelMapper.map(response, BookDto.class);
     }
 
     @Override
     public BookDto getById(Long id) {
         Book response = bookRepository.findById(id);
-        return modelMapper.map(response, BookDto.class);//маппим book в bookDto
+        return modelMapper.map(response, BookDto.class);
     }
 
     @Override
@@ -36,14 +36,13 @@ public class BookServiceImpl implements BookService {
 
         List<Book> books = bookRepository.findAll();
         return modelMapper.map(books, new TypeToken<List<BookDto>>() {
-        }.getType());//маппим из List<Book> в List<BookDto>
+        }.getType());
     }
-
 
     @Override
     public BookDto update(BookDto bookDto) {
         Book book = modelMapper.map(bookDto, Book.class);
-        Book response = bookRepository.update(book);
+         Book response = bookRepository.update(book);
         return modelMapper.map(response, BookDto.class);
     }
 

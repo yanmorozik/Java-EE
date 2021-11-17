@@ -9,9 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Publisher{
-
-    private Long id;
+public class Publisher extends BaseEntity{
 
     private String namePublisher;
 

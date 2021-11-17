@@ -9,9 +9,7 @@ import java.util.GregorianCalendar;
 @Getter
 @Setter
 @ToString
-public class Booking  {
-
-    private Long id;
+public class Booking extends BaseEntity{
 
     private GregorianCalendar startTime;
 

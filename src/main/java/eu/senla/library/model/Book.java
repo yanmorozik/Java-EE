@@ -9,9 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Book{
-
-    private Long id;
+public class Book extends BaseEntity{
 
     private String nameBook;
 
