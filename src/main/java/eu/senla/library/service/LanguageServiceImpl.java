@@ -1,5 +1,6 @@
 package eu.senla.library.service;
 
+import eu.senla.library.annotation.Transactional;
 import eu.senla.library.api.repository.LanguageRepository;
 import eu.senla.library.api.service.LanguageService;
 import eu.senla.library.dto.LanguageDto;
@@ -18,6 +19,7 @@ public class LanguageServiceImpl implements LanguageService {
     private final ModelMapper modelMapper;
 
     @Override
+    @Transactional
     public LanguageDto create(LanguageDto languageDto) {
         Language language = modelMapper.map(languageDto, Language.class);
         Language response = languageRepository.add(language);
@@ -49,5 +51,4 @@ public class LanguageServiceImpl implements LanguageService {
     public void deleteById(Long id) {
         languageRepository.deleteById(id);
     }
-
 }

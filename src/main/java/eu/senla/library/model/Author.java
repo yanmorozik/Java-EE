@@ -9,9 +9,7 @@ import java.util.List;
 @Getter
 @Setter
 @ToString
-public class Author{
-
-    private Long id;
+public class Author extends BaseEntity{
 
     private String firstName;
 
