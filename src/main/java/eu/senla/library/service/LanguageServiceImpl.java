@@ -34,7 +34,6 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Override
     public List<LanguageDto> getAll() {
-
         List<Language> languages = languageRepository.findAll();
         return modelMapper.map(languages, new TypeToken<List<LanguageDto>>() {
         }.getType());
