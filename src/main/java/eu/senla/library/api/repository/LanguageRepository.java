@@ -4,7 +4,7 @@ import eu.senla.library.model.Language;
 
 import java.util.List;
 
-public interface LanguageRepository {
+public interface LanguageRepository extends AbstractRepository<Language>{
 
     Language add(Language language);
 

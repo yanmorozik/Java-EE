@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Repository
-public class BookRepositoryImpl implements BookRepository {
+public class BookRepositoryImpl extends AbstractRepositoryImpl<Book> implements BookRepository {
 
     private final List<Book> books = new ArrayList<>();
 

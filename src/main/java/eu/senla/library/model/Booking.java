@@ -1,21 +1,28 @@
 package eu.senla.library.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
+import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.GregorianCalendar;
 
-@Getter
-@Setter
-@ToString
+@Data
+@Entity
+@Table(name = "booking")
+@AllArgsConstructor
+@NoArgsConstructor
 public class Booking extends BaseEntity{
+    @Column
+    private LocalDateTime startTime;
 
-    private GregorianCalendar startTime;
+    @Column
+    private LocalDateTime endTime;
 
-    private GregorianCalendar endTime;
-
+    @ManyToOne
+    @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

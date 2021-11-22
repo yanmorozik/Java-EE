@@ -15,16 +15,16 @@ import javax.sql.DataSource;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:application.properties")
+@PropertySource("classpath:hibernate.properties")
 public class DatabaseConfiguration {
 
-    @Value(value = "${spring.datasource.url}")
+    @Value(value = "${hibernate.connection.url}")
     private String url;
 
-    @Value(value = "${spring.datasource.username}")
+    @Value(value = "${hibernate.connection.username}")
     private String username;
 
-    @Value(value = "${spring.datasource.password}")
+    @Value(value = "${hibernate.connection.password}")
     private String password;
 
     @Bean
@@ -36,5 +36,6 @@ public class DatabaseConfiguration {
     public TransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);
     }
+
 
 }
