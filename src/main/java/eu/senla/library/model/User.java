@@ -20,14 +20,9 @@ public class User extends BaseEntity{
     @Column
     private String telephone;
 
-    @Column
-    private String login;
-
-    @Column
-    private String password;
-
-    @Transient
-    private String passwordConfirm;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "credential_id", referencedColumnName = "id")
+    private Credential credential;
 
     @OneToMany(mappedBy = "user")
     private List<Booking> bookings;

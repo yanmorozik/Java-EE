@@ -4,16 +4,23 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "booking")
+@Table(name = "credential")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Credential extends BaseEntity{
     @Column
-    private String name;
+    private String login;
+
+    @Column
+    private String password;
+
+    @Transient
+    private String passwordConfirm;
+
+    @OneToOne(mappedBy = "credential")
+    private User user;
 }
