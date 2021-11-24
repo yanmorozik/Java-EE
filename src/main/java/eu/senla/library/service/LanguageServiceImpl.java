@@ -1,6 +1,5 @@
 package eu.senla.library.service;
 
-import eu.senla.library.annotation.Transactional;
 import eu.senla.library.api.repository.LanguageRepository;
 import eu.senla.library.api.service.LanguageService;
 import eu.senla.library.dto.LanguageDto;
@@ -9,17 +8,18 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class LanguageServiceImpl implements LanguageService {
     private final LanguageRepository languageRepository;
     private final ModelMapper modelMapper;
 
     @Override
-    @Transactional
     public LanguageDto create(LanguageDto languageDto) {
         Language language = modelMapper.map(languageDto, Language.class);
         Language response = languageRepository.add(language);

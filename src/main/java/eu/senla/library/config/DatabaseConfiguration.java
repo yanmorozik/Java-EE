@@ -1,16 +1,19 @@
 package eu.senla.library.config;
 
+import org.hibernate.jpa.HibernatePersistenceProvider;
+import org.springframework.beans.factory.FactoryBean;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
+import java.util.Map;
 
 
 @Configuration
@@ -27,6 +30,9 @@ public class DatabaseConfiguration {
     @Value(value = "${hibernate.connection.password}")
     private String password;
 
+    @Value("#{${database.hibernate}}")
+    private Map<String,String> hibernateAdditionalProperties;
+
     @Bean
     public DataSource dataSource() {
         return new DriverManagerDataSource(url, username, password);
@@ -37,5 +43,13 @@ public class DatabaseConfiguration {
         return new JpaTransactionManager(entityManagerFactory);
     }
 
-
+    @Bean
+    public FactoryBean<EntityManagerFactory> entityManagerFactory(DataSource dataSource){
+        final LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean= new LocalContainerEntityManagerFactoryBean();
+        localContainerEntityManagerFactoryBean.setPackagesToScan("src.main.java.eu.senla.library.model");
+        localContainerEntityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+        localContainerEntityManagerFactoryBean.setDataSource(dataSource);
+        localContainerEntityManagerFactoryBean.setJpaPropertyMap(hibernateAdditionalProperties);
+        return localContainerEntityManagerFactoryBean;
+    }
 }

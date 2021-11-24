@@ -2,10 +2,7 @@ package eu.senla.library.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
@@ -14,9 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Language extends BaseEntity{
-    @Column
+    @Column(name="name_language")
     private String nameLanguage;
 
-    @OneToMany(mappedBy = "language")
+    @OneToMany(fetch = FetchType.LAZY,mappedBy = "language")
     private List<Book> books;
 }

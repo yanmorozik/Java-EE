@@ -4,7 +4,7 @@ import eu.senla.library.model.Book;
 
 import java.util.List;
 
-public interface BookRepository {
+public interface BookRepository extends AbstractRepository<Book>{
 
     Book add(Book book);
 

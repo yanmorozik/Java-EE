@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "credential")
+@Table(name = "credentials")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Credential extends BaseEntity{
@@ -21,6 +21,6 @@ public class Credential extends BaseEntity{
     @Transient
     private String passwordConfirm;
 
-    @OneToOne(mappedBy = "credential")
+    @OneToOne(fetch = FetchType.LAZY,mappedBy = "credential")
     private User user;
 }

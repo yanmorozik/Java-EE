@@ -10,46 +10,46 @@ import java.util.List;
 @Table(name = "books")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Book extends BaseEntity{
-    @Column
+public class Book extends BaseEntity {
+    @Column(name = "name_book")
     private String nameBook;
 
     @Column
     private String description;
 
-    @Column
+    @Column(name = "number_of_page")
     private Integer numberOfPage;
 
-    @Column
+    @Column(name = "year_of_publishing")
     private Integer yearOfPublishing;
 
-    @Column
+    @Column(name = "number_of_copies")
     private Integer numberOfCopies;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "genre_id", nullable = false)
     private Genre genre;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "language_id", nullable = false)
     private Language language;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(
             name = "book_author",
-            joinColumns = { @JoinColumn(name = "author_id") },
-            inverseJoinColumns = { @JoinColumn(name = "book_id") }
+            joinColumns = {@JoinColumn(name = "author_id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_id")}
     )
     private List<Author> authors;
 
-    @ManyToMany(cascade = { CascadeType.ALL })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(
             name = "book_publisher",
-            joinColumns = { @JoinColumn(name = "publisher_id") },
-            inverseJoinColumns = { @JoinColumn(name = "book_id") }
+            joinColumns = {@JoinColumn(name = "publisher_id")},
+            inverseJoinColumns = {@JoinColumn(name = "book_id")}
     )
     private List<Publisher> publishers;
 
-    @OneToMany(mappedBy = "book")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
     private List<Booking> bookings;
 }

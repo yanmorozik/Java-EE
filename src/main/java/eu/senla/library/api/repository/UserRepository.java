@@ -1,10 +1,11 @@
 package eu.senla.library.api.repository;
 
+import eu.senla.library.model.Book;
 import eu.senla.library.model.User;
 
 import java.util.List;
 
-public interface UserRepository {
+public interface UserRepository extends AbstractRepository<User>{
 
     User add(User user);
 

@@ -1,10 +1,11 @@
 package eu.senla.library.api.repository;
 
+import eu.senla.library.model.Book;
 import eu.senla.library.model.Booking;
 
 import java.util.List;
 
-public interface BookingRepository {
+public interface BookingRepository extends AbstractRepository<Booking>{
 
     Booking add(Booking booking);
 

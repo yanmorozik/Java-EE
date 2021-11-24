@@ -12,17 +12,17 @@ import java.util.GregorianCalendar;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Booking extends BaseEntity{
-    @Column
+    @Column(name="start_time")
     private LocalDateTime startTime;
 
-    @Column
+    @Column(name="end_time")
     private LocalDateTime endTime;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "book_id", nullable = false)
     private Book book;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

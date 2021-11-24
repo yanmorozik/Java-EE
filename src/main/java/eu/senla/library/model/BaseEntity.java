@@ -10,7 +10,7 @@ import javax.persistence.MappedSuperclass;
 
 @Getter
 @Setter
-@MappedSuperclass//позволяет включать класс и его jpa аннотации в производный класс, не делая базовый класс сущностью
+@MappedSuperclass   //позволяет включать класс и его jpa аннотации в производный класс, не делая базовый класс сущностью
 public abstract class BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

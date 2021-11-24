@@ -2,10 +2,7 @@ package eu.senla.library.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
@@ -13,13 +10,13 @@ import java.util.List;
 @Table(name = "authors")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Author extends BaseEntity{
-    @Column
+public class Author extends BaseEntity {
+    @Column(name = "first_name")
     private String firstName;
 
     @Column
     private String surname;
 
-    @ManyToMany(mappedBy = "authors")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "authors")
     private List<Book> books;
 }

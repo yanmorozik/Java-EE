@@ -8,10 +8,12 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
     private final RoleRepository roleRepository;
@@ -48,5 +50,11 @@ public class RoleServiceImpl implements RoleService {
     @Override
     public void deleteById(Long id) {
         roleRepository.deleteById(id);
+    }
+
+    @Override
+    public RoleDto getUserRoleWithUser(Long id) {
+        Role response = roleRepository.getByIdWithUsers(id);
+        return modelMapper.map(response, RoleDto.class);
     }
 }
