@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.RoleService;
 import eu.senla.library.dto.RoleDto;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor()
 public class RoleController {
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            RoleController.class);
 
     private final RoleService roleService;
 
@@ -23,7 +28,7 @@ public class RoleController {
             RoleDto response = roleService.create(roleDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -33,7 +38,7 @@ public class RoleController {
             RoleDto roleDto = roleService.getById(id);
             return mapper.writeValueAsString(roleDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -43,7 +48,7 @@ public class RoleController {
             List<RoleDto> roles = roleService.getAll();
             return mapper.writeValueAsString(roles);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +59,7 @@ public class RoleController {
             RoleDto response = roleService.update(roleDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -68,7 +73,7 @@ public class RoleController {
             RoleDto roleDto = roleService.getUserRoleWithUserJPQL(id);
             return mapper.writeValueAsString(roleDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -78,7 +83,7 @@ public class RoleController {
             RoleDto roleDto = roleService.getUserRoleWithUserCriteria(id);
             return mapper.writeValueAsString(roleDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -88,7 +93,7 @@ public class RoleController {
             RoleDto roleDto = roleService.getUserRoleWithUserGraph(id);
             return mapper.writeValueAsString(roleDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

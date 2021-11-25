@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.UserService;
 import eu.senla.library.dto.UserDto;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class UserController {
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            UserController.class);
 
     private final UserService userService;
 
@@ -23,7 +28,7 @@ public class UserController {
             UserDto response = userService.create(userDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -33,7 +38,7 @@ public class UserController {
             UserDto userDto = userService.getById(id);
             return mapper.writeValueAsString(userDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -43,7 +48,7 @@ public class UserController {
             List<UserDto> users = userService.getAll();
             return mapper.writeValueAsString(users);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +59,7 @@ public class UserController {
             UserDto response = userService.update(userDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

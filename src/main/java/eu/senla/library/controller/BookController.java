@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.BookService;
 import eu.senla.library.dto.BookDto;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class BookController {
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            BookController.class);
 
     private final BookService bookService;
 
@@ -23,7 +28,7 @@ public class BookController {
             BookDto response = bookService.create(bookDto);
             return mapper.writeValueAsString(response);//   записываем BookDto в String
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -33,7 +38,7 @@ public class BookController {
             BookDto bookDto = bookService.getById(id);
             return mapper.writeValueAsString(bookDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -43,7 +48,7 @@ public class BookController {
             List<BookDto> books = bookService.getAll();
             return mapper.writeValueAsString(books);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +59,7 @@ public class BookController {
             BookDto response = bookService.update(bookDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

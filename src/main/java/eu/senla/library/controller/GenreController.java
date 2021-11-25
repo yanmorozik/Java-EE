@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.GenreService;
 import eu.senla.library.dto.GenreDto;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class GenreController{
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            GenreController.class);
 
     private final GenreService genreService;
 
@@ -23,7 +28,7 @@ public class GenreController{
             GenreDto response = genreService.create(genreDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -33,7 +38,7 @@ public class GenreController{
             GenreDto genreDto = genreService.getById(id);
             return mapper.writeValueAsString(genreDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -43,7 +48,7 @@ public class GenreController{
             List<GenreDto> genres = genreService.getAll();
             return mapper.writeValueAsString(genres);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +59,7 @@ public class GenreController{
             GenreDto response = genreService.update(genreDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

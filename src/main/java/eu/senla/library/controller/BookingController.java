@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.BookingService;
 import eu.senla.library.dto.BookingDto;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class BookingController {
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            BookingController.class);
 
     private final BookingService bookingService;
 
@@ -23,7 +28,7 @@ public class BookingController {
             BookingDto response = bookingService.create(bookingDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -33,7 +38,7 @@ public class BookingController {
             BookingDto bookingDto = bookingService.getById(id);
             return mapper.writeValueAsString(bookingDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -43,7 +48,7 @@ public class BookingController {
             List<BookingDto> bookings = bookingService.getAll();
             return mapper.writeValueAsString(bookings);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +59,7 @@ public class BookingController {
             BookingDto response = bookingService.update(bookingDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
