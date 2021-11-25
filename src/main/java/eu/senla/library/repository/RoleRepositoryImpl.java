@@ -11,6 +11,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Repository
@@ -21,9 +22,9 @@ public class RoleRepositoryImpl extends AbstractRepositoryImpl<Role> implements 
     }
 
     @Override
-    public Role getByIdWithUsersJPQL(Long id) {
-        return entityManager.createQuery("select role from Role role left join fetch role.users where role.id =:id", Role.class)
-                .setParameter("id", id).getSingleResult();
+    public List<Role> getByIdWithUsersJPQL(Long id) {
+        return entityManager.createQuery("select role from Role role left join fetch role.users users where users.id =:id", Role.class)
+                .setParameter("id", id).getResultList();
     }
 
     @Override

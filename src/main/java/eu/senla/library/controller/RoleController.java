@@ -70,8 +70,8 @@ public class RoleController {
 
     public String getUserRoleWithUserJPQL(Long id) {
         try {
-            RoleDto roleDto = roleService.getUserRoleWithUserJPQL(id);
-            return mapper.writeValueAsString(roleDto);
+            List<RoleDto> roles = roleService.getUserRoleWithUserJPQL(id);
+            return mapper.writeValueAsString(roles);
         } catch (JsonProcessingException e) {
             logger.error(e.getMessage());
             throw new RuntimeException(e);

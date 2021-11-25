@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(response, UserDto.class);
     }
 
-    @Transactional
+
     @Override
     public List<UserDto> getAll() {
 

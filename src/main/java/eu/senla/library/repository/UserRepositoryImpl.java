@@ -10,4 +10,5 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<User> implements 
     public UserRepositoryImpl() {
         super(User.class);
     }
+
 }

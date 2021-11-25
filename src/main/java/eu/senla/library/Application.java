@@ -12,9 +12,10 @@ public class Application {
         ApplicationContext context = new AnnotationConfigApplicationContext(ContextConfiguration.class, DatabaseConfiguration.class);
 
         RoleController roleController = context.getBean(RoleController.class);
+
         System.out.println(roleController.getUserRoleWithUserJPQL(1L));
-        System.out.println(roleController.getUserRoleWithUserCriteria(1L));
-        System.out.println(roleController.getUserRoleWithUserGraph(1L));
+//        System.out.println(roleController.getUserRoleWithUserCriteria(1L));
+//        System.out.println(roleController.getUserRoleWithUserGraph(1L));
     }
 }
 

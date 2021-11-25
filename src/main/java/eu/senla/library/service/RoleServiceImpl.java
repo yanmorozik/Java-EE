@@ -36,7 +36,6 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public List<RoleDto> getAll() {
-
         List<Role> roles = roleRepository.findAll();
         return modelMapper.map(roles, new TypeToken<List<RoleDto>>() {
         }.getType());
@@ -58,9 +57,10 @@ public class RoleServiceImpl implements RoleService {
 
     @Transactional
     @Override
-    public RoleDto getUserRoleWithUserJPQL(Long id) {
-        Role response = roleRepository.getByIdWithUsersJPQL(id);
-        return modelMapper.map(response, RoleDto.class);
+    public List<RoleDto> getUserRoleWithUserJPQL(Long id) {
+        List<Role> response = roleRepository.getByIdWithUsersJPQL(id);
+        return modelMapper.map(response,  new TypeToken<List<RoleDto>>() {
+        }.getType());
     }
 
     @Transactional

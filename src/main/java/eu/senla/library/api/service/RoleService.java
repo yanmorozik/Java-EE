@@ -1,7 +1,6 @@
 package eu.senla.library.api.service;
 
 import eu.senla.library.dto.RoleDto;
-import eu.senla.library.model.Role;
 
 import java.util.List;
 
@@ -17,7 +16,7 @@ public interface RoleService {
 
     void deleteById(Long id);
 
-    RoleDto getUserRoleWithUserJPQL(Long id);
+    List<RoleDto> getUserRoleWithUserJPQL(Long id);
 
     RoleDto getUserRoleWithUserCriteria(Long id);
 
