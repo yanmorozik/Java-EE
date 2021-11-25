@@ -7,16 +7,16 @@ import java.util.List;
 
 @Data
 @Entity
-@Table(name="publishers")
+@Table(name = "publishers")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Publisher extends BaseEntity{
-    @Column(name="name_publisher")
+public class Publisher extends BaseEntity {
+    @Column(name = "name_publisher")
     private String namePublisher;
 
     @Column
     private String telephone;
 
-    @ManyToMany(fetch = FetchType.LAZY,mappedBy = "publishers")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "publishers")
     private List<Book> books;
 }

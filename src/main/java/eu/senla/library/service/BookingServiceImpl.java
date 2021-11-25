@@ -17,6 +17,7 @@ import java.util.List;
 public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final ModelMapper modelMapper;
+
     @Transactional
     @Override
     public BookingDto create(BookingDto bookingDto) {
@@ -25,12 +26,14 @@ public class BookingServiceImpl implements BookingService {
         return modelMapper.map(response, BookingDto.class);
     }
 
+    @Transactional
     @Override
     public BookingDto getById(Long id) {
         Booking response = bookingRepository.findById(id);
         return modelMapper.map(response, BookingDto.class);
     }
 
+    @Transactional
     @Override
     public List<BookingDto> getAll() {
 
@@ -38,6 +41,7 @@ public class BookingServiceImpl implements BookingService {
         return modelMapper.map(bookings, new TypeToken<List<BookingDto>>() {
         }.getType());
     }
+
     @Transactional
     @Override
     public BookingDto update(BookingDto bookingDto) {
@@ -45,6 +49,7 @@ public class BookingServiceImpl implements BookingService {
         Booking response = bookingRepository.update(booking);
         return modelMapper.map(response, BookingDto.class);
     }
+
     @Transactional
     @Override
     public void deleteById(Long id) {

@@ -17,6 +17,7 @@ import java.util.List;
 public class PublisherServiceImpl implements PublisherService {
     private final PublisherRepository publisherRepository;
     private final ModelMapper modelMapper;
+
     @Transactional
     @Override
     public PublisherDto create(PublisherDto publisherDto) {
@@ -25,12 +26,14 @@ public class PublisherServiceImpl implements PublisherService {
         return modelMapper.map(response, PublisherDto.class);
     }
 
+    @Transactional
     @Override
     public PublisherDto getById(Long id) {
         Publisher response = publisherRepository.findById(id);
         return modelMapper.map(response, PublisherDto.class);
     }
 
+    @Transactional
     @Override
     public List<PublisherDto> getAll() {
 
@@ -38,6 +41,7 @@ public class PublisherServiceImpl implements PublisherService {
         return modelMapper.map(publishers, new TypeToken<List<PublisherDto>>() {
         }.getType());
     }
+
     @Transactional
     @Override
     public PublisherDto update(PublisherDto publisherDto) {
@@ -45,6 +49,7 @@ public class PublisherServiceImpl implements PublisherService {
         Publisher response = publisherRepository.update(publisher);
         return modelMapper.map(response, PublisherDto.class);
     }
+
     @Transactional
     @Override
     public void deleteById(Long id) {

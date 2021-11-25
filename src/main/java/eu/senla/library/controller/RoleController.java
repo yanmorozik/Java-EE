@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.RoleService;
 import eu.senla.library.dto.RoleDto;
-import eu.senla.library.model.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

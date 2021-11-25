@@ -17,6 +17,7 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
+
     @Transactional
     @Override
     public UserDto create(UserDto userDto) {
@@ -25,12 +26,14 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(response, UserDto.class);
     }
 
+    @Transactional
     @Override
     public UserDto getById(Long id) {
         User response = userRepository.findById(id);
         return modelMapper.map(response, UserDto.class);
     }
 
+    @Transactional
     @Override
     public List<UserDto> getAll() {
 
@@ -38,6 +41,7 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(users, new TypeToken<List<UserDto>>() {
         }.getType());
     }
+
     @Transactional
     @Override
     public UserDto update(UserDto userDto) {
@@ -45,6 +49,7 @@ public class UserServiceImpl implements UserService {
         User response = userRepository.update(user);
         return modelMapper.map(response, UserDto.class);
     }
+
     @Transactional
     @Override
     public void deleteById(Long id) {

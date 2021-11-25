@@ -4,7 +4,6 @@ import eu.senla.library.api.repository.AuthorRepository;
 import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.model.Author;
-import eu.senla.library.repository.AbstractRepositoryImpl;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -28,13 +27,14 @@ public class AuthorServiceImpl implements AuthorService {
         return modelMapper.map(response, AuthorDto.class);
     }
 
+    @Transactional
     @Override
     public AuthorDto getById(Long id) {
         Author response = authorRepository.findById(id);
         return modelMapper.map(response, AuthorDto.class);
     }
 
-
+    @Transactional
     @Override
     public List<AuthorDto> getAll() {
 
@@ -42,6 +42,7 @@ public class AuthorServiceImpl implements AuthorService {
         return modelMapper.map(authors, new TypeToken<List<AuthorDto>>() {
         }.getType());
     }
+
     @Transactional
     @Override
     public AuthorDto update(AuthorDto authorDto) {

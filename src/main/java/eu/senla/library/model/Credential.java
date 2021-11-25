@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "credentials")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Credential extends BaseEntity{
+public class Credential extends BaseEntity {
     @Column
     private String login;
 
@@ -21,6 +21,6 @@ public class Credential extends BaseEntity{
     @Transient
     private String passwordConfirm;
 
-    @OneToOne(fetch = FetchType.LAZY,mappedBy = "credential")
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
     private User user;
 }

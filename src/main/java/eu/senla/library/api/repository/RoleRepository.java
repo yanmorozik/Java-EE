@@ -1,7 +1,5 @@
 package eu.senla.library.api.repository;
 
-import eu.senla.library.dto.RoleDto;
-import eu.senla.library.model.Book;
 import eu.senla.library.model.Role;
 
 import java.util.List;

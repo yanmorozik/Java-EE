@@ -17,6 +17,8 @@ import java.util.List;
 public class GenreServiceImpl implements GenreService {
     private final GenreRepository genreRepository;
     private final ModelMapper modelMapper;
+
+
     @Transactional
     @Override
     public GenreDto create(GenreDto genreDto) {
@@ -25,12 +27,14 @@ public class GenreServiceImpl implements GenreService {
         return modelMapper.map(response, GenreDto.class);
     }
 
+    @Transactional
     @Override
     public GenreDto getById(Long id) {
         Genre response = genreRepository.findById(id);
         return modelMapper.map(response, GenreDto.class);
     }
 
+    @Transactional
     @Override
     public List<GenreDto> getAll() {
 
@@ -38,6 +42,7 @@ public class GenreServiceImpl implements GenreService {
         return modelMapper.map(genres, new TypeToken<List<GenreDto>>() {
         }.getType());
     }
+
     @Transactional
     @Override
     public GenreDto update(GenreDto genreDto) {
@@ -45,6 +50,7 @@ public class GenreServiceImpl implements GenreService {
         Genre response = genreRepository.update(genre);
         return modelMapper.map(response, GenreDto.class);
     }
+
     @Transactional
     @Override
     public void deleteById(Long id) {

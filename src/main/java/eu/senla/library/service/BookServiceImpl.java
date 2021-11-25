@@ -18,6 +18,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
+
     @Transactional
     @Override
     public BookDto create(BookDto bookDto) {
@@ -33,6 +34,7 @@ public class BookServiceImpl implements BookService {
         return modelMapper.map(response, BookDto.class);
     }
 
+    @Transactional
     @Override
     public List<BookDto> getAll() {
 
@@ -40,13 +42,15 @@ public class BookServiceImpl implements BookService {
         return modelMapper.map(books, new TypeToken<List<BookDto>>() {
         }.getType());
     }
+
     @Transactional
     @Override
     public BookDto update(BookDto bookDto) {
         Book book = modelMapper.map(bookDto, Book.class);
-         Book response = bookRepository.update(book);
+        Book response = bookRepository.update(book);
         return modelMapper.map(response, BookDto.class);
     }
+
     @Transactional
     @Override
     public void deleteById(Long id) {

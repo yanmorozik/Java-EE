@@ -10,10 +10,10 @@ import java.util.List;
 @Table(name = "genres")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Genre extends BaseEntity{
-    @Column(name ="name_genre")
+public class Genre extends BaseEntity {
+    @Column(name = "name_genre")
     private String nameGenre;
 
-    @OneToMany(fetch = FetchType.LAZY,mappedBy = "genre")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
     private List<Book> books;
 }

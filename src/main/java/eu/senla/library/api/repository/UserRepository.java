@@ -1,6 +1,5 @@
 package eu.senla.library.api.repository;
 
-import eu.senla.library.model.Book;
 import eu.senla.library.model.User;
 
 import java.util.List;

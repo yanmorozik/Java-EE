@@ -17,6 +17,7 @@ import java.util.List;
 public class LanguageServiceImpl implements LanguageService {
     private final LanguageRepository languageRepository;
     private final ModelMapper modelMapper;
+
     @Transactional
     @Override
     public LanguageDto create(LanguageDto languageDto) {
@@ -25,18 +26,21 @@ public class LanguageServiceImpl implements LanguageService {
         return modelMapper.map(response, LanguageDto.class);
     }
 
+    @Transactional
     @Override
     public LanguageDto getById(Long id) {
         Language response = languageRepository.findById(id);
         return modelMapper.map(response, LanguageDto.class);
     }
 
+    @Transactional
     @Override
     public List<LanguageDto> getAll() {
         List<Language> languages = languageRepository.findAll();
         return modelMapper.map(languages, new TypeToken<List<LanguageDto>>() {
         }.getType());
     }
+
     @Transactional
     @Override
     public LanguageDto update(LanguageDto languageDto) {
@@ -44,6 +48,7 @@ public class LanguageServiceImpl implements LanguageService {
         Language response = languageRepository.update(language);
         return modelMapper.map(response, LanguageDto.class);
     }
+
     @Transactional
     @Override
     public void deleteById(Long id) {

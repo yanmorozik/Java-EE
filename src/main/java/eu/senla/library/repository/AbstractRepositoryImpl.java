@@ -1,8 +1,6 @@
 package eu.senla.library.repository;
 
 import eu.senla.library.api.repository.AbstractRepository;
-import eu.senla.library.model.Role;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

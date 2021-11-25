@@ -34,8 +34,7 @@ public class Book extends BaseEntity {
     @JoinColumn(name = "language_id", nullable = false)
     private Language language;
 
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(
             name = "book_author",
             joinColumns = {@JoinColumn(name = "author_id")},
@@ -43,8 +42,7 @@ public class Book extends BaseEntity {
     )
     private List<Author> authors;
 
-//    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
     @JoinTable(
             name = "book_publisher",
             joinColumns = {@JoinColumn(name = "publisher_id")},
