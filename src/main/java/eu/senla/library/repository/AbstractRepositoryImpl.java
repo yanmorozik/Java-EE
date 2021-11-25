@@ -1,6 +1,7 @@
 package eu.senla.library.repository;
 
 import eu.senla.library.api.repository.AbstractRepository;
+import eu.senla.library.model.Role;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -23,30 +24,16 @@ public class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
 
     @Override
     public T add(T entity) {
-        entityManager.getTransaction().begin();
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-
-        CriteriaQuery<T> entityCriteria = cb.createQuery(entityClass);
-        Root<T> personRoot = entityCriteria.from(entityClass);
-        entityCriteria.select(personRoot);
-        entityManager.createQuery(entityCriteria)
-                .getResultList();
-        //
-        entityManager.getTransaction().begin();
         entityManager.persist(entity);
-        entityManager.getTransaction().commit();
-        entityManager.close();
         return entity;
     }
 
     @Override
     public T findById(Long id) {
-        entityManager.getTransaction().begin();
-        entityManager.createQuery("from " + entityClass.getName(), entityClass);
         return entityManager.find(entityClass, id);
     }
 
-    @Override   //не уверен
+    @Override
     public List<T> findAll() {
         CriteriaBuilder cb = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> cq = cb.createQuery(entityClass);

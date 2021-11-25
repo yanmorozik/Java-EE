@@ -20,5 +20,9 @@ public interface RoleRepository extends AbstractRepository<Role>{
 
     void deleteById(Long id);
 
-    Role getByIdWithUsers(Long id);
+    Role getByIdWithUsersJPQL(Long id);
+
+    Role getByIdWithUsersCriteria(Long id);
+
+    Role getByIdWithUsersGraph(Long id);
 }

@@ -13,13 +13,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
-
+    @Transactional
     @Override
     public BookDto create(BookDto bookDto) {
         Book book = modelMapper.map(bookDto, Book.class);
@@ -27,6 +26,7 @@ public class BookServiceImpl implements BookService {
         return modelMapper.map(response, BookDto.class);
     }
 
+    @Transactional
     @Override
     public BookDto getById(Long id) {
         Book response = bookRepository.findById(id);
@@ -40,14 +40,14 @@ public class BookServiceImpl implements BookService {
         return modelMapper.map(books, new TypeToken<List<BookDto>>() {
         }.getType());
     }
-
+    @Transactional
     @Override
     public BookDto update(BookDto bookDto) {
         Book book = modelMapper.map(bookDto, Book.class);
          Book response = bookRepository.update(book);
         return modelMapper.map(response, BookDto.class);
     }
-
+    @Transactional
     @Override
     public void deleteById(Long id) {
         bookRepository.deleteById(id);

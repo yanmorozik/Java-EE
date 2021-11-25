@@ -13,12 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class LanguageServiceImpl implements LanguageService {
     private final LanguageRepository languageRepository;
     private final ModelMapper modelMapper;
-
+    @Transactional
     @Override
     public LanguageDto create(LanguageDto languageDto) {
         Language language = modelMapper.map(languageDto, Language.class);
@@ -38,14 +37,14 @@ public class LanguageServiceImpl implements LanguageService {
         return modelMapper.map(languages, new TypeToken<List<LanguageDto>>() {
         }.getType());
     }
-
+    @Transactional
     @Override
     public LanguageDto update(LanguageDto languageDto) {
         Language language = modelMapper.map(languageDto, Language.class);
         Language response = languageRepository.update(language);
         return modelMapper.map(response, LanguageDto.class);
     }
-
+    @Transactional
     @Override
     public void deleteById(Long id) {
         languageRepository.deleteById(id);

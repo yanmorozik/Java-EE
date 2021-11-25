@@ -1,5 +1,5 @@
 create table publishers(
-id serial primary key,
+id bigserial primary key,
 name_publisher varchar(64),
 telephone varchar(64)
 );

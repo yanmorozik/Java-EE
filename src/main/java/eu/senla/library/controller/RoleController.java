@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.RoleService;
 import eu.senla.library.dto.RoleDto;
+import eu.senla.library.model.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -61,5 +62,35 @@ public class RoleController {
 
     public void deleteById(Long id) {
         roleService.deleteById(id);
+    }
+
+    public String getUserRoleWithUserJPQL(Long id) {
+        try {
+            RoleDto roleDto = roleService.getUserRoleWithUserJPQL(id);
+            return mapper.writeValueAsString(roleDto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getUserRoleWithUserCriteria(Long id) {
+        try {
+            RoleDto roleDto = roleService.getUserRoleWithUserCriteria(id);
+            return mapper.writeValueAsString(roleDto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getUserRoleWithUserGraph(Long id) {
+        try {
+            RoleDto roleDto = roleService.getUserRoleWithUserGraph(id);
+            return mapper.writeValueAsString(roleDto);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 }

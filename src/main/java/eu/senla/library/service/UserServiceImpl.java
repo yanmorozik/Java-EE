@@ -13,12 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
-
+    @Transactional
     @Override
     public UserDto create(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
@@ -39,14 +38,14 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(users, new TypeToken<List<UserDto>>() {
         }.getType());
     }
-
+    @Transactional
     @Override
     public UserDto update(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
         User response = userRepository.update(user);
         return modelMapper.map(response, UserDto.class);
     }
-
+    @Transactional
     @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);

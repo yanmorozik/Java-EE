@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.dto.AuthorDto;
+import eu.senla.library.dto.RoleDto;
+import eu.senla.library.model.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -62,5 +64,6 @@ public class AuthorController {
     public void deleteById(Long id) {
         authorService.deleteById(id);
     }
+
 
 }

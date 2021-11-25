@@ -14,13 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
     private final ModelMapper modelMapper;
 
+    @Transactional
     @Override
     public AuthorDto create(AuthorDto authorDto) {
         Author author = modelMapper.map(authorDto, Author.class);
@@ -34,6 +34,7 @@ public class AuthorServiceImpl implements AuthorService {
         return modelMapper.map(response, AuthorDto.class);
     }
 
+
     @Override
     public List<AuthorDto> getAll() {
 
@@ -41,7 +42,7 @@ public class AuthorServiceImpl implements AuthorService {
         return modelMapper.map(authors, new TypeToken<List<AuthorDto>>() {
         }.getType());
     }
-
+    @Transactional
     @Override
     public AuthorDto update(AuthorDto authorDto) {
         Author author = modelMapper.map(authorDto, Author.class);
@@ -49,6 +50,7 @@ public class AuthorServiceImpl implements AuthorService {
         return modelMapper.map(response, AuthorDto.class);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         authorRepository.deleteById(id);

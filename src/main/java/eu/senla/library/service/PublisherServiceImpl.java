@@ -13,12 +13,11 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @RequiredArgsConstructor
 public class PublisherServiceImpl implements PublisherService {
     private final PublisherRepository publisherRepository;
     private final ModelMapper modelMapper;
-
+    @Transactional
     @Override
     public PublisherDto create(PublisherDto publisherDto) {
         Publisher publisher = modelMapper.map(publisherDto, Publisher.class);
@@ -39,14 +38,14 @@ public class PublisherServiceImpl implements PublisherService {
         return modelMapper.map(publishers, new TypeToken<List<PublisherDto>>() {
         }.getType());
     }
-
+    @Transactional
     @Override
     public PublisherDto update(PublisherDto publisherDto) {
         Publisher publisher = modelMapper.map(publisherDto, Publisher.class);
         Publisher response = publisherRepository.update(publisher);
         return modelMapper.map(response, PublisherDto.class);
     }
-
+    @Transactional
     @Override
     public void deleteById(Long id) {
         publisherRepository.deleteById(id);

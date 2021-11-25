@@ -10,6 +10,10 @@ import java.util.List;
 @Table(name="roles")
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedEntityGraph(
+        name="with-users",
+        attributeNodes = @NamedAttributeNode("users")
+)
 public class Role extends BaseEntity{
     @Column(name="name_role")
     private String nameRole;
