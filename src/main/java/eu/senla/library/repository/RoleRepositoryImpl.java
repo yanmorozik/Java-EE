@@ -2,53 +2,48 @@ package eu.senla.library.repository;
 
 import eu.senla.library.api.repository.RoleRepository;
 import eu.senla.library.model.Role;
+import eu.senla.library.model.Role_;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
+import javax.persistence.EntityGraph;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+import javax.persistence.criteria.Root;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Repository
-public class RoleRepositoryImpl implements RoleRepository {
+public class RoleRepositoryImpl extends AbstractRepositoryImpl<Role> implements RoleRepository {
 
-    private final List<Role> roles = new ArrayList<>();
-
-    private static Long facilitiesIdSequence = 0L;
-
-    private static Long generateFacilitiesId() {
-        return facilitiesIdSequence++;
+    public RoleRepositoryImpl() {
+        super(Role.class);
     }
 
     @Override
-    public Role add(Role role) {
-        role.setId(generateFacilitiesId());
-        roles.add(role);
-        return role;
+    public List<Role> getByIdWithUsersJPQL(Long id) {
+        return entityManager.createQuery("select role from Role role left join fetch role.users users where users.id =:id", Role.class)
+                .setParameter("id", id).getResultList();
     }
 
     @Override
-    public Role findById(Long id) {
-        return roles.get(id.intValue());
+    public Role getByIdWithUsersCriteria(Long id) {
+        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        final CriteriaQuery<Role> query = criteriaBuilder.createQuery(Role.class);
+        final Root<Role> from = query.from(Role.class);
+        from.fetch(Role_.users, JoinType.INNER);
+
+        return entityManager.createQuery(
+                query.select(from).where(criteriaBuilder.equal(from.get(Role_.id), id))).getSingleResult();
     }
 
     @Override
-    public List<Role> findAll() {
-        return roles;
+    public Role getByIdWithUsersGraph(Long id) {
+        EntityGraph<?> graph = this.entityManager.getEntityGraph("with-users");
+        Map<String, Object> hints = new HashMap<>();
+        hints.put("javax.persistence.fetchgraph", graph);
+        return entityManager.find(Role.class, id, hints);
     }
 
-    @Override
-    public Role update(Role role) {
-        Long index = role.getId();
-        roles.set(index.intValue(),role);
-        return role;
-    }
-
-    @Override
-    public void delete(Role role) {
-        roles.remove(role);
-    }
-
-    @Override
-    public void deleteById(Long id) {
-        roles.remove(id.intValue());
-    }
 }

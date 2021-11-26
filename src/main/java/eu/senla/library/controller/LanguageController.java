@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.LanguageService;
 import eu.senla.library.dto.LanguageDto;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class LanguageController {
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            LanguageController.class);
 
     private final LanguageService languageService;
 
@@ -23,7 +28,7 @@ public class LanguageController {
             LanguageDto response = languageService.create(languageDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -33,7 +38,7 @@ public class LanguageController {
             LanguageDto languageDto = languageService.getById(id);
             return mapper.writeValueAsString(languageDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -43,7 +48,7 @@ public class LanguageController {
             List<LanguageDto> languages = languageService.getAll();
             return mapper.writeValueAsString(languages);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +59,7 @@ public class LanguageController {
             LanguageDto response = languageService.update(languageDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

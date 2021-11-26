@@ -8,15 +8,18 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class AuthorServiceImpl implements AuthorService {
+
     private final AuthorRepository authorRepository;
     private final ModelMapper modelMapper;
 
+    @Transactional
     @Override
     public AuthorDto create(AuthorDto authorDto) {
         Author author = modelMapper.map(authorDto, Author.class);
@@ -24,12 +27,14 @@ public class AuthorServiceImpl implements AuthorService {
         return modelMapper.map(response, AuthorDto.class);
     }
 
+    @Transactional
     @Override
     public AuthorDto getById(Long id) {
         Author response = authorRepository.findById(id);
         return modelMapper.map(response, AuthorDto.class);
     }
 
+    @Transactional
     @Override
     public List<AuthorDto> getAll() {
 
@@ -38,6 +43,7 @@ public class AuthorServiceImpl implements AuthorService {
         }.getType());
     }
 
+    @Transactional
     @Override
     public AuthorDto update(AuthorDto authorDto) {
         Author author = modelMapper.map(authorDto, Author.class);
@@ -45,6 +51,7 @@ public class AuthorServiceImpl implements AuthorService {
         return modelMapper.map(response, AuthorDto.class);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         authorRepository.deleteById(id);

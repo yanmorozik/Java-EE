@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.GregorianCalendar;
+import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -13,9 +13,9 @@ public class BookingDto {
 
     private Long id;
 
-    private GregorianCalendar startTime;
+    private LocalDateTime startTime;
 
-    private GregorianCalendar endTime;
+    private LocalDateTime endTime;
 
     private BookWithBookingDto book;
 

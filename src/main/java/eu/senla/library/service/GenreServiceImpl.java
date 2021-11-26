@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,8 @@ public class GenreServiceImpl implements GenreService {
     private final GenreRepository genreRepository;
     private final ModelMapper modelMapper;
 
+
+    @Transactional
     @Override
     public GenreDto create(GenreDto genreDto) {
         Genre genre = modelMapper.map(genreDto, Genre.class);
@@ -24,12 +27,14 @@ public class GenreServiceImpl implements GenreService {
         return modelMapper.map(response, GenreDto.class);
     }
 
+    @Transactional
     @Override
     public GenreDto getById(Long id) {
         Genre response = genreRepository.findById(id);
         return modelMapper.map(response, GenreDto.class);
     }
 
+    @Transactional
     @Override
     public List<GenreDto> getAll() {
 
@@ -38,6 +43,7 @@ public class GenreServiceImpl implements GenreService {
         }.getType());
     }
 
+    @Transactional
     @Override
     public GenreDto update(GenreDto genreDto) {
         Genre genre = modelMapper.map(genreDto, Genre.class);
@@ -45,6 +51,7 @@ public class GenreServiceImpl implements GenreService {
         return modelMapper.map(response, GenreDto.class);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         genreRepository.deleteById(id);

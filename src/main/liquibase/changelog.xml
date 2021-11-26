@@ -17,6 +17,10 @@
 		<sqlFile encoding="utf8" path="./sql/07.create-languages-table.sql" relativeToChangelogFile="true"/>
 	</changeSet>
 
+	<changeSet id="homework-2-credential" author="Yan Morozik">
+		<sqlFile encoding="utf8" path="./sql/22.create-credentials-table.sql" relativeToChangelogFile="true"/>
+	</changeSet>
+
 	<changeSet id="homework-2-author" author="Yan Morozik">
 		<sqlFile encoding="utf8" path="./sql/02.create-authors-table.sql" relativeToChangelogFile="true"/>
 	</changeSet>
@@ -91,6 +95,10 @@
 
 	<changeSet id="homework-2-user_role_role_id_idx" author="Yan Morozik">
 		<sqlFile encoding="utf8" path="./sql/21.create-user_role_role_id_idx.sql" relativeToChangelogFile="true"/>
+	</changeSet>
+
+	<changeSet id="homework-2-user_credential_user_id_idx" author="Yan Morozik">
+		<sqlFile encoding="utf8" path="./sql/23.create-user_credential_user_id_idx.sql" relativeToChangelogFile="true"/>
 	</changeSet>
 
 </databaseChangeLog>

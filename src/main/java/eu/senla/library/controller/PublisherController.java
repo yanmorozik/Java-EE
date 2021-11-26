@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.PublisherService;
 import eu.senla.library.dto.PublisherDto;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -12,6 +14,9 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class PublisherController {
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            PublisherController.class);
 
     private final PublisherService publisherService;
 
@@ -23,7 +28,7 @@ public class PublisherController {
             PublisherDto response = publisherService.create(publisherDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -33,7 +38,7 @@ public class PublisherController {
             PublisherDto publisherDto = publisherService.getById(id);
             return mapper.writeValueAsString(publisherDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -43,7 +48,7 @@ public class PublisherController {
             List<PublisherDto> publishers = publisherService.getAll();
             return mapper.writeValueAsString(publishers);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +59,7 @@ public class PublisherController {
             PublisherDto response = publisherService.update(publisherDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }

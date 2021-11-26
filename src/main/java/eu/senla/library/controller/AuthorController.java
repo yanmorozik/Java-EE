@@ -6,12 +6,17 @@ import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.dto.AuthorDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 @Component
 @RequiredArgsConstructor
 public class AuthorController {
+
+    private static final Logger logger = LoggerFactory.getLogger(
+            AuthorController.class);
 
     private final AuthorService authorService;
 
@@ -23,7 +28,7 @@ public class AuthorController {
             AuthorDto response = authorService.create(authorDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -33,7 +38,7 @@ public class AuthorController {
             AuthorDto authorDto = authorService.getById(id);
             return mapper.writeValueAsString(authorDto);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -43,7 +48,7 @@ public class AuthorController {
             List<AuthorDto> authors = authorService.getAll();
             return mapper.writeValueAsString(authors);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -54,7 +59,7 @@ public class AuthorController {
             AuthorDto response = authorService.update(authorDto);
             return mapper.writeValueAsString(response);
         } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            logger.error(e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -62,5 +67,6 @@ public class AuthorController {
     public void deleteById(Long id) {
         authorService.deleteById(id);
     }
+
 
 }

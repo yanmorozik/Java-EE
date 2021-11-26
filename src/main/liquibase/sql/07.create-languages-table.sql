@@ -1,4 +1,4 @@
 create table languages(
-id serial primary key,
+id bigserial primary key,
 name_language varchar(64)
 );

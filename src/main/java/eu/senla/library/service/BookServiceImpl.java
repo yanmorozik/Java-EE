@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class BookServiceImpl implements BookService {
     private final BookRepository bookRepository;
     private final ModelMapper modelMapper;
 
+    @Transactional
     @Override
     public BookDto create(BookDto bookDto) {
         Book book = modelMapper.map(bookDto, Book.class);
@@ -25,12 +27,14 @@ public class BookServiceImpl implements BookService {
         return modelMapper.map(response, BookDto.class);
     }
 
+    @Transactional
     @Override
     public BookDto getById(Long id) {
         Book response = bookRepository.findById(id);
         return modelMapper.map(response, BookDto.class);
     }
 
+    @Transactional
     @Override
     public List<BookDto> getAll() {
 
@@ -39,13 +43,15 @@ public class BookServiceImpl implements BookService {
         }.getType());
     }
 
+    @Transactional
     @Override
     public BookDto update(BookDto bookDto) {
         Book book = modelMapper.map(bookDto, Book.class);
-         Book response = bookRepository.update(book);
+        Book response = bookRepository.update(book);
         return modelMapper.map(response, BookDto.class);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         bookRepository.deleteById(id);

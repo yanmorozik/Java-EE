@@ -1,0 +1,14 @@
+759  [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+811  [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.1.Final
+813  [main] INFO  org.hibernate.cfg.Environment - HHH000205: Loaded properties from resource hibernate.properties: {hibernate.connection.url=jdbc:postgresql://localhost/postgres, database.hibernate={'hibernate.hbm2ddl.auto':'validate','hibernate.dialect':'org.hibernate.dialect.PostgreSQLDialect','hibernate.ejb.naming_strategy': 'org.hibernate.cfg.ImplicitNamingStrategy','hibernate.show_sql':'true','hibernate.format_sql':'true'}, hibernate.bytecode.use_reflection_optimizer=false, hibernate.connection.password=****, hibernate.connection.username=postgres}
+963  [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+1319 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+1965 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+1972 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+740  [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+787  [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 5.6.1.Final
+789  [main] INFO  org.hibernate.cfg.Environment - HHH000205: Loaded properties from resource hibernate.properties: {hibernate.connection.url=jdbc:postgresql://localhost/postgres, database.hibernate={'hibernate.hbm2ddl.auto':'validate','hibernate.dialect':'org.hibernate.dialect.PostgreSQLDialect','hibernate.ejb.naming_strategy': 'org.hibernate.cfg.ImplicitNamingStrategy','hibernate.show_sql':'true','hibernate.format_sql':'true'}, hibernate.bytecode.use_reflection_optimizer=false, hibernate.connection.password=****, hibernate.connection.username=postgres}
+941  [main] INFO  o.h.annotations.common.Version - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+1381 [main] INFO  org.hibernate.dialect.Dialect - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+1997 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2003 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'

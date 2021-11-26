@@ -6,24 +6,30 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.OneToOne;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import java.util.List;
+import javax.persistence.Transient;
 
 @Getter
 @Setter
 @ToString
 @Entity
-@Table(name = "languages")
+@Table(name = "credentials")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Language extends BaseEntity {
-    @Column(name = "name_language")
-    private String nameLanguage;
+public class Credential extends BaseEntity {
+    @Column
+    private String login;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "language")
-    private List<Book> books;
+    @Column
+    private String password;
+
+    @Transient
+    private String passwordConfirm;
+
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
+    private User user;
 }

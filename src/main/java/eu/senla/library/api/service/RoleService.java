@@ -15,4 +15,10 @@ public interface RoleService {
     RoleDto update(RoleDto roleDto);
 
     void deleteById(Long id);
+
+    List<RoleDto> getUserRoleWithUserJPQL(Long id);
+
+    RoleDto getUserRoleWithUserCriteria(Long id);
+
+    RoleDto getUserRoleWithUserGraph(Long id);
 }

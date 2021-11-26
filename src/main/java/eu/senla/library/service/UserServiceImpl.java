@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final ModelMapper modelMapper;
 
+    @Transactional
     @Override
     public UserDto create(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
@@ -24,11 +26,13 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(response, UserDto.class);
     }
 
+    @Transactional
     @Override
     public UserDto getById(Long id) {
         User response = userRepository.findById(id);
         return modelMapper.map(response, UserDto.class);
     }
+
 
     @Override
     public List<UserDto> getAll() {
@@ -38,6 +42,7 @@ public class UserServiceImpl implements UserService {
         }.getType());
     }
 
+    @Transactional
     @Override
     public UserDto update(UserDto userDto) {
         User user = modelMapper.map(userDto, User.class);
@@ -45,6 +50,7 @@ public class UserServiceImpl implements UserService {
         return modelMapper.map(response, UserDto.class);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         userRepository.deleteById(id);
