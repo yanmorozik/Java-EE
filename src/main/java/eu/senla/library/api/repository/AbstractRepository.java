@@ -12,7 +12,5 @@ public interface AbstractRepository<T> {
 
     T update(T entity);
 
-    void delete(T entity);
-
     void deleteById(Long id);
 }

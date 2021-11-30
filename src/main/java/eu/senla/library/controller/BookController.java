@@ -2,17 +2,23 @@ package eu.senla.library.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.api.service.BookService;
+import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.dto.BookDto;
+import eu.senla.library.exception.AuthorNotFoundException;
+import eu.senla.library.exception.BookNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Component
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("books")
 public class BookController {
 
     private static final Logger logger = LoggerFactory.getLogger(
@@ -20,51 +26,29 @@ public class BookController {
 
     private final BookService bookService;
 
-    private final ObjectMapper mapper;
-
-    public String create(String requestJson) {
-        try {
-            BookDto bookDto = mapper.readValue(requestJson, BookDto.class); //   преобразуем json в bookDto
-            BookDto response = bookService.create(bookDto);
-            return mapper.writeValueAsString(response);//   записываем BookDto в String
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PostMapping
+    public BookDto create(@RequestBody BookDto bookDto) {
+        return bookService.create(bookDto);
     }
 
-    public String getById(Long id) {
-        try {
-            BookDto bookDto = bookService.getById(id);
-            return mapper.writeValueAsString(bookDto);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping("/{id}")
+    public BookDto getById(@PathVariable Long id) throws BookNotFoundException {
+        return bookService.getById(id);
     }
 
-    public String getAll() {
-        try {
-            List<BookDto> books = bookService.getAll();
-            return mapper.writeValueAsString(books);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping
+    public List<BookDto> getAll() {
+        return bookService.getAll();
     }
 
-    public String update(String requestJson) {
-        try {
-            BookDto bookDto = mapper.readValue(requestJson, BookDto.class);
-            BookDto response = bookService.update(bookDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PutMapping
+    public BookDto update(@RequestBody BookDto bookDto) {
+        return bookService.update(bookDto);
     }
 
-    public void deleteById(Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
         bookService.deleteById(id);
     }
+
 }

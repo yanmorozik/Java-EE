@@ -1,18 +1,18 @@
 package eu.senla.library.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.GenreService;
 import eu.senla.library.dto.GenreDto;
+import eu.senla.library.exception.GenreNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Component
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("genres")
 public class GenreController{
 
     private static final Logger logger = LoggerFactory.getLogger(
@@ -20,51 +20,29 @@ public class GenreController{
 
     private final GenreService genreService;
 
-    private final ObjectMapper mapper;
-
-    public String create(String requestJson) {
-        try {
-            GenreDto genreDto = mapper.readValue(requestJson, GenreDto.class);
-            GenreDto response = genreService.create(genreDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PostMapping
+    public GenreDto create(@RequestBody GenreDto genreDto) {
+        return genreService.create(genreDto);
     }
 
-    public String getById(Long id) {
-        try {
-            GenreDto genreDto = genreService.getById(id);
-            return mapper.writeValueAsString(genreDto);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping("/{id}")
+    public GenreDto getById(@PathVariable Long id) throws GenreNotFoundException {
+        return genreService.getById(id);
     }
 
-    public String getAll() {
-        try {
-            List<GenreDto> genres = genreService.getAll();
-            return mapper.writeValueAsString(genres);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping
+    public List<GenreDto> getAll() {
+        return genreService.getAll();
     }
 
-    public String update(String requestJson) {
-        try {
-            GenreDto genreDto = mapper.readValue(requestJson, GenreDto.class);
-            GenreDto response = genreService.update(genreDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PutMapping
+    public GenreDto update(@RequestBody GenreDto genreDto) {
+        return genreService.update(genreDto);
     }
 
-    public void deleteById(Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
         genreService.deleteById(id);
     }
+
 }

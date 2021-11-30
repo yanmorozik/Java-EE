@@ -47,11 +47,6 @@ public class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
     }
 
     @Override
-    public void delete(T entity) {
-
-    }
-
-    @Override
     public void deleteById(Long id) {
         T removeEntity = entityManager.find(entityClass, id);
         entityManager.remove(removeEntity);

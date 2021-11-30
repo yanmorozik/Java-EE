@@ -4,15 +4,17 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.dto.AuthorDto;
+import eu.senla.library.exception.AuthorNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Component
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("authors")
 public class AuthorController {
 
     private static final Logger logger = LoggerFactory.getLogger(
@@ -20,53 +22,28 @@ public class AuthorController {
 
     private final AuthorService authorService;
 
-    private final ObjectMapper mapper;
-
-    public String create(String requestJson) {
-        try {
-            AuthorDto authorDto = mapper.readValue(requestJson, AuthorDto.class);
-            AuthorDto response = authorService.create(authorDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PostMapping
+    public AuthorDto create(@RequestBody AuthorDto authorDto) {
+       return authorService.create(authorDto);
     }
 
-    public String getById(Long id) {
-        try {
-            AuthorDto authorDto = authorService.getById(id);
-            return mapper.writeValueAsString(authorDto);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping("/{id}")
+    public AuthorDto getById(@PathVariable Long id) throws AuthorNotFoundException {
+        return authorService.getById(id);
     }
 
-    public String getAll() {
-        try {
-            List<AuthorDto> authors = authorService.getAll();
-            return mapper.writeValueAsString(authors);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping
+    public List<AuthorDto> getAll() {
+        return authorService.getAll();
     }
 
-    public String update(String requestJson) {
-        try {
-            AuthorDto authorDto = mapper.readValue(requestJson, AuthorDto.class);
-            AuthorDto response = authorService.update(authorDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PutMapping
+    public AuthorDto update(@RequestBody AuthorDto authorDto) {
+        return authorService.update(authorDto);
     }
 
-    public void deleteById(Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
         authorService.deleteById(id);
     }
-
-
 }
