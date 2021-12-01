@@ -1,7 +1,9 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.GenreService;
+import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.dto.GenreDto;
+import eu.senla.library.exception.BookNotFoundException;
 import eu.senla.library.exception.GenreNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -19,6 +21,11 @@ public class GenreController{
             GenreController.class);
 
     private final GenreService genreService;
+
+    @ExceptionHandler(GenreNotFoundException.class)
+    public ErrorMessageDto catchException(){
+        return new ErrorMessageDto("error");
+    }
 
     @PostMapping
     public GenreDto create(@RequestBody GenreDto genreDto) {

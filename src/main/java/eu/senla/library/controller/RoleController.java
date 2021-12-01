@@ -1,16 +1,13 @@
 package eu.senla.library.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.RoleService;
-import eu.senla.library.dto.PublisherDto;
+import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.dto.RoleDto;
-import eu.senla.library.exception.PublisherNotFoundException;
+import eu.senla.library.exception.BookNotFoundException;
 import eu.senla.library.exception.RoleNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -24,6 +21,11 @@ public class RoleController {
             RoleController.class);
 
     private final RoleService roleService;
+
+    @ExceptionHandler(RoleNotFoundException.class)
+    public ErrorMessageDto catchException(){
+        return new ErrorMessageDto("error");
+    }
 
     @PostMapping
     public RoleDto create(@RequestBody RoleDto roleDto) {

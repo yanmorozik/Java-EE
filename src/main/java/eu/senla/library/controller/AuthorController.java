@@ -1,9 +1,8 @@
 package eu.senla.library.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.dto.AuthorDto;
+import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.exception.AuthorNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -22,9 +21,14 @@ public class AuthorController {
 
     private final AuthorService authorService;
 
+    @ExceptionHandler(AuthorNotFoundException.class)
+    public ErrorMessageDto catchException(){
+        return new ErrorMessageDto("error");
+    }
+
     @PostMapping
-    public AuthorDto create(@RequestBody AuthorDto authorDto) {
-       return authorService.create(authorDto);
+    public AuthorDto create(@RequestBody AuthorDto authorDto){
+        return authorService.create(authorDto);
     }
 
     @GetMapping("/{id}")

@@ -1,7 +1,9 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.UserService;
+import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.dto.UserDto;
+import eu.senla.library.exception.BookNotFoundException;
 import eu.senla.library.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -19,6 +21,11 @@ public class UserController {
             UserController.class);
 
     private final UserService userService;
+
+    @ExceptionHandler(UserNotFoundException.class)
+    public ErrorMessageDto catchException(){
+        return new ErrorMessageDto("error");
+    }
 
     @PostMapping
     public UserDto create(@RequestBody UserDto userDto) {

@@ -1,7 +1,9 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.LanguageService;
+import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.dto.LanguageDto;
+import eu.senla.library.exception.BookNotFoundException;
 import eu.senla.library.exception.LanguageNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -19,6 +21,11 @@ public class LanguageController {
             LanguageController.class);
 
     private final LanguageService languageService;
+
+    @ExceptionHandler(LanguageNotFoundException.class)
+    public ErrorMessageDto catchException(){
+        return new ErrorMessageDto("error");
+    }
 
     @PostMapping
     public LanguageDto create(@RequestBody LanguageDto languageDto) {

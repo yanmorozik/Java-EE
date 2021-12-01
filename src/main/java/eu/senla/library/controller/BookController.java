@@ -1,17 +1,13 @@
 package eu.senla.library.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.api.service.BookService;
-import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.dto.BookDto;
+import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.exception.AuthorNotFoundException;
 import eu.senla.library.exception.BookNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -25,6 +21,11 @@ public class BookController {
             BookController.class);
 
     private final BookService bookService;
+
+    @ExceptionHandler(BookNotFoundException.class)
+    public ErrorMessageDto catchException(){
+        return new ErrorMessageDto("error");
+    }
 
     @PostMapping
     public BookDto create(@RequestBody BookDto bookDto) {
