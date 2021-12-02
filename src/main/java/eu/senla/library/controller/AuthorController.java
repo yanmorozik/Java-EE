@@ -2,11 +2,11 @@ package eu.senla.library.controller;
 
 import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.dto.AuthorDto;
-import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.exception.AuthorNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,33 +21,33 @@ public class AuthorController {
 
     private final AuthorService authorService;
 
-    @ExceptionHandler(AuthorNotFoundException.class)
-    public ErrorMessageDto catchException(){
-        return new ErrorMessageDto("error");
-    }
-
     @PostMapping
-    public AuthorDto create(@RequestBody AuthorDto authorDto){
-        return authorService.create(authorDto);
+    public ResponseEntity<AuthorDto> create(@RequestBody AuthorDto authorDto) {
+        AuthorDto dto = authorService.create(authorDto);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public AuthorDto getById(@PathVariable Long id) throws AuthorNotFoundException {
-        return authorService.getById(id);
+    public ResponseEntity<AuthorDto> getById(@PathVariable Long id) throws AuthorNotFoundException {
+        AuthorDto dto = authorService.getById(id);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public List<AuthorDto> getAll() {
-        return authorService.getAll();
+    public ResponseEntity<List<AuthorDto>> getAll() {
+        List<AuthorDto> authors = authorService.getAll();
+        return ResponseEntity.ok(authors);
     }
 
     @PutMapping
-    public AuthorDto update(@RequestBody AuthorDto authorDto) {
-        return authorService.update(authorDto);
+    public ResponseEntity<AuthorDto> update(@RequestBody AuthorDto authorDto){
+        AuthorDto dto = authorService.update(authorDto);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         authorService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 }
