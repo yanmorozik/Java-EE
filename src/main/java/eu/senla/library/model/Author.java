@@ -1,10 +1,6 @@
 package eu.senla.library.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.FetchType;
 import javax.persistence.Column;
@@ -15,8 +11,9 @@ import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @Entity
+@Builder
+@ToString
 @Table(name = "authors")
 @AllArgsConstructor
 @NoArgsConstructor
