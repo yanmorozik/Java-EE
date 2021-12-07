@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableWebMvc
 @Configuration
 @ComponentScan({"eu.senla.library"})
-public class ContextConfiguration {
+public class MyContextConfiguration {
 
     @Bean
     public ObjectMapper objectMapper() {
