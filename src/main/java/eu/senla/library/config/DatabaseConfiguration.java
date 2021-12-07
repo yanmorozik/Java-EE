@@ -2,49 +2,47 @@ package eu.senla.library.config;
 
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.FactoryBean;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.*;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
-import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Map;
-import java.util.Properties;
 
+@EnableTransactionManagement(proxyTargetClass = true)
 @Configuration
-@EnableTransactionManagement
-@PropertySource("classpath:hibernate.properties")
-@EnableJpaRepositories("eu.senla.library.repository")
+@PropertySource("classpath:/database.properties")
 public class DatabaseConfiguration {
 
-    @Value(value = "${hibernate.connection.url}")
-    private String url;
+    @Value("${database.url}")
+    private String databaseUrl;
 
-    @Value(value = "${hibernate.connection.username}")
-    private String username;
+    @Value("${database.username}")
+    private String databaseUserName;
 
-    @Value(value = "${hibernate.connection.password}")
-    private String password;
+    @Value("${database.password}")
+    private String databasePassword;
 
-    @Value(value = "${hibernate.connection.driver}")
-    private String driver;
+    @Value("${database.driver}")
+    private String getDatabaseDriver;
 
     @Value("#{${database.hibernate}}")
-    private Map<String, String> hibernateAdditionalProperties;
+    private Map<String, String> hibernateProperties;
 
     @Bean
     public DataSource dataSource() {
-        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(url, username, password);
-        driverManagerDataSource.setDriverClassName(driver);
-        return driverManagerDataSource;
+//        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(databaseUrl, databaseUserName, databasePassword);
+//        driverManagerDataSource.setDriverClassName(getDatabaseDriver);
+//        return driverManagerDataSource;
+
+        return new DriverManagerDataSource(databaseUrl, databaseUserName, databasePassword);
     }
 
     @Bean
@@ -55,11 +53,10 @@ public class DatabaseConfiguration {
     @Bean
     public FactoryBean<EntityManagerFactory> entityManagerFactory(DataSource dataSource) {
         final LocalContainerEntityManagerFactoryBean localContainerEntityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
-        localContainerEntityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
         localContainerEntityManagerFactoryBean.setPackagesToScan("eu.senla.library.model");
         localContainerEntityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         localContainerEntityManagerFactoryBean.setDataSource(dataSource);
-        localContainerEntityManagerFactoryBean.setJpaPropertyMap(hibernateAdditionalProperties);
+        localContainerEntityManagerFactoryBean.setJpaPropertyMap(hibernateProperties);
         return localContainerEntityManagerFactoryBean;
     }
 }

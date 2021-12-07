@@ -15,21 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthorConverter {
 
-//    public Author convert(AuthorDto authorDto) {
-//        return Author.builder()
-//                .firstName(authorDto.getFirstName())
-//                .surname(authorDto.getSurname())
-//                .build();
-//    }
-//
-//    public AuthorDto convert(Author author) {
-//        return AuthorDto.builder()
-//                .id(author.getId())
-//                .firstName(author.getFirstName())
-//                .surname(author.getSurname())
-//                .build();
-//    }
-
     private final ModelMapper modelMapper;
 
     public Author convert(AuthorDto authorDto) {

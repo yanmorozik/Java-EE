@@ -6,11 +6,11 @@ import eu.senla.library.model.Author;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 @ContextConfiguration(classes = AuthorRepositoryImpl.class)
 public class AuthorRepositoryTest extends BaseRepositoryTest {
@@ -19,6 +19,7 @@ public class AuthorRepositoryTest extends BaseRepositoryTest {
     private AuthorRepository authorRepository;
 
     @Test
+    @Transactional
     public void shouldCreateAuthor() {
         final String authorName = "Pushkin";
         authorRepository.add(Author.builder().firstName(authorName).surname("fsfdsg").build());
@@ -27,7 +28,10 @@ public class AuthorRepositoryTest extends BaseRepositoryTest {
         assertEquals(authorName, all.get(all.size() - 1).getFirstName());
     }
 
+
+    //for testing, we must remove @GeneratedValue (strategy = GenerationType.IDENTITY) in BaseEntity
     @Test
+    @Transactional
     public void shouldReturnAuthorById() {
         final String authorName = "Pushkin";
         Author author = new Author();
@@ -41,6 +45,7 @@ public class AuthorRepositoryTest extends BaseRepositoryTest {
     }
 
     @Test
+    @Transactional
     public void shouldReturnAllAuthors() {
         final String authorName = "Pushkin";
         authorRepository.add(Author.builder().firstName(authorName).surname("fsfdsg").build());
@@ -52,27 +57,30 @@ public class AuthorRepositoryTest extends BaseRepositoryTest {
     }
 
     @Test
+    @Transactional
     public void shouldUpdateAuthor() {
         final String authorName = "Pushkin";
-        final String anotherAuthorName = "Pushkin";
 
         Author author = new Author();
         author.setFirstName(authorName);
-        author.setId(999L);
+        author.setId(55L);
         authorRepository.add(author);
 
         Author tempAuthor = new Author();
-        author.setFirstName(anotherAuthorName);
-        author.setId(999L);
+        author.setFirstName(authorName);
+        author.setId(55L);
 
-        authorRepository.update(tempAuthor);
         Author author2;
-        author2=authorRepository.findById(999L);
-        assertEquals(anotherAuthorName, author2.getFirstName());
+
+        author2 = authorRepository.update(tempAuthor);
+
+        assertEquals(authorName, author2.getFirstName());
     }
 
+    //for testing, we must remove @GeneratedValue (strategy = GenerationType.IDENTITY) in BaseEntity
     @Test
-    public void shouldDeleteAuthorById(){
+    @Transactional
+    public void shouldDeleteAuthorById() {
         final String authorName = "Pushkin";
         Author author = new Author();
         author.setFirstName(authorName);
@@ -81,6 +89,6 @@ public class AuthorRepositoryTest extends BaseRepositoryTest {
 
         authorRepository.deleteById(122L);
 
-        assertEquals(122L,author.getId());
+        assertEquals(122L, author.getId());
     }
 }

@@ -1,18 +1,15 @@
 package eu.senla.library.model;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.FetchType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Builder
+@SuperBuilder
 @ToString
 @Table(name = "authors")
 @AllArgsConstructor
