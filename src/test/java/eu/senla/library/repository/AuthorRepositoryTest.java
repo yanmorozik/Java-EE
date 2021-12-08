@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ContextConfiguration(classes = AuthorRepositoryImpl.class)
 public class AuthorRepositoryTest extends BaseRepositoryTest {
@@ -21,74 +22,42 @@ public class AuthorRepositoryTest extends BaseRepositoryTest {
     @Test
     @Transactional
     public void shouldCreateAuthor() {
-        final String authorName = "Pushkin";
-        authorRepository.add(Author.builder().firstName(authorName).surname("fsfdsg").build());
-
+        authorRepository.add(Author.builder().firstName("name").surname("surname").build());
         List<Author> all = authorRepository.findAll();
-        assertEquals(authorName, all.get(all.size() - 1).getFirstName());
+        assertEquals("name", all.get(all.size() - 1).getFirstName());
     }
 
-
-    //for testing, we must remove @GeneratedValue (strategy = GenerationType.IDENTITY) in BaseEntity
     @Test
     @Transactional
     public void shouldReturnAuthorById() {
-        final String authorName = "Pushkin";
-        Author author = new Author();
-        author.setFirstName(authorName);
-        author.setId(122L);
-        authorRepository.add(author);
-
-        Author tempAuthor = authorRepository.findById(122L);
-
-        assertEquals(authorName, tempAuthor.getFirstName());
+        Author tempAuthor = authorRepository.add(Author.builder().firstName("name").build());
+        assertEquals(tempAuthor.getId(), authorRepository.getByName("name").getId());
     }
 
     @Test
     @Transactional
     public void shouldReturnAllAuthors() {
-        final String authorName = "Pushkin";
-        authorRepository.add(Author.builder().firstName(authorName).surname("fsfdsg").build());
-
+        authorRepository.add(Author.builder().firstName("name").surname("surname").build());
         List<Author> all = authorRepository.findAll();
         assertEquals(1, all.size());
-
-        assertEquals(authorName, all.get(0).getFirstName());
+        assertEquals("name", all.get(0).getFirstName());
     }
 
     @Test
     @Transactional
     public void shouldUpdateAuthor() {
-        final String authorName = "Pushkin";
-
-        Author author = new Author();
-        author.setFirstName(authorName);
-        author.setId(55L);
-        authorRepository.add(author);
-
-        Author tempAuthor = new Author();
-        author.setFirstName(authorName);
-        author.setId(55L);
-
-        Author author2;
-
-        author2 = authorRepository.update(tempAuthor);
-
-        assertEquals(authorName, author2.getFirstName());
+        authorRepository.add(Author.builder().firstName("name").build());
+        Author author2 = authorRepository.update(Author.builder().firstName("name").build());
+        assertEquals("name", author2.getFirstName());
     }
 
-    //for testing, we must remove @GeneratedValue (strategy = GenerationType.IDENTITY) in BaseEntity
     @Test
     @Transactional
     public void shouldDeleteAuthorById() {
-        final String authorName = "Pushkin";
-        Author author = new Author();
-        author.setFirstName(authorName);
-        author.setId(122L);
-        authorRepository.add(author);
-
-        authorRepository.deleteById(122L);
-
-        assertEquals(122L, author.getId());
+        authorRepository.add(Author.builder().firstName("name").build());
+        authorRepository.deleteById(1L);
+        assertThrows(Exception.class, () -> {
+            authorRepository.getByName("name");
+        });
     }
 }

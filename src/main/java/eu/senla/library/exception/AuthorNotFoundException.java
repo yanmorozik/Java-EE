@@ -1,6 +1,5 @@
 package eu.senla.library.exception;
 
-import jdk.swing.interop.SwingInterOpUtils;
 import lombok.Getter;
 
 @Getter

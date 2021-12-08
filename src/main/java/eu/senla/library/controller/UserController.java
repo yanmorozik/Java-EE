@@ -3,11 +3,8 @@ package eu.senla.library.controller;
 import eu.senla.library.api.service.UserService;
 import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.dto.UserDto;
-import eu.senla.library.exception.BookNotFoundException;
 import eu.senla.library.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("users")
 public class UserController {
-
-    private static final Logger logger = LoggerFactory.getLogger(
-            UserController.class);
 
     private final UserService userService;
 

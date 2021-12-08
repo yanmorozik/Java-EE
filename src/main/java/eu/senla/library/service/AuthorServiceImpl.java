@@ -7,7 +7,6 @@ import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.exception.AuthorNotFoundException;
 import eu.senla.library.model.Author;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,14 +19,13 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
     private final AuthorConverter authorConverter;
-    private final ModelMapper modelMapper;
 
     @Transactional
     @Override
     public AuthorDto create(AuthorDto authorDto) {
-        Author author = modelMapper.map(authorDto, Author.class);
+        Author author = authorConverter.convert(authorDto);
         Author response = authorRepository.add(author);
-        return modelMapper.map(response, AuthorDto.class);
+        return authorConverter.convert(response);
     }
 
     @Transactional

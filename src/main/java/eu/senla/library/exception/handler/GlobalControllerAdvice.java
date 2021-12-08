@@ -1,6 +1,14 @@
 package eu.senla.library.exception.handler;
 
-import eu.senla.library.exception.*;
+import eu.senla.library.exception.AuthorNotFoundException;
+import eu.senla.library.exception.BookNotFoundException;
+import eu.senla.library.exception.BookingNotFoundException;
+import eu.senla.library.exception.CredentialNotFoundException;
+import eu.senla.library.exception.GenreNotFoundException;
+import eu.senla.library.exception.LanguageNotFoundException;
+import eu.senla.library.exception.PublisherNotFoundException;
+import eu.senla.library.exception.RoleNotFoundException;
+import eu.senla.library.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

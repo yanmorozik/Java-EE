@@ -3,11 +3,8 @@ package eu.senla.library.controller;
 import eu.senla.library.api.service.LanguageService;
 import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.dto.LanguageDto;
-import eu.senla.library.exception.BookNotFoundException;
 import eu.senla.library.exception.LanguageNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("languages")
 public class LanguageController {
-
-    private static final Logger logger = LoggerFactory.getLogger(
-            LanguageController.class);
 
     private final LanguageService languageService;
 

@@ -43,15 +43,6 @@ public class DatabaseConfiguration {
         return driverManagerDataSource;
     }
 
-//    @Bean
-//    public DataSource dataSource() {
-//        DriverManagerDataSource driverManagerDataSource = new DriverManagerDataSource(databaseUrl, databaseUserName, databasePassword);
-//        driverManagerDataSource.setDriverClassName(getDatabaseDriver);
-//        return driverManagerDataSource;
-//
-//        //return new DriverManagerDataSource(databaseUrl, databaseUserName, databasePassword);
-//    }
-
     @Bean
     public TransactionManager transactionManager(EntityManagerFactory entityManagerFactory) {
         return new JpaTransactionManager(entityManagerFactory);

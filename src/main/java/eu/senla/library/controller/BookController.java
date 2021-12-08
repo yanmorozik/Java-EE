@@ -3,11 +3,8 @@ package eu.senla.library.controller;
 import eu.senla.library.api.service.BookService;
 import eu.senla.library.dto.BookDto;
 import eu.senla.library.dto.ErrorMessageDto;
-import eu.senla.library.exception.AuthorNotFoundException;
 import eu.senla.library.exception.BookNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,9 +13,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("books")
 public class BookController {
-
-    private static final Logger logger = LoggerFactory.getLogger(
-            BookController.class);
 
     private final BookService bookService;
 

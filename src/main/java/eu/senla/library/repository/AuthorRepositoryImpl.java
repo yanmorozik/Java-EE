@@ -4,7 +4,6 @@ import eu.senla.library.api.repository.AuthorRepository;
 import eu.senla.library.model.Author;
 import eu.senla.library.model.Author_;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

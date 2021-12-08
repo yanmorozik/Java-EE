@@ -2,8 +2,6 @@ package eu.senla.library.converter;
 
 import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.model.Author;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
