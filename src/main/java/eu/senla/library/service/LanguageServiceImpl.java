@@ -4,7 +4,7 @@ import eu.senla.library.api.repository.LanguageRepository;
 import eu.senla.library.api.service.LanguageService;
 import eu.senla.library.converter.LanguageConverter;
 import eu.senla.library.dto.LanguageDto;
-import eu.senla.library.exception.LanguageNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Language;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class LanguageServiceImpl implements LanguageService {
 
     @Transactional
     @Override
-    public LanguageDto getById(Long id) throws LanguageNotFoundException {
-        Language response = Optional.ofNullable(languageRepository.findById(id)).orElseThrow(() -> new LanguageNotFoundException(id));
+    public LanguageDto getById(Long id) throws NotFoundException {
+        Language response = Optional.ofNullable(languageRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
         return languageConverter.convert(response);
     }
 

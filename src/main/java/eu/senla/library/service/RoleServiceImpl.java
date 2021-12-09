@@ -4,7 +4,7 @@ import eu.senla.library.api.repository.RoleRepository;
 import eu.senla.library.api.service.RoleService;
 import eu.senla.library.converter.RoleConverter;
 import eu.senla.library.dto.RoleDto;
-import eu.senla.library.exception.RoleNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class RoleServiceImpl implements RoleService {
 
     @Transactional
     @Override
-    public RoleDto getById(Long id) throws RoleNotFoundException {
-        Role response = Optional.ofNullable(roleRepository.findById(id)).orElseThrow(() -> new RoleNotFoundException(id));
+    public RoleDto getById(Long id) throws NotFoundException {
+        Role response = Optional.ofNullable(roleRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
         return roleConverter.convert(response);
     }
 

@@ -4,7 +4,7 @@ import eu.senla.library.api.repository.PublisherRepository;
 import eu.senla.library.api.service.PublisherService;
 import eu.senla.library.converter.PublisherConverter;
 import eu.senla.library.dto.PublisherDto;
-import eu.senla.library.exception.PublisherNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Publisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class PublisherServiceImpl implements PublisherService {
 
     @Transactional
     @Override
-    public PublisherDto getById(Long id) throws PublisherNotFoundException {
-        Publisher response = Optional.ofNullable(publisherRepository.findById(id)).orElseThrow(() -> new PublisherNotFoundException(id));
+    public PublisherDto getById(Long id) throws NotFoundException {
+        Publisher response = Optional.ofNullable(publisherRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
         return publisherConverter.convert(response);
     }
 

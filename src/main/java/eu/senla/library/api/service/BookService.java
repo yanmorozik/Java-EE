@@ -1,7 +1,7 @@
 package eu.senla.library.api.service;
 
 import eu.senla.library.dto.BookDto;
-import eu.senla.library.exception.BookNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ public interface BookService {
 
     BookDto create(BookDto bookDto);
 
-    BookDto getById(Long id) throws BookNotFoundException;
+    BookDto getById(Long id) throws NotFoundException;
 
     List<BookDto> getAll();
 

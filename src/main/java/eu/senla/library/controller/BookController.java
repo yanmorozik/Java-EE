@@ -2,8 +2,7 @@ package eu.senla.library.controller;
 
 import eu.senla.library.api.service.BookService;
 import eu.senla.library.dto.BookDto;
-import eu.senla.library.dto.ErrorMessageDto;
-import eu.senla.library.exception.BookNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,18 +15,13 @@ public class BookController {
 
     private final BookService bookService;
 
-    @ExceptionHandler(BookNotFoundException.class)
-    public ErrorMessageDto catchException(){
-        return new ErrorMessageDto("error");
-    }
-
     @PostMapping
     public BookDto create(@RequestBody BookDto bookDto) {
         return bookService.create(bookDto);
     }
 
     @GetMapping("/{id}")
-    public BookDto getById(@PathVariable Long id) throws BookNotFoundException {
+    public BookDto getById(@PathVariable Long id) throws NotFoundException {
         return bookService.getById(id);
     }
 

@@ -4,7 +4,7 @@ import eu.senla.library.api.repository.BookRepository;
 import eu.senla.library.api.service.BookService;
 import eu.senla.library.converter.BookConverter;
 import eu.senla.library.dto.BookDto;
-import eu.senla.library.exception.BookNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class BookServiceImpl implements BookService {
 
     @Transactional
     @Override
-    public BookDto getById(Long id) throws BookNotFoundException {
-        Book response = Optional.ofNullable(bookRepository.findById(id)).orElseThrow(() -> new BookNotFoundException(id));
+    public BookDto getById(Long id) throws NotFoundException {
+        Book response = Optional.ofNullable(bookRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
         return bookConverter.convert(response);
     }
 

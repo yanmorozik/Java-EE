@@ -1,14 +1,14 @@
 package eu.senla.library.api.service;
 
 import eu.senla.library.dto.CredentialDto;
-import eu.senla.library.exception.CredentialNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 
 import java.util.List;
 
 public interface CredentialService {
     CredentialDto create(CredentialDto  credentialDto);
 
-    CredentialDto getById(Long id) throws CredentialNotFoundException;
+    CredentialDto getById(Long id) throws NotFoundException;
 
     List<CredentialDto> getAll();
 

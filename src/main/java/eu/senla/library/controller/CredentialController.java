@@ -2,8 +2,7 @@ package eu.senla.library.controller;
 
 import eu.senla.library.api.service.CredentialService;
 import eu.senla.library.dto.CredentialDto;
-import eu.senla.library.dto.ErrorMessageDto;
-import eu.senla.library.exception.CredentialNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,18 +15,13 @@ public class CredentialController {
 
     private final CredentialService credentialService;
 
-    @ExceptionHandler(CredentialNotFoundException.class)
-    public ErrorMessageDto catchException(){
-        return new ErrorMessageDto("error");
-    }
-
     @PostMapping
     public CredentialDto create(@RequestBody CredentialDto credentialDto) {
         return credentialService.create(credentialDto);
     }
 
     @GetMapping("/{id}")
-    public CredentialDto getById(@PathVariable Long id) throws CredentialNotFoundException {
+    public CredentialDto getById(@PathVariable Long id) throws NotFoundException {
         return credentialService.getById(id);
     }
 

@@ -1,9 +1,8 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.RoleService;
-import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.dto.RoleDto;
-import eu.senla.library.exception.RoleNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,18 +15,13 @@ public class RoleController {
 
     private final RoleService roleService;
 
-    @ExceptionHandler(RoleNotFoundException.class)
-    public ErrorMessageDto catchException(){
-        return new ErrorMessageDto("error");
-    }
-
     @PostMapping
     public RoleDto create(@RequestBody RoleDto roleDto) {
         return roleService.create(roleDto);
     }
 
     @GetMapping("/{id}")
-    public RoleDto getById(@PathVariable Long id) throws RoleNotFoundException {
+    public RoleDto getById(@PathVariable Long id) throws NotFoundException {
         return roleService.getById(id);
     }
 

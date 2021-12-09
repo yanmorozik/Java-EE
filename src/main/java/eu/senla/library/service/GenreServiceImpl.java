@@ -4,7 +4,7 @@ import eu.senla.library.api.repository.GenreRepository;
 import eu.senla.library.api.service.GenreService;
 import eu.senla.library.converter.GenreConverter;
 import eu.senla.library.dto.GenreDto;
-import eu.senla.library.exception.GenreNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Genre;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class GenreServiceImpl implements GenreService {
 
     @Transactional
     @Override
-    public GenreDto getById(Long id) throws GenreNotFoundException {
-        Genre response = Optional.ofNullable(genreRepository.findById(id)).orElseThrow(() -> new GenreNotFoundException(id));
+    public GenreDto getById(Long id) throws NotFoundException {
+        Genre response = Optional.ofNullable(genreRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
         return genreConverter.convert(response);
     }
 

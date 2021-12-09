@@ -1,9 +1,8 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.LanguageService;
-import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.dto.LanguageDto;
-import eu.senla.library.exception.LanguageNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,18 +15,13 @@ public class LanguageController {
 
     private final LanguageService languageService;
 
-    @ExceptionHandler(LanguageNotFoundException.class)
-    public ErrorMessageDto catchException(){
-        return new ErrorMessageDto("error");
-    }
-
     @PostMapping
     public LanguageDto create(@RequestBody LanguageDto languageDto) {
         return languageService.create(languageDto);
     }
 
     @GetMapping("/{id}")
-    public LanguageDto getById(@PathVariable Long id) throws LanguageNotFoundException {
+    public LanguageDto getById(@PathVariable Long id) throws NotFoundException {
         return languageService.getById(id);
     }
 

@@ -1,9 +1,8 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.GenreService;
-import eu.senla.library.dto.ErrorMessageDto;
 import eu.senla.library.dto.GenreDto;
-import eu.senla.library.exception.GenreNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,18 +15,13 @@ public class GenreController{
 
     private final GenreService genreService;
 
-    @ExceptionHandler(GenreNotFoundException.class)
-    public ErrorMessageDto catchException(){
-        return new ErrorMessageDto("error");
-    }
-
     @PostMapping
     public GenreDto create(@RequestBody GenreDto genreDto) {
         return genreService.create(genreDto);
     }
 
     @GetMapping("/{id}")
-    public GenreDto getById(@PathVariable Long id) throws GenreNotFoundException {
+    public GenreDto getById(@PathVariable Long id) throws NotFoundException {
         return genreService.getById(id);
     }
 

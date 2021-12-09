@@ -4,7 +4,7 @@ import eu.senla.library.api.repository.CredentialRepository;
 import eu.senla.library.api.service.CredentialService;
 import eu.senla.library.converter.CredentialConverter;
 import eu.senla.library.dto.CredentialDto;
-import eu.senla.library.exception.CredentialNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Credential;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class CredentialServiceImpl implements CredentialService {
 
     @Transactional
     @Override
-    public CredentialDto getById(Long id) throws CredentialNotFoundException {
-        Credential response = Optional.ofNullable(credentialRepository.findById(id)).orElseThrow(() -> new CredentialNotFoundException(id));
+    public CredentialDto getById(Long id) throws NotFoundException {
+        Credential response = Optional.ofNullable(credentialRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
         return credentialConverter.convert(response);
     }
 

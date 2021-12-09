@@ -2,7 +2,7 @@ package eu.senla.library.controller;
 
 import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.dto.AuthorDto;
-import eu.senla.library.exception.AuthorNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +23,7 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AuthorDto> getById(@PathVariable Long id) throws AuthorNotFoundException {
+    public ResponseEntity<AuthorDto> getById(@PathVariable Long id) throws NotFoundException {
         AuthorDto dto = authorService.getById(id);
         return ResponseEntity.ok(dto);
     }

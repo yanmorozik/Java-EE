@@ -4,7 +4,7 @@ import eu.senla.library.api.repository.UserRepository;
 import eu.senla.library.api.service.UserService;
 import eu.senla.library.converter.UserConverter;
 import eu.senla.library.dto.UserDto;
-import eu.senla.library.exception.UserNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional
     @Override
-    public UserDto getById(Long id) throws UserNotFoundException {
-        User response = Optional.ofNullable(userRepository.findById(id)).orElseThrow(() -> new UserNotFoundException(id));
+    public UserDto getById(Long id) throws NotFoundException {
+        User response = Optional.ofNullable(userRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
         return userConverter.convert(response);
     }
 

@@ -3,7 +3,7 @@ package eu.senla.library.service;
 import eu.senla.library.api.repository.AuthorRepository;
 import eu.senla.library.converter.AuthorConverter;
 import eu.senla.library.dto.AuthorDto;
-import eu.senla.library.exception.AuthorNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Author;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -52,7 +52,7 @@ public class AuthorServiceTest {
     }
 
     @Test
-    public void getByIdAuthorShouldFinishedOk() throws AuthorNotFoundException {
+    public void getByIdAuthorShouldFinishedOk() throws NotFoundException {
 
         doReturn(author).when(authorConverter).convert((AuthorDto) any());
         doReturn(authorDto).when(authorConverter).convert((Author) any());

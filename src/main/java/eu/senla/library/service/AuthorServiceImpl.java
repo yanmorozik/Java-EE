@@ -4,7 +4,7 @@ import eu.senla.library.api.repository.AuthorRepository;
 import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.converter.AuthorConverter;
 import eu.senla.library.dto.AuthorDto;
-import eu.senla.library.exception.AuthorNotFoundException;
+import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Author;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Transactional
     @Override
-    public AuthorDto getById(Long id) throws AuthorNotFoundException {
-        Author response = Optional.ofNullable(authorRepository.findById(id)).orElseThrow(()-> new AuthorNotFoundException(id));
+    public AuthorDto getById(Long id) throws NotFoundException {
+        Author response = Optional.ofNullable(authorRepository.findById(id)).orElseThrow(()-> new NotFoundException(id));
         return authorConverter.convert(response);
     }
 
