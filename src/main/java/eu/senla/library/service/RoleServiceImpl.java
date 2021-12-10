@@ -2,11 +2,11 @@ package eu.senla.library.service;
 
 import eu.senla.library.api.repository.RoleRepository;
 import eu.senla.library.api.service.RoleService;
+import eu.senla.library.converter.RoleConverter;
 import eu.senla.library.dto.RoleDto;
+import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Role;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,38 +15,38 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class RoleServiceImpl implements RoleService {
+
     private final RoleRepository roleRepository;
-    private final ModelMapper modelMapper;
+    private final RoleConverter roleConverter;
 
     @Transactional
     @Override
     public RoleDto create(RoleDto roleDto) {
-        Role role = modelMapper.map(roleDto, Role.class);
-        Role response = roleRepository.add(role);
-        return modelMapper.map(response, RoleDto.class);
+        final Role role = roleConverter.convert(roleDto);
+        final Role response = roleRepository.add(role);
+        return roleConverter.convert(response);
     }
 
     @Transactional
     @Override
-    public RoleDto getById(Long id) {
-        Role response = roleRepository.findById(id);
-        return modelMapper.map(response, RoleDto.class);
+    public RoleDto getById(Long id) throws NotFoundException {
+        Role response = roleRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
+        return roleConverter.convert(response);
     }
 
     @Transactional
     @Override
     public List<RoleDto> getAll() {
         List<Role> roles = roleRepository.findAll();
-        return modelMapper.map(roles, new TypeToken<List<RoleDto>>() {
-        }.getType());
+        return roleConverter.convert(roles);
     }
 
     @Transactional
     @Override
     public RoleDto update(RoleDto roleDto) {
-        Role role = modelMapper.map(roleDto, Role.class);
-        Role response = roleRepository.update(role);
-        return modelMapper.map(response, RoleDto.class);
+        final Role role = roleConverter.convert(roleDto);
+        final Role response = roleRepository.update(role);
+        return roleConverter.convert(response);
     }
 
     @Transactional
@@ -54,27 +54,4 @@ public class RoleServiceImpl implements RoleService {
     public void deleteById(Long id) {
         roleRepository.deleteById(id);
     }
-
-    @Transactional
-    @Override
-    public List<RoleDto> getUserRoleWithUserJPQL(Long id) {
-        List<Role> response = roleRepository.getByIdWithUsersJPQL(id);
-        return modelMapper.map(response,  new TypeToken<List<RoleDto>>() {
-        }.getType());
-    }
-
-    @Transactional
-    @Override
-    public RoleDto getUserRoleWithUserCriteria(Long id) {
-        Role response = roleRepository.getByIdWithUsersCriteria(id);
-        return modelMapper.map(response, RoleDto.class);
-    }
-
-    @Transactional
-    @Override
-    public RoleDto getUserRoleWithUserGraph(Long id) {
-        Role response = roleRepository.getByIdWithUsersGraph(id);
-        return modelMapper.map(response, RoleDto.class);
-    }
-
 }

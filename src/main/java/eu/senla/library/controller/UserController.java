@@ -1,70 +1,43 @@
 package eu.senla.library.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.UserService;
 import eu.senla.library.dto.UserDto;
+import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Component
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("users")
 public class UserController {
-
-    private static final Logger logger = LoggerFactory.getLogger(
-            UserController.class);
 
     private final UserService userService;
 
-    private final ObjectMapper mapper;
-
-    public String create(String requestJson) {
-        try {
-            UserDto userDto = mapper.readValue(requestJson, UserDto.class);
-            UserDto response = userService.create(userDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PostMapping
+    public UserDto create(@RequestBody UserDto userDto) {
+        return userService.create(userDto);
     }
 
-    public String getById(Long id) {
-        try {
-            UserDto userDto = userService.getById(id);
-            return mapper.writeValueAsString(userDto);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping("/{id}")
+    public UserDto getById(@PathVariable Long id) throws NotFoundException {
+        return userService.getById(id);
     }
 
-    public String getAll() {
-        try {
-            List<UserDto> users = userService.getAll();
-            return mapper.writeValueAsString(users);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping
+    public List<UserDto> getAll() {
+        return userService.getAll();
     }
 
-    public String update(String requestJson) {
-        try {
-            UserDto userDto = mapper.readValue(requestJson, UserDto.class);
-            UserDto response = userService.update(userDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PutMapping
+    public UserDto update(@RequestBody UserDto userDto) {
+        return userService.update(userDto);
     }
 
-    public void deleteById(Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
         userService.deleteById(id);
     }
+
 }

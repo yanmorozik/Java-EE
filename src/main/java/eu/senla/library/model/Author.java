@@ -2,21 +2,19 @@ package eu.senla.library.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-import javax.persistence.FetchType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @Setter
-@ToString
 @Entity
+@SuperBuilder
+@ToString
 @Table(name = "authors")
 @AllArgsConstructor
 @NoArgsConstructor

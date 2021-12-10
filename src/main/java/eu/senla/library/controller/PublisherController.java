@@ -1,70 +1,42 @@
 package eu.senla.library.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.PublisherService;
 import eu.senla.library.dto.PublisherDto;
+import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Component
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("publishers")
 public class PublisherController {
-
-    private static final Logger logger = LoggerFactory.getLogger(
-            PublisherController.class);
 
     private final PublisherService publisherService;
 
-    private final ObjectMapper mapper;
-
-    public String create(String requestJson) {
-        try {
-            PublisherDto publisherDto = mapper.readValue(requestJson, PublisherDto.class);
-            PublisherDto response = publisherService.create(publisherDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PostMapping
+    public PublisherDto create(@RequestBody PublisherDto publisherDto) {
+        return publisherService.create(publisherDto);
     }
 
-    public String getById(Long id) {
-        try {
-            PublisherDto publisherDto = publisherService.getById(id);
-            return mapper.writeValueAsString(publisherDto);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping("/{id}")
+    public PublisherDto getById(@PathVariable Long id) throws NotFoundException {
+        return publisherService.getById(id);
     }
 
-    public String getAll() {
-        try {
-            List<PublisherDto> publishers = publisherService.getAll();
-            return mapper.writeValueAsString(publishers);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping
+    public List<PublisherDto> getAll() {
+        return publisherService.getAll();
     }
 
-    public String update(String requestJson) {
-        try {
-            PublisherDto publisherDto = mapper.readValue(requestJson, PublisherDto.class);
-            PublisherDto response = publisherService.update(publisherDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PutMapping
+    public PublisherDto update(@RequestBody PublisherDto publisherDto) {
+        return publisherService.update(publisherDto);
     }
 
-    public void deleteById(Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
         publisherService.deleteById(id);
     }
 }

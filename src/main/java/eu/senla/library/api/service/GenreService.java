@@ -1,6 +1,7 @@
 package eu.senla.library.api.service;
 
 import eu.senla.library.dto.GenreDto;
+import eu.senla.library.exception.NotFoundException;
 
 import java.util.List;
 
@@ -8,7 +9,7 @@ public interface GenreService {
 
     GenreDto create(GenreDto  genreDto);
 
-    GenreDto getById(Long id);
+    GenreDto getById(Long id) throws NotFoundException;
 
     List<GenreDto> getAll();
 

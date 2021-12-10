@@ -1,71 +1,42 @@
 package eu.senla.library.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.api.service.LanguageService;
 import eu.senla.library.dto.LanguageDto;
+import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Component
+@RestController
 @RequiredArgsConstructor
+@RequestMapping("languages")
 public class LanguageController {
-
-    private static final Logger logger = LoggerFactory.getLogger(
-            LanguageController.class);
 
     private final LanguageService languageService;
 
-    private final ObjectMapper mapper;
-
-    public String create(String requestJson) {
-        try {
-            LanguageDto languageDto = mapper.readValue(requestJson, LanguageDto.class);
-            LanguageDto response = languageService.create(languageDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PostMapping
+    public LanguageDto create(@RequestBody LanguageDto languageDto) {
+        return languageService.create(languageDto);
     }
 
-    public String getById(Long id) {
-        try {
-            LanguageDto languageDto = languageService.getById(id);
-            return mapper.writeValueAsString(languageDto);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping("/{id}")
+    public LanguageDto getById(@PathVariable Long id) throws NotFoundException {
+        return languageService.getById(id);
     }
 
-    public String getAll() {
-        try {
-            List<LanguageDto> languages = languageService.getAll();
-            return mapper.writeValueAsString(languages);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @GetMapping
+    public List<LanguageDto> getAll() {
+        return languageService.getAll();
     }
 
-    public String update(String requestJson) {
-        try {
-            LanguageDto languageDto = mapper.readValue(requestJson, LanguageDto.class);
-            LanguageDto response = languageService.update(languageDto);
-            return mapper.writeValueAsString(response);
-        } catch (JsonProcessingException e) {
-            logger.error(e.getMessage());
-            throw new RuntimeException(e);
-        }
+    @PutMapping
+    public LanguageDto update(@RequestBody LanguageDto languageDto) {
+        return languageService.update(languageDto);
     }
 
-    public void deleteById(Long id) {
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
         languageService.deleteById(id);
     }
-
 }

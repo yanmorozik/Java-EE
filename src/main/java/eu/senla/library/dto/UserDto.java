@@ -19,7 +19,7 @@ public class UserDto {
 
     private String telephone;
 
-    private String login;
+    private CredentialDto credential;
 
     private List<RoleDto> roles;
 }
