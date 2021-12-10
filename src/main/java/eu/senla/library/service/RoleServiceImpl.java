@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class RoleServiceImpl implements RoleService {
     @Transactional
     @Override
     public RoleDto getById(Long id) throws NotFoundException {
-        Role response = Optional.ofNullable(roleRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
+        Role response = roleRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return roleConverter.convert(response);
     }
 

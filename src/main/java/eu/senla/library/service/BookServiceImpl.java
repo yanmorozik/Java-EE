@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class BookServiceImpl implements BookService {
     @Transactional
     @Override
     public BookDto getById(Long id) throws NotFoundException {
-        Book response = Optional.ofNullable(bookRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
+        Book response = bookRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return bookConverter.convert(response);
     }
 

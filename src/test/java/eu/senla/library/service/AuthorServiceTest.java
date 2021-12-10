@@ -56,7 +56,7 @@ public class AuthorServiceTest {
 
         doReturn(author).when(authorConverter).convert((AuthorDto) any());
         doReturn(authorDto).when(authorConverter).convert((Author) any());
-        when(authorRepository.findById(any())).thenReturn(Author.builder().id(1L).firstName("yan").surname("morozik").build());
+        when(authorRepository.findById(any())).thenReturn(java.util.Optional.ofNullable(Author.builder().id(1L).firstName("yan").surname("morozik").build()));
 
         final AuthorDto authorDto1 = authorService.getById(1L);
 

@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -79,7 +81,7 @@ public class AuthorControllerTest extends WebApplicationTest {
         mockMvc.perform(delete("/authors/" + author.getId())).
                 andExpect(status().is2xxSuccessful());
 
-        final Author tempAuthor = authorRepository.findById(author.getId());
+        final Optional<Author> tempAuthor = authorRepository.findById(author.getId());
 
         assertNull(tempAuthor);
     }

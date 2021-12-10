@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class CredentialServiceImpl implements CredentialService {
     @Transactional
     @Override
     public CredentialDto getById(Long id) throws NotFoundException {
-        Credential response = Optional.ofNullable(credentialRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
+        Credential response = credentialRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return credentialConverter.convert(response);
     }
 

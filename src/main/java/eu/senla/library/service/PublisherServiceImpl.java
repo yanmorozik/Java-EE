@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class PublisherServiceImpl implements PublisherService {
     @Transactional
     @Override
     public PublisherDto getById(Long id) throws NotFoundException {
-        Publisher response = Optional.ofNullable(publisherRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
+        Publisher response = publisherRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return publisherConverter.convert(response);
     }
 

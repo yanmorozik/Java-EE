@@ -1,12 +1,13 @@
 package eu.senla.library.api.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AbstractRepository<T> {
 
     T add(T entity);
 
-    T findById(Long id);
+    Optional<T> findById(Long id);
 
     List<T> findAll();
 

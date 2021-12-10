@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class GenreServiceImpl implements GenreService {
     @Transactional
     @Override
     public GenreDto getById(Long id) throws NotFoundException {
-        Genre response = Optional.ofNullable(genreRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
+        Genre response = genreRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return genreConverter.convert(response);
     }
 

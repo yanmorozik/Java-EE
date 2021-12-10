@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class AuthorServiceImpl implements AuthorService {
     @Transactional
     @Override
     public AuthorDto getById(Long id) throws NotFoundException {
-        Author response = Optional.ofNullable(authorRepository.findById(id)).orElseThrow(()-> new NotFoundException(id));
+        Author response = authorRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return authorConverter.convert(response);
     }
 

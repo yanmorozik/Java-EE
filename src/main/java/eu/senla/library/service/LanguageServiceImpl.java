@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class LanguageServiceImpl implements LanguageService {
     @Transactional
     @Override
     public LanguageDto getById(Long id) throws NotFoundException {
-        Language response = Optional.ofNullable(languageRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
+        Language response = languageRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return languageConverter.convert(response);
     }
 

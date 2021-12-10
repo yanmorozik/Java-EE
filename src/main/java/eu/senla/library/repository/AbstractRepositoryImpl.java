@@ -9,6 +9,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 public class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
 
@@ -27,8 +28,8 @@ public class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
     }
 
     @Override
-    public T findById(Long id) {
-        return entityManager.find(entityClass, id);
+    public Optional<T> findById(Long id) {
+        return Optional.of(entityManager.find(entityClass,id));
     }
 
     @Override

@@ -5,6 +5,7 @@ import eu.senla.library.api.service.BookingService;
 import eu.senla.library.converter.BookingConverter;
 import eu.senla.library.dto.BookingDto;
 import eu.senla.library.exception.NotFoundException;
+import eu.senla.library.model.Author;
 import eu.senla.library.model.Booking;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -31,7 +32,7 @@ public class BookingServiceImpl implements BookingService {
     @Transactional
     @Override
     public BookingDto getById(Long id) throws NotFoundException {
-        Booking response = Optional.ofNullable(bookingRepository.findById(id)).orElseThrow(()-> new NotFoundException(id));
+        Booking response = bookingRepository.findById(id).orElseThrow(()-> new NotFoundException(id));
         return bookingConverter.convert(response);
     }
 

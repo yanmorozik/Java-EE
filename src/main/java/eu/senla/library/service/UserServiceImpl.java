@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +30,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserDto getById(Long id) throws NotFoundException {
-        User response = Optional.ofNullable(userRepository.findById(id)).orElseThrow(() -> new NotFoundException(id));
+        User response = userRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return userConverter.convert(response);
     }
 
