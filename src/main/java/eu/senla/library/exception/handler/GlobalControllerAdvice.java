@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class GlobalControllerAdvice {
-
     private static final Logger logger = LoggerFactory.getLogger(
             GlobalControllerAdvice.class);
 
