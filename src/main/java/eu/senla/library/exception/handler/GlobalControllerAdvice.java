@@ -15,13 +15,13 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<String> notFoundException(NotFoundException notFoundException) {
-        logger.error(notFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+        logger.error(notFoundException.getLocalizedMessage(), notFoundException);
         return new ResponseEntity<>(notFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> notFoundException(Exception exception) {
-        logger.error(exception.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        logger.error(exception.getLocalizedMessage(), exception);
         return new ResponseEntity<>(exception.getLocalizedMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
