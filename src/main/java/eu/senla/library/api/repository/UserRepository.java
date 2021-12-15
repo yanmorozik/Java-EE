@@ -4,4 +4,6 @@ import eu.senla.library.model.User;
 
 public interface UserRepository extends AbstractRepository<User>{
 
+     User getByNameWithRoles(String name);
+
 }

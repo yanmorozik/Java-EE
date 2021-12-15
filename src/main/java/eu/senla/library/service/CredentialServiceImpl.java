@@ -7,6 +7,7 @@ import eu.senla.library.dto.CredentialDto;
 import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Credential;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +19,13 @@ public class CredentialServiceImpl implements CredentialService {
 
     private final CredentialRepository credentialRepository;
     private final CredentialConverter credentialConverter;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     @Override
     public CredentialDto create(CredentialDto credentialDto) {
         final Credential credential = credentialConverter.convert(credentialDto);
+        credential.setPassword(passwordEncoder.encode(credential.getPassword()));
         final Credential response = credentialRepository.add(credential);
         return credentialConverter.convert(response);
     }
@@ -54,4 +57,6 @@ public class CredentialServiceImpl implements CredentialService {
     public void deleteById(Long id) {
         credentialRepository.deleteById(id);
     }
+
+
 }
