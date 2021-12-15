@@ -1,6 +1,5 @@
 package eu.senla.library.security.configuration;
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import eu.senla.library.security.JwtProvider;
 import eu.senla.library.security.filter.JwtAuthenticationFilter;
@@ -31,30 +30,34 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     private JwtProvider jwtProvider;
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public ObjectMapper objectMapper(){
+    public ObjectMapper objectMapper() {
         return new ObjectMapper();
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService)
-        .passwordEncoder(bCryptPasswordEncoder());
+                .passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.antMatcher("/**").
+                httpBasic().disable().
+                csrf().disable().
                 sessionManagement().
                 sessionCreationPolicy(SessionCreationPolicy.STATELESS).
                 and().
-                httpBasic().disable().
-                csrf().disable().
-                addFilter(new LoginFilter(jwtProvider,objectMapper(),authenticationManager())).
-                addFilterBefore(new JwtAuthenticationFilter(jwtProvider,userDetailsService),LoginFilter.class);
+                authorizeRequests().
+                anyRequest().authenticated();
+        httpSecurity.addFilter(new LoginFilter(jwtProvider, objectMapper(), authenticationManager())).
+                addFilterBefore(new JwtAuthenticationFilter(jwtProvider, userDetailsService), LoginFilter.class);
+//                addFilter(new LoginFilter(jwtProvider,objectMapper(),authenticationManager())).
+//                addFilterBefore(new JwtAuthenticationFilter(jwtProvider,userDetailsService),LoginFilter.class);
     }
 }

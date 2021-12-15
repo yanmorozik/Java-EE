@@ -46,3 +46,7 @@ public class AuthorController {
         return ResponseEntity.noContent().build();
     }
 }
+
+//  Post запрос dto
+//контроллер принимает credential
+//возвращает token
