@@ -22,26 +22,20 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final UserDetailsService userDetailsService;
     private final JwtProvider jwtProvider;
 
-    public JwtAuthenticationFilter(JwtProvider jwtProvider,UserDetailsService userDetailsService ) {
-        this.userDetailsService = userDetailsService;
-        this.jwtProvider = jwtProvider;
+    public JwtAuthenticationFilter(JwtProvider jwtProvider, UserDetailsService userDetailsService) {
+        this.jwtProvider=jwtProvider;
+        this.userDetailsService=userDetailsService;
     }
 
     @Override
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
-        final String authorization= httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
-        if (authorization !=null && authorization.startsWith(BEARER)){
+        final String authorization = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
+        if (authorization!= null && authorization.startsWith(BEARER)){
             final String token = authorization.substring(BEARER.length());
             final String username = jwtProvider.getUsernameFromToken(token);
-            ofNullable(userDetailsService.loadUserByUsername(username))
-                    .ifPresent(
-                            x->
-                                    SecurityContextHolder.getContext().setAuthentication(
-                                            new UsernamePasswordAuthenticationToken(
-                                                    username,null,x.getAuthorities()
-                                            )
-                                    )
-                    );
+            ofNullable(userDetailsService.loadUserByUsername(username)).
+                    ifPresent(x-> SecurityContextHolder.getContext().
+                            setAuthentication(new UsernamePasswordAuthenticationToken(username,null,x.getAuthorities())));
         }
         filterChain.doFilter(httpServletRequest,httpServletResponse);
     }

@@ -58,5 +58,9 @@ public class CredentialServiceImpl implements CredentialService {
         credentialRepository.deleteById(id);
     }
 
-
+    @Override
+    public CredentialDto getByLoginWithRole(String login) {
+        Credential credential = credentialRepository.findByLogin(login);
+        return credentialConverter.convert(credential);
+    }
 }

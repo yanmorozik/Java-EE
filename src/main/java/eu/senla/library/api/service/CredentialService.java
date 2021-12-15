@@ -16,5 +16,5 @@ public interface CredentialService {
 
     void deleteById(Long id);
 
-
+    CredentialDto getByLoginWithRole(String login);
 }

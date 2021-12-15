@@ -40,4 +40,8 @@ public class CredentialController {
         credentialService.deleteById(id);
     }
 
+    @GetMapping("/get/{login}")
+    public CredentialDto getByLoginWithRole(@PathVariable String login){
+        return credentialService.getByLoginWithRole(login);
+    }
 }
