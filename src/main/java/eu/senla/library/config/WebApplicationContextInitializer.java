@@ -1,11 +1,13 @@
 package eu.senla.library.config;
 
+import eu.senla.library.security.config.SecurityConfig;
+import eu.senla.library.security.jwt.JwtConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class WebApplicationContextInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{WebConfiguration.class};
+        return new Class[]{WebConfiguration.class, DatabaseConfiguration.class,MyContextConfiguration.class, SecurityConfig.class};
     }
 
     @Override
