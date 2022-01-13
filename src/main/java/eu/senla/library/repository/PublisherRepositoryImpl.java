@@ -10,4 +10,9 @@ public class PublisherRepositoryImpl extends AbstractRepositoryImpl<Publisher> i
     public PublisherRepositoryImpl() {
         super(Publisher.class);
     }
+
+    @Override
+    protected String getNameGraph() {
+        return "publisherEntityGraph";
+    }
 }

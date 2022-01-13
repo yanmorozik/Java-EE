@@ -4,6 +4,8 @@ import eu.senla.library.api.service.GenreService;
 import eu.senla.library.dto.GenreDto;
 import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,28 +18,38 @@ public class GenreController{
     private final GenreService genreService;
 
     @PostMapping
-    public GenreDto create(@RequestBody GenreDto genreDto) {
-        return genreService.create(genreDto);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<GenreDto> create(@RequestBody GenreDto genreDto) {
+        GenreDto dto = genreService.create(genreDto);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public GenreDto getById(@PathVariable Long id) throws NotFoundException {
-        return genreService.getById(id);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<GenreDto> getById(@PathVariable Long id) throws NotFoundException {
+        GenreDto dto = genreService.getById(id);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public List<GenreDto> getAll() {
-        return genreService.getAll();
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<GenreDto>> getAll() {
+        List<GenreDto> genres = genreService.getAll();
+        return ResponseEntity.ok(genres);
     }
 
     @PutMapping
-    public GenreDto update(@RequestBody GenreDto genreDto) {
-        return genreService.update(genreDto);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<GenreDto> update(@RequestBody GenreDto genreDto) {
+        GenreDto dto = genreService.update(genreDto);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         genreService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }

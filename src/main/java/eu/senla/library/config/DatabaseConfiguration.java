@@ -1,5 +1,6 @@
 package eu.senla.library.config;
 
+import liquibase.integration.spring.SpringLiquibase;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.FactoryBean;
 import org.springframework.beans.factory.annotation.Value;
@@ -33,6 +34,9 @@ public class DatabaseConfiguration {
     @Value("${database.driver}")
     private String getDatabaseDriver;
 
+    @Value("${liquibase.changeLog}")
+    private String changeLog;
+
     @Value("#{${database.hibernate}}")
     private Map<String, String> hibernateProperties;
 
@@ -56,5 +60,13 @@ public class DatabaseConfiguration {
         localContainerEntityManagerFactoryBean.setDataSource(dataSource);
         localContainerEntityManagerFactoryBean.setJpaPropertyMap(hibernateProperties);
         return localContainerEntityManagerFactoryBean;
+    }
+
+    @Bean
+    public SpringLiquibase springLiquibase(DataSource dataSource) {
+        SpringLiquibase springLiquibase = new SpringLiquibase();
+        springLiquibase.setChangeLog(changeLog);
+        springLiquibase.setDataSource(dataSource);
+        return springLiquibase;
     }
 }

@@ -1,17 +1,19 @@
 package eu.senla.library.repository;
 
 import eu.senla.library.api.repository.AbstractRepository;
+import eu.senla.library.model.Book;
+import eu.senla.library.model.Genre;
 
+import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 import java.util.Optional;
 
-public class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
+public abstract class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
 
     @PersistenceContext
     protected EntityManager entityManager;
@@ -29,17 +31,19 @@ public class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
 
     @Override
     public Optional<T> findById(Long id) {
-        return Optional.of(entityManager.find(entityClass,id));
+        return Optional.of(entityManager.find(entityClass, id));
     }
 
     @Override
     public List<T> findAll() {
-        CriteriaBuilder cb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> cq = cb.createQuery(entityClass);
-        Root<T> rootEntry = cq.from(entityClass);
-        CriteriaQuery<T> all = cq.select(rootEntry);
-        TypedQuery<T> allQuery = entityManager.createQuery(all);
-        return allQuery.getResultList();
+        EntityGraph entityGraph = entityManager.getEntityGraph(getNameGraph());
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        Root<T> root = criteriaQuery.from(entityClass);
+        criteriaQuery.select(root);
+        return entityManager.createQuery(criteriaQuery)
+                .setHint("javax.persistence.fetchgraph", entityGraph)
+                .getResultList();
     }
 
     @Override
@@ -52,4 +56,7 @@ public class AbstractRepositoryImpl<T> implements AbstractRepository<T> {
         T removeEntity = entityManager.find(entityClass, id);
         entityManager.remove(removeEntity);
     }
+
+
+    protected abstract String getNameGraph();
 }

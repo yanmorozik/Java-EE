@@ -6,12 +6,11 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,6 +19,8 @@ import java.util.List;
 @Table(name = "publishers")
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedEntityGraph(name = "publisherEntityGraph",
+        attributeNodes = {@NamedAttributeNode(value = "books")})
 public class Publisher extends BaseEntity {
     @Column(name = "name_publisher")
     private String namePublisher;
@@ -27,6 +28,6 @@ public class Publisher extends BaseEntity {
     @Column
     private String telephone;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "publishers")
-    private List<Book> books;
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "publishers",cascade = {CascadeType.REMOVE})
+    private Set<Book> books= new HashSet<>();
 }

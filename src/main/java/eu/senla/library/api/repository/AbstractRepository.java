@@ -11,7 +11,8 @@ public interface AbstractRepository<T> {
 
     List<T> findAll();
 
-    T update(T entity);
+     T update(T entity);
 
     void deleteById(Long id);
+
 }

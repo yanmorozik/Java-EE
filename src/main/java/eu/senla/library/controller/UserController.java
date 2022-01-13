@@ -2,8 +2,11 @@ package eu.senla.library.controller;
 
 import eu.senla.library.api.service.UserService;
 import eu.senla.library.dto.UserDto;
+import eu.senla.library.dto.UserWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,28 +19,32 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public UserDto create(@RequestBody UserDto userDto) {
-        return userService.create(userDto);
+    public ResponseEntity<UserDto> create(@RequestBody UserWithRelationIdsDto userWithRelationIdsDto) {
+        UserDto dto = userService.create(userWithRelationIdsDto);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public UserDto getById(@PathVariable Long id) throws NotFoundException {
-        return userService.getById(id);
+    public ResponseEntity<UserDto> getById(@PathVariable Long id) throws NotFoundException {
+        UserDto dto = userService.getById(id);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public List<UserDto> getAll() {
-        return userService.getAll();
+    public ResponseEntity<List<UserDto>> getAll() {
+        List<UserDto> users = userService.getAll();
+        return ResponseEntity.ok(users);
     }
 
     @PutMapping
-    public UserDto update(@RequestBody UserDto userDto) {
-        return userService.update(userDto);
+    public ResponseEntity<UserDto> update(@RequestBody UserWithRelationIdsDto userWithRelationIdsDto) {
+        UserDto dto = userService.update(userWithRelationIdsDto);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         userService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
-
 }

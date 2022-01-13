@@ -3,6 +3,7 @@ package eu.senla.library.service;
 import eu.senla.library.api.repository.AuthorRepository;
 import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.converter.AuthorConverter;
+import eu.senla.library.converter.Converter;
 import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Author;

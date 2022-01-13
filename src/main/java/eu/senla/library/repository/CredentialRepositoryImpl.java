@@ -9,4 +9,9 @@ public class CredentialRepositoryImpl extends AbstractRepositoryImpl<Credential>
     public CredentialRepositoryImpl() {
         super(Credential.class);
     }
+
+    @Override
+    protected String getNameGraph() {
+        return null;
+    }
 }

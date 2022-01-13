@@ -6,12 +6,10 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -20,10 +18,12 @@ import java.util.List;
 @Table(name = "genres")
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedEntityGraph(name = "genreEntityGraph",
+        attributeNodes = {@NamedAttributeNode(value = "books")})
 public class Genre extends BaseEntity {
     @Column(name = "name_genre")
     private String nameGenre;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "genre")
-    private List<Book> books;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "genre", orphanRemoval = true)
+    private Set<Book> books= new HashSet<>();
 }

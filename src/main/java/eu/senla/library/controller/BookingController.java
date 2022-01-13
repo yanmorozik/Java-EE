@@ -2,8 +2,11 @@ package eu.senla.library.controller;
 
 import eu.senla.library.api.service.BookingService;
 import eu.senla.library.dto.BookingDto;
+import eu.senla.library.dto.BookingWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,28 +19,37 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping
-    public BookingDto create(@RequestBody BookingDto bookingDto) {
-        return bookingService.create(bookingDto);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<BookingDto> create(@RequestBody BookingWithRelationIdsDto bookingWithRelationIdsDto) {
+        BookingDto dto = bookingService.create(bookingWithRelationIdsDto);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public BookingDto getById(@PathVariable Long id) throws NotFoundException {
-        return bookingService.getById(id);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<BookingDto> getById(@PathVariable Long id) throws NotFoundException {
+        BookingDto dto = bookingService.getById(id);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public List<BookingDto> getAll() {
-        return bookingService.getAll();
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<BookingDto>> getAll() {
+        List<BookingDto> bookings = bookingService.getAll();
+        return ResponseEntity.ok(bookings);
     }
 
     @PutMapping
-    public BookingDto update(@RequestBody BookingDto bookingDto) {
-        return bookingService.update(bookingDto);
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<BookingDto> update(@RequestBody BookingWithRelationIdsDto bookingWithRelationIdsDto) {
+        BookingDto dto = bookingService.update(bookingWithRelationIdsDto);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         bookingService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
-
 }
