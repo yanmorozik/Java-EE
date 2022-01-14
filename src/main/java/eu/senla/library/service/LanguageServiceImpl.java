@@ -27,14 +27,14 @@ public class LanguageServiceImpl implements LanguageService {
         return languageConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public LanguageDto getById(Long id) throws NotFoundException {
         Language response = languageRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return languageConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<LanguageDto> getAll() {
         List<Language> languages = languageRepository.findAll();

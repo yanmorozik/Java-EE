@@ -28,14 +28,14 @@ public class AuthorServiceImpl implements AuthorService {
         return authorConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public AuthorDto getById(Long id) throws NotFoundException {
         Author response = authorRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return authorConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<AuthorDto> getAll() {
         List<Author> authors = authorRepository.findAll();

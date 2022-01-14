@@ -98,6 +98,10 @@ public class Book extends BaseEntity {
     )
     private Set<Publisher> publishers = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book",cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST})
     private Set<Booking> bookings = new HashSet<>();
 }

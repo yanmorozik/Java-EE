@@ -3,7 +3,10 @@ package eu.senla.library.controller;
 import eu.senla.library.api.service.CredentialService;
 import eu.senla.library.dto.CredentialDto;
 import eu.senla.library.exception.NotFoundException;
+import eu.senla.library.model.Credential;
+import liquibase.pro.packaged.V;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,28 +19,32 @@ public class CredentialController {
     private final CredentialService credentialService;
 
     @PostMapping
-    public CredentialDto create(@RequestBody CredentialDto credentialDto) {
-        return credentialService.create(credentialDto);
+    public ResponseEntity<CredentialDto> create(@RequestBody CredentialDto credentialDto) {
+        CredentialDto dto = credentialService.create(credentialDto);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping("/{id}")
-    public CredentialDto getById(@PathVariable Long id) throws NotFoundException {
-        return credentialService.getById(id);
+    public ResponseEntity<CredentialDto> getById(@PathVariable Long id) throws NotFoundException {
+        CredentialDto dto = credentialService.getById(id);
+        return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public List<CredentialDto> getAll() {
-        return credentialService.getAll();
+    public ResponseEntity<List<CredentialDto>> getAll() {
+        List<CredentialDto> credentials= credentialService.getAll();
+        return ResponseEntity.ok(credentials);
     }
 
     @PutMapping
-    public CredentialDto update(@RequestBody CredentialDto credentialDto) {
-        return credentialService.update(credentialDto);
+    public ResponseEntity<CredentialDto> update(@RequestBody CredentialDto credentialDto) {
+        CredentialDto dto = credentialService.update(credentialDto);
+        return ResponseEntity.ok(dto);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         credentialService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
-
 }

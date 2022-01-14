@@ -28,6 +28,6 @@ public class Publisher extends BaseEntity {
     @Column
     private String telephone;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "publishers",cascade = {CascadeType.REMOVE})
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "publishers",cascade = CascadeType.ALL)
     private Set<Book> books= new HashSet<>();
 }

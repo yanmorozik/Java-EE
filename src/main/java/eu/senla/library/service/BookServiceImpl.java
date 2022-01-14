@@ -35,14 +35,14 @@ public class BookServiceImpl implements BookService {
         return bookConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public BookDto getById(Long id) throws NotFoundException {
         Book response = bookRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return bookConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<BookDto> getAll() {
         List<Book> books = bookRepository.findAll();

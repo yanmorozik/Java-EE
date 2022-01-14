@@ -28,14 +28,27 @@ public class User extends BaseEntity {
     @Column
     private String telephone;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE/*, orphanRemoval = true*/)
+    @OneToOne(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST}, orphanRemoval = true)
     @JoinColumn(name = "credential_id", referencedColumnName = "id")
     private Credential credential;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST})
     private Set<Booking> bookings = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST}
+    )
     @JoinTable(
             name = "user_role",
             joinColumns = {@JoinColumn(name = "user_id")},

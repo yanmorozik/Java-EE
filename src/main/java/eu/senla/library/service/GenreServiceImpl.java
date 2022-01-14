@@ -27,14 +27,14 @@ public class GenreServiceImpl implements GenreService {
         return genreConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public GenreDto getById(Long id) throws NotFoundException {
         Genre response = genreRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return genreConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<GenreDto> getAll() {
         List<Genre> genres = genreRepository.findAll();

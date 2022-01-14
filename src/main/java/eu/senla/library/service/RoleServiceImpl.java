@@ -27,14 +27,14 @@ public class RoleServiceImpl implements RoleService {
         return roleConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public RoleDto getById(Long id) throws NotFoundException {
         Role response = roleRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return roleConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<RoleDto> getAll() {
         List<Role> roles = roleRepository.findAll();

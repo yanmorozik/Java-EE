@@ -17,11 +17,13 @@ public class UserWithRelationIdsDto {
 
     private Long id;
 
+    private String firstName;
+
     private String surname;
 
     private String telephone;
 
-    private Long credentialId;
+    private CredentialDto credential;
 
     private List<Long> roleIds;
 }

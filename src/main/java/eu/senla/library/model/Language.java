@@ -24,6 +24,6 @@ public class Language extends BaseEntity {
     @Column(name = "name_language")
     private String nameLanguage;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "language",orphanRemoval = true)
-    private Set<Book> books= new HashSet<>();
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "language", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Book> books = new HashSet<>();
 }

@@ -27,14 +27,14 @@ public class PublisherServiceImpl implements PublisherService {
         return publisherConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public PublisherDto getById(Long id) throws NotFoundException {
         Publisher response = publisherRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return publisherConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<PublisherDto> getAll() {
         List<Publisher> publishers = publisherRepository.findAll();

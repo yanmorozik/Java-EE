@@ -28,6 +28,6 @@ public class RoleRepositoryImpl extends AbstractRepositoryImpl<Role> implements 
 
     @Override
     protected String getNameGraph() {
-        return null;
+        return "with-users";
     }
 }

@@ -14,6 +14,7 @@ import eu.senla.library.dto.UserWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,18 +42,19 @@ public class UserServiceImpl implements UserService {
     @Transactional
     @Override
     public UserDto create(UserWithRelationIdsDto userWithRelationIdsDto) {
+        //userWithRelationIdsDto
         final User response = userRepository.add(reassignment(userWithRelationIdsDto));
         return userConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public UserDto getById(Long id) throws NotFoundException {
         User response = userRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return userConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<UserDto> getAll() {
         List<User> users = userRepository.findAll();
@@ -97,7 +99,7 @@ public class UserServiceImpl implements UserService {
         return userConverter.convert(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public UserDto findByUsername(String name) {
         return userConverter.convert(userRepository.findByUsername(name));
@@ -106,16 +108,16 @@ public class UserServiceImpl implements UserService {
     public User reassignment(UserWithRelationIdsDto userWithRelationIdsDto) {
         final User user = userWithRelationConverter.convert(userWithRelationIdsDto);
 
-        Credential credential = credentialRepository.findById(userWithRelationIdsDto.getCredentialId())
-                .orElseThrow(() -> new NotFoundException(userWithRelationIdsDto.getCredentialId()));
-        user.setCredential(credential);
-
         Set<Role> roles = userWithRelationIdsDto.getRoleIds()
                 .stream()
                 .map(id -> roleRepository.findById(id).orElseThrow(() -> new NotFoundException(id)))
                 .collect(Collectors.toSet());
         user.setRoles(roles);
 
+        Credential credential = credentialConverter.convert(userWithRelationIdsDto.getCredential());
+        credential.setLogin(userWithRelationIdsDto.getCredential().getLogin());
+        credential.setPassword(passwordEncoder.encode(userWithRelationIdsDto.getCredential().getPassword()));
+        user.setCredential(credential);
         return user;
     }
 }

@@ -15,6 +15,8 @@ import javax.persistence.*;
 @Table(name = "credentials")
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedEntityGraph(name = "credentialEntityGraph",
+        includeAllAttributes = true)
 public class Credential extends BaseEntity {
     @Column
     private String login;
@@ -25,6 +27,6 @@ public class Credential extends BaseEntity {
 //    @Column
 //    private String passwordConfirm;
 
-    @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential",cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
     private User user;
 }

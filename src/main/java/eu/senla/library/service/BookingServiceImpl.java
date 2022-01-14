@@ -35,14 +35,14 @@ public class BookingServiceImpl implements BookingService {
         return bookingConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public BookingDto getById(Long id) throws NotFoundException {
         Booking response = bookingRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return bookingConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public List<BookingDto> getAll() {
         List<Booking> bookings = bookingRepository.findAll();

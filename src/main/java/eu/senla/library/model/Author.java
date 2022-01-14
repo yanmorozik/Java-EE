@@ -30,6 +30,6 @@ public class Author extends BaseEntity {
     @Column
     private String surname;
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "authors", cascade = CascadeType.REMOVE)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "authors", cascade = CascadeType.ALL)
     private Set<Book> books = new HashSet<>();
 }

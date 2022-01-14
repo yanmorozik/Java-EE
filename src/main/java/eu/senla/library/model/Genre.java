@@ -24,6 +24,6 @@ public class Genre extends BaseEntity {
     @Column(name = "name_genre")
     private String nameGenre;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "genre", orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "genre",cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Book> books= new HashSet<>();
 }
