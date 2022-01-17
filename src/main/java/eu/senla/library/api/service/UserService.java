@@ -9,8 +9,6 @@ import java.util.List;
 
 public interface UserService {
 
-    UserDto create(UserWithRelationIdsDto userWithRelationIdsDto);
-
     UserDto getById(Long id) throws NotFoundException;
 
     List<UserDto> getAll(int start, int max);

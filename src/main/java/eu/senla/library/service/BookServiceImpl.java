@@ -32,7 +32,6 @@ public class BookServiceImpl implements BookService {
     private final GenreRepository genreRepository;
     private final PublisherRepository publisherRepository;
     private final LanguageRepository languageRepository;
-    private final BookFilterConverter bookFilterConverter;
 
     @Transactional
     @Override

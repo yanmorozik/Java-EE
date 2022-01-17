@@ -35,15 +35,6 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<User> implements 
         query.select(root).where(builder.equal(root.get(User_.credential), credential));
 
         return entityManager.createQuery(query).getSingleResult();
-
-//        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-//        final CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-//        final Root<User> root = query.from(User.class);
-//        final Root<Credential> rootCred = query.from(Credential.class);
-//
-//        root.fetch(User_.credential, JoinType.INNER);
-//        query.select(root).where(criteriaBuilder.equal(rootCred.get(Credential_.login), name));
-//        return entityManager.createQuery(query).getResultList().stream().findFirst().orElse(null);
     }
 
 

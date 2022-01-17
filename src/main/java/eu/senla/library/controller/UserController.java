@@ -20,12 +20,6 @@ public class UserController {
 
     private final UserService userService;
 
-//    @PostMapping
-//    public ResponseEntity<UserDto> create(@RequestBody UserWithRelationIdsDto userWithRelationIdsDto) {
-//        UserDto dto = userService.create(userWithRelationIdsDto);
-//        return ResponseEntity.ok(dto);
-//    }
-
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<UserDto> getById(@PathVariable Long id) throws NotFoundException {

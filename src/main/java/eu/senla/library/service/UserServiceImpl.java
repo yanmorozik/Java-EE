@@ -32,19 +32,10 @@ public class UserServiceImpl implements UserService {
     private final RoleRepository roleRepository;
     private final CredentialRepository credentialRepository;
     private final UserConverter userConverter;
-    private final RoleConverter roleConverter;
     private final CredentialConverter credentialConverter;
     private final UserConverterWithBookWithRelationIdsDto userWithRelationConverter;
 
     private final BCryptPasswordEncoder passwordEncoder;
-
-    @Transactional
-    @Override
-    public UserDto create(UserWithRelationIdsDto userWithRelationIdsDto) {
-        //userWithRelationIdsDto
-        final User response = userRepository.add(reassignment(userWithRelationIdsDto));
-        return userConverter.convert(response);
-    }
 
     @Transactional(readOnly = true)
     @Override
@@ -88,9 +79,6 @@ public class UserServiceImpl implements UserService {
 
         Credential credential = credentialConverter.convert(userDto.getCredential());
         credential.setPassword(passwordEncoder.encode(userDto.getCredential().getPassword()));
-        //credential.setPasswordConfirm(credential.getPassword());
-
-        //credential.setPasswordConfirm(passwordEncoder.encode(userDto.getCredential().getPasswordConfirm()));
 
         credentialRepository.add(credential);
 

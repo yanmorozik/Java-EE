@@ -3,15 +3,10 @@ package eu.senla.library.service;
 import eu.senla.library.api.repository.AuthorRepository;
 import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.converter.AuthorConverter;
-import eu.senla.library.converter.AuthorDtoConverter;
-import eu.senla.library.converter.AuthorProtocolConverter;
 import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.exception.NotFoundException;
-import eu.senla.library.filter.AuthorsProtocol;
-import eu.senla.library.filter.Protocol;
 import eu.senla.library.model.Author;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +21,6 @@ public class AuthorServiceImpl implements AuthorService {
 
     private final AuthorRepository authorRepository;
     private final AuthorConverter authorConverter;
-    private final AuthorProtocolConverter authorProtocolConverter;
-    private final AuthorDtoConverter authorDtoConverter;
 
     @Transactional
     @Override
