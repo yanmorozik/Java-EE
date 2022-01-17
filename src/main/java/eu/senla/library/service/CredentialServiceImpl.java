@@ -36,6 +36,13 @@ public class CredentialServiceImpl implements CredentialService {
 
     @Transactional(readOnly = true)
     @Override
+    public List<CredentialDto> getAll(int start,int max) {
+        List<Credential> credentials = credentialRepository.findAll(start,max);
+        return credentialConverter.convert(credentials);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
     public List<CredentialDto> getAll() {
         List<Credential> credentials = credentialRepository.findAll();
         return credentialConverter.convert(credentials);

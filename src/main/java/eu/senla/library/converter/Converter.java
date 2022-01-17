@@ -45,4 +45,5 @@ public class Converter<T extends BaseEntity, DTO> {
     public List<DTO> convert(List<T> entities) {
         return entities.stream().map(entity->modelMapper.map(entity,dtoClass)).collect(Collectors.toList());
     }
+
 }

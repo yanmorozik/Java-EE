@@ -1,6 +1,7 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.LanguageService;
+import eu.senla.library.dto.GenreDto;
 import eu.senla.library.dto.LanguageDto;
 import eu.senla.library.exception.NotFoundException;
 import liquibase.pro.packaged.V;
@@ -32,6 +33,14 @@ public class LanguageController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/pagination")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<LanguageDto>> getAll(@RequestParam(defaultValue = "1") int start,
+                                                    @RequestParam(defaultValue = "3") int max) {
+        List<LanguageDto> languages=languageService.getAll(start,max);
+        return ResponseEntity.ok(languages);
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<LanguageDto>> getAll() {
@@ -51,5 +60,12 @@ public class LanguageController {
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         languageService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filtration")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<LanguageDto>> getByFiler(@RequestParam(defaultValue = "") String nameLanguage) {
+        List<LanguageDto> languages = languageService.getByFiler(nameLanguage);
+        return ResponseEntity.ok(languages);
     }
 }

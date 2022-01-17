@@ -8,6 +8,7 @@ import eu.senla.library.converter.CredentialConverter;
 import eu.senla.library.converter.RoleConverter;
 import eu.senla.library.converter.UserConverter;
 import eu.senla.library.converter.UserConverterWithBookWithRelationIdsDto;
+import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.dto.BookWithRelationIdsDto;
 import eu.senla.library.dto.UserDto;
 import eu.senla.library.dto.UserWithRelationIdsDto;
@@ -19,10 +20,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -52,6 +51,13 @@ public class UserServiceImpl implements UserService {
     public UserDto getById(Long id) throws NotFoundException {
         User response = userRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return userConverter.convert(response);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<UserDto> getAll(int start,int max) {
+        List<User> users = userRepository.findAll(start,max);
+        return userConverter.convert(users);
     }
 
     @Transactional(readOnly = true)
@@ -119,5 +125,31 @@ public class UserServiceImpl implements UserService {
         credential.setPassword(passwordEncoder.encode(userWithRelationIdsDto.getCredential().getPassword()));
         user.setCredential(credential);
         return user;
+    }
+
+    @Transactional
+    @Override
+    public List<UserDto> getByFiler(String firstName, String surname,String telephone) {
+
+        UserDto filter = UserDto.builder().firstName(firstName).surname(surname).telephone(telephone).build();
+        List<User> users = userRepository.findAll();
+        List<UserDto> userProtocols = userConverter.convert(users);
+        List<Function<UserDto, String>> comparingFields = Arrays.asList(UserDto::getFirstName,
+                UserDto::getSurname,UserDto::getTelephone);
+        return filter(userProtocols, filter, comparingFields);
+
+    }
+
+    private List<UserDto> filter(List<UserDto> allProtocols, UserDto filter,
+                                   List<Function<UserDto, String>> comparingFields) {
+        return allProtocols.stream()
+                .filter(protocol -> test(protocol, filter, comparingFields))
+                .collect(Collectors.toList());
+    }
+
+    private boolean test(UserDto protocol, UserDto filter,
+                         List<Function<UserDto, String>> comparingFields) {
+        return comparingFields.stream()
+                .allMatch(func -> func.apply(protocol).contains(func.apply(filter)));
     }
 }

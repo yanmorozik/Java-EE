@@ -35,6 +35,20 @@ public abstract class AbstractRepositoryImpl<T> implements AbstractRepository<T>
     }
 
     @Override
+    public List<T> findAll(int start, int max) {
+        EntityGraph entityGraph = entityManager.getEntityGraph(getNameGraph());
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
+        Root<T> root = criteriaQuery.from(entityClass);
+        criteriaQuery.select(root);
+        return entityManager.createQuery(criteriaQuery)
+                .setHint("javax.persistence.fetchgraph", entityGraph)
+                .setFirstResult(start-1)
+                .setMaxResults(max)
+                .getResultList();
+    }
+
+    @Override
     public List<T> findAll() {
         EntityGraph entityGraph = entityManager.getEntityGraph(getNameGraph());
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
@@ -56,7 +70,6 @@ public abstract class AbstractRepositoryImpl<T> implements AbstractRepository<T>
         T removeEntity = entityManager.find(entityClass, id);
         entityManager.remove(removeEntity);
     }
-
 
     protected abstract String getNameGraph();
 }

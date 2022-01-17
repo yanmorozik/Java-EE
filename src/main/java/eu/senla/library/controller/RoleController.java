@@ -31,6 +31,14 @@ public class RoleController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/pagination")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<RoleDto>> getAll(@RequestParam(defaultValue = "1") int start,
+                                                @RequestParam(defaultValue = "3") int max) {
+        List<RoleDto> roles = roleService.getAll(start,max);
+        return ResponseEntity.ok(roles);
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<RoleDto>> getAll() {

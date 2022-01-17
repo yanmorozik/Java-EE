@@ -4,16 +4,12 @@ import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +34,14 @@ public class AuthorController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/pagination")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<AuthorDto>> getAll(@RequestParam(defaultValue = "1") int start,
+                                                  @RequestParam(defaultValue = "3") int max) {
+        List<AuthorDto> authors = authorService.getAll(start, max);
+        return ResponseEntity.ok(authors);
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<AuthorDto>> getAll() {
@@ -47,7 +51,7 @@ public class AuthorController {
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<AuthorDto> update(@RequestBody AuthorDto authorDto){
+    public ResponseEntity<AuthorDto> update(@RequestBody AuthorDto authorDto) {
         AuthorDto dto = authorService.update(authorDto);
         return ResponseEntity.ok(dto);
     }
@@ -57,5 +61,13 @@ public class AuthorController {
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         authorService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filtration")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<AuthorDto>> getByFiler(@RequestParam(defaultValue = "") String firstName,
+                                                      @RequestParam(defaultValue = "") String surname) {
+        List<AuthorDto> authors = authorService.getByFiler(firstName, surname);
+        return ResponseEntity.ok(authors);
     }
 }

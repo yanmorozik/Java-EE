@@ -24,8 +24,8 @@ public class MyContextConfiguration {
 
     @Bean
     public ModelMapper modelMapper() {
- //       ModelMapper modelMapper = new ModelMapper();
-   //     modelMapper.getConfiguration().setSkipNullEnabled(true);
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setSkipNullEnabled(true);
         return new ModelMapper();
     }
 }

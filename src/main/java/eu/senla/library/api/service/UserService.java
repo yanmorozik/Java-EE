@@ -1,5 +1,6 @@
 package eu.senla.library.api.service;
 
+import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.dto.UserDto;
 import eu.senla.library.dto.UserWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
@@ -12,6 +13,8 @@ public interface UserService {
 
     UserDto getById(Long id) throws NotFoundException;
 
+    List<UserDto> getAll(int start, int max);
+
     List<UserDto> getAll();
 
     UserDto update(UserWithRelationIdsDto userWithRelationIdsDto);
@@ -21,4 +24,7 @@ public interface UserService {
     UserDto register(UserDto user);
 
     UserDto findByUsername(String name);
+
+    List<UserDto> getByFiler(String firstName, String surname, String telephone);
+
 }

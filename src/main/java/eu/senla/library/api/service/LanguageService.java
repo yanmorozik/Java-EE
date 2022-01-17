@@ -1,5 +1,6 @@
 package eu.senla.library.api.service;
 
+import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.dto.LanguageDto;
 import eu.senla.library.exception.NotFoundException;
 
@@ -11,9 +12,14 @@ public interface LanguageService {
 
     LanguageDto getById(Long id) throws NotFoundException;
 
+    List<LanguageDto> getAll(int start,int max);
+
     List<LanguageDto> getAll();
 
     LanguageDto update(LanguageDto languageDto);
 
     void deleteById(Long id);
+
+    List<LanguageDto> getByFiler(String nameLanguage);
+
 }

@@ -11,26 +11,30 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookDto {
-
+public class BookDtoFilter {
     private Long id;
 
     private String name;
 
     private String description;
 
-    private Integer numberOfPage;
+    private Integer minNumberOfPage;
 
-    private Integer yearOfPublishing;
+    private Integer maxNumberOfPage;
 
-    private Integer numberOfCopies;
+    private Integer minYearOfPublishing;
 
-    private List<AuthorDto> authors;
+    private Integer maxYearOfPublishing;
+
+    private Integer minNumberOfCopies;
+
+    private Integer maxNumberOfCopies;
+
+    private AuthorDto author;
 
     private GenreDto genre;
 
-    private List<PublisherDto> publishers;
+    private PublisherDto publisher;
 
     private LanguageDto language;
-
 }

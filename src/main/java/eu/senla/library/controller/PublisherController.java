@@ -1,6 +1,7 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.PublisherService;
+import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.dto.PublisherDto;
 import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +32,14 @@ public class PublisherController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/pagination")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<PublisherDto>> getAll(@RequestParam(defaultValue = "1") int start,
+                                                     @RequestParam(defaultValue = "3") int max) {
+        List<PublisherDto> publishers = publisherService.getAll(start,max);
+        return ResponseEntity.ok(publishers);
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<PublisherDto>> getAll() {
@@ -50,5 +59,13 @@ public class PublisherController {
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         publisherService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filtration")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<PublisherDto>> getByFiler(@RequestParam(defaultValue = "") String namePublisher,
+                                                      @RequestParam(defaultValue = "") String telephone) {
+        List<PublisherDto> publishers = publisherService.getByFiler(namePublisher, telephone);
+        return ResponseEntity.ok(publishers);
     }
 }

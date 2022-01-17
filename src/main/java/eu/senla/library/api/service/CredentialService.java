@@ -10,6 +10,8 @@ public interface CredentialService {
 
     CredentialDto getById(Long id) throws NotFoundException;
 
+    List<CredentialDto> getAll(int start,int max);
+
     List<CredentialDto> getAll();
 
     CredentialDto update(CredentialDto credentialDto);

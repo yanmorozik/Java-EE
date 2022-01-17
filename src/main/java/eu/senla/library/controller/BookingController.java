@@ -1,6 +1,7 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.BookingService;
+import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.dto.BookingDto;
 import eu.senla.library.dto.BookingWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
@@ -32,6 +33,14 @@ public class BookingController {
         return ResponseEntity.ok(dto);
     }
 
+    @GetMapping("/pagination")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<BookingDto>> getAll(@RequestParam(defaultValue = "1") int start,
+                                                   @RequestParam(defaultValue = "3") int max) {
+        List<BookingDto> bookings = bookingService.getAll(start, max);
+        return ResponseEntity.ok(bookings);
+    }
+
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<BookingDto>> getAll() {
@@ -51,5 +60,30 @@ public class BookingController {
     public ResponseEntity<Void> deleteById(@PathVariable Long id) {
         bookingService.deleteById(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/filtration")
+    @PreAuthorize("hasRole('ROLE_USER')")
+    public ResponseEntity<List<BookingDto>> getByFiler(@RequestParam(defaultValue = "1") String startYear,
+                                                       @RequestParam(defaultValue = "1") String startMonth,
+                                                       @RequestParam(defaultValue = "1") String startDay,
+                                                       @RequestParam(defaultValue = "1") String startHour,
+                                                       @RequestParam(defaultValue = "1") String startMinute,
+                                                       @RequestParam(defaultValue = "2099") String endYear,
+                                                       @RequestParam(defaultValue = "12") String endMonth,
+                                                       @RequestParam(defaultValue = "31") String endDay,
+                                                       @RequestParam(defaultValue = "23") String endHour,
+                                                       @RequestParam(defaultValue = "59") String endMinute) {
+        List<BookingDto> bookings = bookingService.getByFiler(startYear,
+                startMonth,
+                startDay,
+                startHour,
+                startMinute,
+                endYear,
+                endMonth,
+                endDay,
+                endHour,
+                endMinute);
+        return ResponseEntity.ok(bookings);
     }
 }

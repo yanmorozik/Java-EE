@@ -11,6 +11,8 @@ public interface RoleService {
 
     RoleDto getById(Long id) throws NotFoundException;
 
+    List<RoleDto> getAll(int start,int max);
+
     List<RoleDto> getAll();
 
     RoleDto update(RoleDto roleDto);
