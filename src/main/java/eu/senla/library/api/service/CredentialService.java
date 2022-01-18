@@ -6,13 +6,11 @@ import eu.senla.library.exception.NotFoundException;
 import java.util.List;
 
 public interface CredentialService {
-    CredentialDto create(CredentialDto  credentialDto);
+    CredentialDto create(CredentialDto credentialDto);
 
     CredentialDto getById(Long id) throws NotFoundException;
 
-    List<CredentialDto> getAll(int start,int max);
-
-    List<CredentialDto> getAll();
+    List<CredentialDto> getAll(int start, int max);
 
     CredentialDto update(CredentialDto credentialDto);
 

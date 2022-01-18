@@ -4,12 +4,17 @@ import eu.senla.library.api.service.AuthorService;
 import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -34,18 +39,11 @@ public class AuthorController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/pagination")
+    @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<AuthorDto>> getAll(@RequestParam(defaultValue = "1") int start,
                                                   @RequestParam(defaultValue = "3") int max) {
         List<AuthorDto> authors = authorService.getAll(start, max);
-        return ResponseEntity.ok(authors);
-    }
-
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<AuthorDto>> getAll() {
-        List<AuthorDto> authors = authorService.getAll();
         return ResponseEntity.ok(authors);
     }
 
@@ -66,8 +64,10 @@ public class AuthorController {
     @GetMapping("/filtration")
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<AuthorDto>> getByFiler(@RequestParam(defaultValue = "") String firstName,
-                                                      @RequestParam(defaultValue = "") String surname) {
-        List<AuthorDto> authors = authorService.getByFiler(firstName, surname);
+                                                      @RequestParam(defaultValue = "") String surname,
+                                                      @RequestParam(defaultValue = "1") int start,
+                                                      @RequestParam(defaultValue = "3") int max) {
+        List<AuthorDto> authors = authorService.getByFiler(firstName, surname, start, max);
         return ResponseEntity.ok(authors);
     }
 }

@@ -15,11 +15,11 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 @Configuration
 @RequiredArgsConstructor
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(securedEnabled = true,prePostEnabled = true)
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final JwtConfigurer jwtConfigurer;
-    private final AccessDeniedHandler accessDeniedException;
+    //private final AccessDeniedHandler accessDeniedException;
 
     private static final String ADMIN_ENDPOINT = "/admin/**";
     private static final String LOGIN_ENDPOINT = "/auth/login";
@@ -35,9 +35,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .httpBasic().disable()
                 .csrf().disable()
-                .exceptionHandling()
-                .accessDeniedHandler(accessDeniedException)
-                .and()
+//                .exceptionHandling()
+//                .accessDeniedHandler(accessDeniedException)
+//                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()

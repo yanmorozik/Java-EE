@@ -23,7 +23,7 @@ public class AuthorRepositoryTest extends BaseRepositoryTest {
     @Transactional
     public void shouldCreateAuthor() {
         authorRepository.add(Author.builder().firstName("name").surname("surname").build());
-        List<Author> all = authorRepository.findAll();
+        List<Author> all = authorRepository.findAll(0,1);
         assertEquals("name", all.get(all.size() - 1).getFirstName());
     }
 
@@ -38,7 +38,7 @@ public class AuthorRepositoryTest extends BaseRepositoryTest {
     @Transactional
     public void shouldReturnAllAuthors() {
         authorRepository.add(Author.builder().firstName("name").surname("surname").build());
-        List<Author> all = authorRepository.findAll();
+        List<Author> all = authorRepository.findAll(0,1);
         assertEquals(1, all.size());
         assertEquals("name", all.get(0).getFirstName());
     }

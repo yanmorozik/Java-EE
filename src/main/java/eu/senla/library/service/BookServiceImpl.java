@@ -1,20 +1,25 @@
 package eu.senla.library.service;
 
-import eu.senla.library.api.repository.*;
+import eu.senla.library.api.repository.AuthorRepository;
+import eu.senla.library.api.repository.BookRepository;
+import eu.senla.library.api.repository.GenreRepository;
+import eu.senla.library.api.repository.LanguageRepository;
+import eu.senla.library.api.repository.PublisherRepository;
 import eu.senla.library.api.service.BookService;
 import eu.senla.library.converter.BookConverterWithBookDto;
 import eu.senla.library.converter.BookConverterWithBookWithRelationIdsDto;
-import eu.senla.library.converter.BookFilterConverter;
-import eu.senla.library.dto.*;
+import eu.senla.library.dto.BookDto;
+import eu.senla.library.dto.BookWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
-import eu.senla.library.model.*;
+import eu.senla.library.model.Author;
+import eu.senla.library.model.Book;
+import eu.senla.library.model.Genre;
+import eu.senla.library.model.Language;
+import eu.senla.library.model.Publisher;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -54,13 +59,6 @@ public class BookServiceImpl implements BookService {
         return bookConverter.convert(books);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<BookDto> getAll() {
-        List<Book> books = bookRepository.findAll();
-        return bookConverter.convert(books);
-    }
-
     @Transactional
     @Override
     public BookDto update(BookWithRelationIdsDto bookWithRelationIdsDto) {
@@ -74,6 +72,7 @@ public class BookServiceImpl implements BookService {
         bookRepository.deleteById(id);
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<BookDto> getByFiler(String name,
                                     String description,
@@ -82,10 +81,12 @@ public class BookServiceImpl implements BookService {
                                     String minYearOfPublishing,
                                     String maxYearOfPublishing,
                                     String minNumberOfCopies,
-                                    String maxNumberOfCopies
+                                    String maxNumberOfCopies,
+                                    int start,
+                                    int max
                                     ) {
         BookDto filter = BookDto.builder().name(name).description(description).build();
-        List<Book> books = bookRepository.findAll();
+        List<Book> books = bookRepository.findAll(start,max);
         List<BookDto> booksProtocols = bookConverter.convert(books);
         booksProtocols = booksProtocols.stream().filter(b1 -> b1.getNumberOfPage() >= Integer.parseInt(minNumberOfPage))
                 .filter(b2 -> b2.getNumberOfPage() <= Integer.parseInt(maxNumberOfPage))
@@ -101,20 +102,20 @@ public class BookServiceImpl implements BookService {
 
     }
 
-    public static List<BookDto> filter(List<BookDto> allProtocols, BookDto filter,
+    private List<BookDto> filter(List<BookDto> allProtocols, BookDto filter,
                                              List<Function<BookDto, String>> comparingFields) {
         return allProtocols.stream()
                 .filter(protocol -> test(protocol, filter, comparingFields))
                 .collect(Collectors.toList());
     }
 
-    private static boolean test(BookDto protocol, BookDto filter,
+    private boolean test(BookDto protocol, BookDto filter,
                                 List<Function<BookDto, String>> comparingFields) {
         return comparingFields.stream()
                 .allMatch(func -> func.apply(protocol).contains(func.apply(filter)));
     }
 
-    public Book reassignment(BookWithRelationIdsDto bookWithRelationIdsDto) {
+    private Book reassignment(BookWithRelationIdsDto bookWithRelationIdsDto) {
         final Book book = bookWithRelationConverter.convert(bookWithRelationIdsDto);
 
         Set<Author> authors = bookWithRelationIdsDto.getAuthorIds()

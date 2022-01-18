@@ -1,15 +1,11 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.BookService;
-import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.dto.BookDto;
-import eu.senla.library.dto.BookDtoFilter;
 import eu.senla.library.dto.BookWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
-import eu.senla.library.model.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,24 +26,17 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<BookDto> getById(@PathVariable Long id) throws NotFoundException {
         BookDto dto = bookService.getById(id);
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/pagination")
+    @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<BookDto>> getAll(@RequestParam(defaultValue = "1") int start,
                                                 @RequestParam(defaultValue = "3") int max) {
         List<BookDto> books = bookService.getAll(start, max);
-        return ResponseEntity.ok(books);
-    }
-
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<BookDto>> getAll() {
-        List<BookDto> books = bookService.getAll();
         return ResponseEntity.ok(books);
     }
 
@@ -74,7 +63,9 @@ public class BookController {
                                                     @RequestParam(defaultValue = "0") String minYearOfPublishing,
                                                     @RequestParam(defaultValue = "9999999") String maxYearOfPublishing,
                                                     @RequestParam(defaultValue = "0") String minNumberOfCopies,
-                                                    @RequestParam(defaultValue = "9999999") String maxNumberOfCopies) {
+                                                    @RequestParam(defaultValue = "9999999") String maxNumberOfCopies,
+                                                    @RequestParam(defaultValue = "1") int start,
+                                                    @RequestParam(defaultValue = "3") int max) {
         List<BookDto> books = bookService.getByFiler(
                 name,
                 description,
@@ -83,7 +74,9 @@ public class BookController {
                 minYearOfPublishing,
                 maxYearOfPublishing,
                 minNumberOfCopies,
-                maxNumberOfCopies);
+                maxNumberOfCopies,
+                start,
+                max);
         return ResponseEntity.ok(books);
     }
 

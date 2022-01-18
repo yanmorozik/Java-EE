@@ -1,8 +1,6 @@
 package eu.senla.library.repository;
 
 import eu.senla.library.api.repository.AbstractRepository;
-import eu.senla.library.model.Book;
-import eu.senla.library.model.Genre;
 
 import javax.persistence.EntityGraph;
 import javax.persistence.EntityManager;
@@ -43,20 +41,8 @@ public abstract class AbstractRepositoryImpl<T> implements AbstractRepository<T>
         criteriaQuery.select(root);
         return entityManager.createQuery(criteriaQuery)
                 .setHint("javax.persistence.fetchgraph", entityGraph)
-                .setFirstResult(start-1)
+                .setFirstResult(start - 1)
                 .setMaxResults(max)
-                .getResultList();
-    }
-
-    @Override
-    public List<T> findAll() {
-        EntityGraph entityGraph = entityManager.getEntityGraph(getNameGraph());
-        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(entityClass);
-        Root<T> root = criteriaQuery.from(entityClass);
-        criteriaQuery.select(root);
-        return entityManager.createQuery(criteriaQuery)
-                .setHint("javax.persistence.fetchgraph", entityGraph)
                 .getResultList();
     }
 

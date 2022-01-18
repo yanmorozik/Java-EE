@@ -3,8 +3,6 @@ package eu.senla.library.repository;
 import eu.senla.library.api.repository.CredentialRepository;
 import eu.senla.library.model.Credential;
 import eu.senla.library.model.Credential_;
-import eu.senla.library.model.Role;
-import eu.senla.library.model.Role_;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;

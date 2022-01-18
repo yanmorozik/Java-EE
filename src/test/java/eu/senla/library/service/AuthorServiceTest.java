@@ -72,10 +72,10 @@ public class AuthorServiceTest {
         doReturn(authorDto).when(authorConverter).convert((Author) any());
         doReturn(authorDtos).when(authorConverter).convert(Collections.singletonList(any()));
 
-        final List<AuthorDto> authors = authorService.getAll();
+        final List<AuthorDto> authors = authorService.getAll(0,1);
 
         assertEquals(authorDtos, authors);
-        verify(authorRepository, times(1)).findAll();
+        verify(authorRepository, times(1)).findAll(0,1);
     }
 
     @Test

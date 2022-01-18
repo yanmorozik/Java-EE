@@ -5,22 +5,23 @@ import eu.senla.library.api.repository.RoleRepository;
 import eu.senla.library.api.repository.UserRepository;
 import eu.senla.library.api.service.UserService;
 import eu.senla.library.converter.CredentialConverter;
-import eu.senla.library.converter.RoleConverter;
 import eu.senla.library.converter.UserConverter;
 import eu.senla.library.converter.UserConverterWithBookWithRelationIdsDto;
-import eu.senla.library.dto.AuthorDto;
-import eu.senla.library.dto.BookWithRelationIdsDto;
 import eu.senla.library.dto.UserDto;
 import eu.senla.library.dto.UserWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
-import eu.senla.library.model.*;
+import eu.senla.library.model.Credential;
+import eu.senla.library.model.Role;
+import eu.senla.library.model.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -46,15 +47,8 @@ public class UserServiceImpl implements UserService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<UserDto> getAll(int start,int max) {
-        List<User> users = userRepository.findAll(start,max);
-        return userConverter.convert(users);
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<UserDto> getAll() {
-        List<User> users = userRepository.findAll();
+    public List<UserDto> getAll(int start, int max) {
+        List<User> users = userRepository.findAll(start, max);
         return userConverter.convert(users);
     }
 
@@ -115,21 +109,21 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
-    public List<UserDto> getByFiler(String firstName, String surname,String telephone) {
+    public List<UserDto> getByFiler(String firstName, String surname, String telephone, int start, int max) {
 
         UserDto filter = UserDto.builder().firstName(firstName).surname(surname).telephone(telephone).build();
-        List<User> users = userRepository.findAll();
+        List<User> users = userRepository.findAll(start, max);
         List<UserDto> userProtocols = userConverter.convert(users);
         List<Function<UserDto, String>> comparingFields = Arrays.asList(UserDto::getFirstName,
-                UserDto::getSurname,UserDto::getTelephone);
+                UserDto::getSurname, UserDto::getTelephone);
         return filter(userProtocols, filter, comparingFields);
 
     }
 
     private List<UserDto> filter(List<UserDto> allProtocols, UserDto filter,
-                                   List<Function<UserDto, String>> comparingFields) {
+                                 List<Function<UserDto, String>> comparingFields) {
         return allProtocols.stream()
                 .filter(protocol -> test(protocol, filter, comparingFields))
                 .collect(Collectors.toList());

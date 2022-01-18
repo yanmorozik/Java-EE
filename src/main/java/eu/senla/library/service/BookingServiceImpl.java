@@ -6,7 +6,6 @@ import eu.senla.library.api.repository.UserRepository;
 import eu.senla.library.api.service.BookingService;
 import eu.senla.library.converter.BookingConverter;
 import eu.senla.library.converter.BookingConverterWithBookWithRelationIdsDto;
-import eu.senla.library.dto.BookDto;
 import eu.senla.library.dto.BookingDto;
 import eu.senla.library.dto.BookingWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
@@ -18,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -54,13 +51,6 @@ public class BookingServiceImpl implements BookingService {
         return bookingConverter.convert(bookings);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<BookingDto> getAll() {
-        List<Booking> bookings = bookingRepository.findAll();
-        return bookingConverter.convert(bookings);
-    }
-
     @Transactional
     @Override
     public BookingDto update(BookingWithRelationIdsDto bookingWithRelationIdsDto) {
@@ -88,6 +78,7 @@ public class BookingServiceImpl implements BookingService {
         return booking;
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<BookingDto> getByFiler(String startYear,
                                        String startMonth,
@@ -98,7 +89,9 @@ public class BookingServiceImpl implements BookingService {
                                        String endMonth,
                                        String endDay,
                                        String endHour,
-                                       String endMinute) {
+                                       String endMinute,
+                                       int start,
+                                       int max) {
         LocalDateTime startDate = LocalDateTime.of(Integer.parseInt(startYear),
                 Integer.parseInt(startMonth),
                 Integer.parseInt(startDay),
@@ -111,7 +104,7 @@ public class BookingServiceImpl implements BookingService {
                 Integer.parseInt(endHour),
                 Integer.parseInt(endMinute));
 
-        List<Booking> bookings = bookingRepository.findAll();
+        List<Booking> bookings = bookingRepository.findAll(start,max);
 
         List<BookingDto> bookingProtocols = bookingConverter.convert(bookings);
 
@@ -121,5 +114,4 @@ public class BookingServiceImpl implements BookingService {
 
         return bookingProtocols;
     }
-
 }

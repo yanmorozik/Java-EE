@@ -3,10 +3,8 @@ package eu.senla.library.service;
 import eu.senla.library.api.repository.PublisherRepository;
 import eu.senla.library.api.service.PublisherService;
 import eu.senla.library.converter.PublisherConverter;
-import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.dto.PublisherDto;
 import eu.senla.library.exception.NotFoundException;
-import eu.senla.library.model.Author;
 import eu.senla.library.model.Publisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,13 +44,6 @@ public class PublisherServiceImpl implements PublisherService {
         return publisherConverter.convert(publishers);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<PublisherDto> getAll() {
-        List<Publisher> publishers = publisherRepository.findAll();
-        return publisherConverter.convert(publishers);
-    }
-
     @Transactional
     @Override
     public PublisherDto update(PublisherDto publisherDto) {
@@ -67,12 +58,12 @@ public class PublisherServiceImpl implements PublisherService {
         publisherRepository.deleteById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
-    public List<PublisherDto> getByFiler(String namePublisher, String telephone) {
+    public List<PublisherDto> getByFiler(String namePublisher, String telephone,int start, int max) {
 
         PublisherDto filter = PublisherDto.builder().namePublisher(namePublisher).telephone(telephone).build();
-        List<Publisher> publishers = publisherRepository.findAll();
+        List<Publisher> publishers = publisherRepository.findAll(start,max);
         List<PublisherDto> publisherProtocols = publisherConverter.convert(publishers);
         List<Function<PublisherDto, String>> comparingFields = Arrays.asList(PublisherDto::getNamePublisher,
                 PublisherDto::getTelephone);
@@ -80,14 +71,14 @@ public class PublisherServiceImpl implements PublisherService {
 
     }
 
-    public static List<PublisherDto> filter(List<PublisherDto> allProtocols, PublisherDto filter,
+    private List<PublisherDto> filter(List<PublisherDto> allProtocols, PublisherDto filter,
                                          List<Function<PublisherDto, String>> comparingFields) {
         return allProtocols.stream()
                 .filter(protocol -> test(protocol, filter, comparingFields))
                 .collect(Collectors.toList());
     }
 
-    private static boolean test(PublisherDto protocol, PublisherDto filter,
+    private boolean test(PublisherDto protocol, PublisherDto filter,
                                 List<Function<PublisherDto, String>> comparingFields) {
         return comparingFields.stream()
                 .allMatch(func -> func.apply(protocol).contains(func.apply(filter)));

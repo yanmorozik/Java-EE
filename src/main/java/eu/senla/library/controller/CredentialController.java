@@ -3,12 +3,18 @@ package eu.senla.library.controller;
 import eu.senla.library.api.service.CredentialService;
 import eu.senla.library.dto.CredentialDto;
 import eu.senla.library.exception.NotFoundException;
-import eu.senla.library.model.Credential;
-import liquibase.pro.packaged.V;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -33,18 +39,11 @@ public class CredentialController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/pagination")
-    @PreAuthorize("hasRole('ROLE_USER')")
+    @GetMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public ResponseEntity<List<CredentialDto>> getAll(@RequestParam(defaultValue = "1") int start,
                                                       @RequestParam(defaultValue = "3") int max) {
         List<CredentialDto> credentials= credentialService.getAll(start,max);
-        return ResponseEntity.ok(credentials);
-    }
-
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<CredentialDto>> getAll() {
-        List<CredentialDto> credentials= credentialService.getAll();
         return ResponseEntity.ok(credentials);
     }
 

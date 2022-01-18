@@ -1,14 +1,20 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.LanguageService;
-import eu.senla.library.dto.GenreDto;
 import eu.senla.library.dto.LanguageDto;
 import eu.senla.library.exception.NotFoundException;
-import liquibase.pro.packaged.V;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -33,18 +39,11 @@ public class LanguageController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/pagination")
+    @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<LanguageDto>> getAll(@RequestParam(defaultValue = "1") int start,
                                                     @RequestParam(defaultValue = "3") int max) {
         List<LanguageDto> languages=languageService.getAll(start,max);
-        return ResponseEntity.ok(languages);
-    }
-
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<LanguageDto>> getAll() {
-        List<LanguageDto> languages=languageService.getAll();
         return ResponseEntity.ok(languages);
     }
 
@@ -64,8 +63,10 @@ public class LanguageController {
 
     @GetMapping("/filtration")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<LanguageDto>> getByFiler(@RequestParam(defaultValue = "") String nameLanguage) {
-        List<LanguageDto> languages = languageService.getByFiler(nameLanguage);
+    public ResponseEntity<List<LanguageDto>> getByFiler(@RequestParam(defaultValue = "") String nameLanguage,
+                                                        @RequestParam(defaultValue = "1") int start,
+                                                        @RequestParam(defaultValue = "3") int max) {
+        List<LanguageDto> languages = languageService.getByFiler(nameLanguage,start,max);
         return ResponseEntity.ok(languages);
     }
 }

@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class CredentialConverter extends Converter<Credential,CredentialDto> {
+public class CredentialConverter extends Converter<Credential, CredentialDto> {
     public CredentialConverter(ModelMapper modelMapper) {
         super(modelMapper);
     }

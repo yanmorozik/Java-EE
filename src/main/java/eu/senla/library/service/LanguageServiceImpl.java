@@ -3,10 +3,8 @@ package eu.senla.library.service;
 import eu.senla.library.api.repository.LanguageRepository;
 import eu.senla.library.api.service.LanguageService;
 import eu.senla.library.converter.LanguageConverter;
-import eu.senla.library.dto.GenreDto;
 import eu.senla.library.dto.LanguageDto;
 import eu.senla.library.exception.NotFoundException;
-import eu.senla.library.model.Genre;
 import eu.senla.library.model.Language;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -46,13 +44,6 @@ public class LanguageServiceImpl implements LanguageService {
         return languageConverter.convert(languages);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<LanguageDto> getAll() {
-        List<Language> languages = languageRepository.findAll();
-        return languageConverter.convert(languages);
-    }
-
     @Transactional
     @Override
     public LanguageDto update(LanguageDto languageDto) {
@@ -67,26 +58,26 @@ public class LanguageServiceImpl implements LanguageService {
         languageRepository.deleteById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
-    public List<LanguageDto> getByFiler(String nameLanguage) {
+    public List<LanguageDto> getByFiler(String nameLanguage,int start, int max) {
 
         LanguageDto filter = LanguageDto.builder().nameLanguage(nameLanguage).build();
-        List<Language> languages = languageRepository.findAll();
+        List<Language> languages = languageRepository.findAll(start, max);
         List<LanguageDto> languagesProtocols = languageConverter.convert(languages);
         List<Function<LanguageDto, String>> comparingFields = Collections.singletonList(LanguageDto::getNameLanguage);
         return filter(languagesProtocols, filter, comparingFields);
 
     }
 
-    public static List<LanguageDto> filter(List<LanguageDto> allProtocols, LanguageDto filter,
+    private List<LanguageDto> filter(List<LanguageDto> allProtocols, LanguageDto filter,
                                         List<Function<LanguageDto, String>> comparingFields) {
         return allProtocols.stream()
                 .filter(protocol -> test(protocol, filter, comparingFields))
                 .collect(Collectors.toList());
     }
 
-    private static boolean test(LanguageDto protocol, LanguageDto filter,
+    private boolean test(LanguageDto protocol, LanguageDto filter,
                                 List<Function<LanguageDto, String>> comparingFields) {
         return comparingFields.stream()
                 .allMatch(func -> func.apply(protocol).contains(func.apply(filter)));

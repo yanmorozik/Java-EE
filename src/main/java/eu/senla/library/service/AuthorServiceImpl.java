@@ -44,13 +44,6 @@ public class AuthorServiceImpl implements AuthorService {
         return authorConverter.convert(authors);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<AuthorDto> getAll() {
-        List<Author> authors = authorRepository.findAll();
-        return authorConverter.convert(authors);
-    }
-
     @Transactional
     @Override
     public AuthorDto update(AuthorDto authorDto) {
@@ -65,12 +58,12 @@ public class AuthorServiceImpl implements AuthorService {
         authorRepository.deleteById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
-    public List<AuthorDto> getByFiler(String firstName, String surname) {
+    public List<AuthorDto> getByFiler(String firstName, String surname,int start, int max) {
 
         AuthorDto filter = AuthorDto.builder().firstName(firstName).surname(surname).build();
-        List<Author> authors = authorRepository.findAll();
+        List<Author> authors = authorRepository.findAll(start,max);
         List<AuthorDto> authorsProtocols = authorConverter.convert(authors);
         List<Function<AuthorDto, String>> comparingFields = Arrays.asList(AuthorDto::getFirstName,
                 AuthorDto::getSurname);

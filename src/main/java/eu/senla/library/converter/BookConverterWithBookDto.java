@@ -5,10 +5,8 @@ import eu.senla.library.model.Book;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Component
-public class BookConverterWithBookDto extends Converter<Book,BookDto> {
+public class BookConverterWithBookDto extends Converter<Book, BookDto> {
     public BookConverterWithBookDto(ModelMapper modelMapper) {
         super(modelMapper);
     }

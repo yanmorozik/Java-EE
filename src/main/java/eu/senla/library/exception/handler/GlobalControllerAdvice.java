@@ -23,7 +23,7 @@ public class GlobalControllerAdvice {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> exception(AccessDeniedException e) {
-        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.FORBIDDEN);//??? потому что ошибка генерируется на русском языке и postman не может её перевести на английский
+        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.UNAUTHORIZED);//??? потому что ошибка генерируется на русском языке и postman не может её перевести на английский
     }
 
     @ExceptionHandler(AuthenticationException.class)

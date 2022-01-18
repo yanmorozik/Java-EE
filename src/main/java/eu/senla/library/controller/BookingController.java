@@ -1,14 +1,21 @@
 package eu.senla.library.controller;
 
 import eu.senla.library.api.service.BookingService;
-import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.dto.BookingDto;
 import eu.senla.library.dto.BookingWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -33,18 +40,11 @@ public class BookingController {
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping("/pagination")
+    @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
     public ResponseEntity<List<BookingDto>> getAll(@RequestParam(defaultValue = "1") int start,
                                                    @RequestParam(defaultValue = "3") int max) {
         List<BookingDto> bookings = bookingService.getAll(start, max);
-        return ResponseEntity.ok(bookings);
-    }
-
-    @GetMapping
-    @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<BookingDto>> getAll() {
-        List<BookingDto> bookings = bookingService.getAll();
         return ResponseEntity.ok(bookings);
     }
 
@@ -73,7 +73,9 @@ public class BookingController {
                                                        @RequestParam(defaultValue = "12") String endMonth,
                                                        @RequestParam(defaultValue = "31") String endDay,
                                                        @RequestParam(defaultValue = "23") String endHour,
-                                                       @RequestParam(defaultValue = "59") String endMinute) {
+                                                       @RequestParam(defaultValue = "59") String endMinute,
+                                                       @RequestParam(defaultValue = "1") int start,
+                                                       @RequestParam(defaultValue = "3") int max) {
         List<BookingDto> bookings = bookingService.getByFiler(startYear,
                 startMonth,
                 startDay,
@@ -83,7 +85,9 @@ public class BookingController {
                 endMonth,
                 endDay,
                 endHour,
-                endMinute);
+                endMinute,
+                start,
+                max);
         return ResponseEntity.ok(bookings);
     }
 }

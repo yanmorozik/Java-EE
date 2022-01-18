@@ -6,7 +6,12 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -23,9 +28,6 @@ public class Credential extends BaseEntity {
 
     @Column
     private String password;
-
-//    @Column
-//    private String passwordConfirm;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
     private User user;

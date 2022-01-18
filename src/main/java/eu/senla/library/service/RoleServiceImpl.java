@@ -41,13 +41,6 @@ public class RoleServiceImpl implements RoleService {
         return roleConverter.convert(roles);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<RoleDto> getAll() {
-        List<Role> roles = roleRepository.findAll();
-        return roleConverter.convert(roles);
-    }
-
     @Transactional
     @Override
     public RoleDto update(RoleDto roleDto) {

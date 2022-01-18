@@ -1,15 +1,11 @@
 package eu.senla.library.converter;
 
-import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.model.BaseEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.TypeToken;
-import org.springframework.stereotype.Component;
 
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor

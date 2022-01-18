@@ -1,16 +1,19 @@
 package eu.senla.library.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.*;
-
-import java.util.ArrayList;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 @Getter
@@ -21,33 +24,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @NamedEntityGraph(name = "bookEntityGraph",
-        includeAllAttributes = true
-        /* attributeNodes = {
-                 @NamedAttributeNode(value = "genre"),
-                 @NamedAttributeNode(value = "language"),
-                 @NamedAttributeNode(value = "authors"),
-                 @NamedAttributeNode(value = "publishers"),
-                 @NamedAttributeNode(value = "bookings"),
-         }, subgraphs = {
-        @NamedSubgraph(
-                name = "authorsSubgraph",
-                attributeNodes = {
-                        @NamedAttributeNode("authors")
-                }
-        ),
-        @NamedSubgraph(
-                name = "publishersSubgraph",
-                attributeNodes = {
-                        @NamedAttributeNode("publishers")
-                }
-        ),
-        @NamedSubgraph(
-                name = "bookingsSubgraph",
-                attributeNodes = {
-                        @NamedAttributeNode("bookings")
-                }
-        )
-}*/)
+        includeAllAttributes = true)
 public class Book extends BaseEntity {
     @Column(name = "name_book")
     private String nameBook;
@@ -98,7 +75,7 @@ public class Book extends BaseEntity {
     )
     private Set<Publisher> publishers = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book",cascade = {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = {
             CascadeType.DETACH,
             CascadeType.MERGE,
             CascadeType.REFRESH,

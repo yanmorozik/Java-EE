@@ -33,7 +33,7 @@ public class AuthorControllerTest extends WebApplicationTest {
                 .content(authorDto))
                 .andExpect(status().is2xxSuccessful());
 
-        String name = (authorRepository.findAll()).get(0).getFirstName();
+        String name = (authorRepository.findAll(0,1)).get(0).getFirstName();
 
         assertEquals(name, "Vanya");
     }

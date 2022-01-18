@@ -41,13 +41,6 @@ public class CredentialServiceImpl implements CredentialService {
         return credentialConverter.convert(credentials);
     }
 
-    @Transactional(readOnly = true)
-    @Override
-    public List<CredentialDto> getAll() {
-        List<Credential> credentials = credentialRepository.findAll();
-        return credentialConverter.convert(credentials);
-    }
-
     @Transactional
     @Override
     public CredentialDto update(CredentialDto credentialDto) {
