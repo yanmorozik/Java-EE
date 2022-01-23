@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.security.core.AuthenticationException;
 
+import java.nio.file.AccessDeniedException;
+
 @RestControllerAdvice
 public class GlobalControllerAdvice {
     private static final Logger logger = LoggerFactory.getLogger(

@@ -7,10 +7,12 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Root;
 
 @Repository
 public class CredentialRepositoryImpl extends AbstractRepositoryImpl<Credential> implements CredentialRepository {
+
     public CredentialRepositoryImpl() {
         super(Credential.class);
     }

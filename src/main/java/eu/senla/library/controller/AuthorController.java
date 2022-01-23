@@ -66,3 +66,7 @@ public class AuthorController {
         return authorService.getByFiler(firstName, surname, start, max);
     }
 }
+
+//  Post запрос dto
+//контроллер принимает credential
+//возвращает token
