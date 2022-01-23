@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.nio.file.AccessDeniedException;
+
 @RestControllerAdvice
 public class GlobalControllerAdvice {
     private static final Logger logger = LoggerFactory.getLogger(
@@ -17,6 +19,12 @@ public class GlobalControllerAdvice {
     public ResponseEntity<String> notFoundException(NotFoundException notFoundException) {
         logger.error(notFoundException.getLocalizedMessage(), notFoundException);
         return new ResponseEntity<>(notFoundException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<String> notFoundException(AccessDeniedException accessDeniedException){
+        logger.error(accessDeniedException.getLocalizedMessage(), accessDeniedException);
+        return new ResponseEntity<>(accessDeniedException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
