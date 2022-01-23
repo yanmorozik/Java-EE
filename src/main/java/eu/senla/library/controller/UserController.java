@@ -27,24 +27,21 @@ public class UserController {
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<UserDto> getById(@PathVariable Long id) throws NotFoundException {
-        UserDto dto = userService.getById(id);
-        return ResponseEntity.ok(dto);
+    public UserDto getById(@PathVariable Long id) throws NotFoundException {
+        return userService.getById(id);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<UserDto>> getAll(@RequestParam(defaultValue = "1") int start,
+    public List<UserDto> getAll(@RequestParam(defaultValue = "1") int start,
                                                 @RequestParam(defaultValue = "3") int max) {
-        List<UserDto> users = userService.getAll(start, max);
-        return ResponseEntity.ok(users);
+        return userService.getAll(start, max);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<UserDto> update(@RequestBody UserWithRelationIdsDto userWithRelationIdsDto) {
-        UserDto dto = userService.update(userWithRelationIdsDto);
-        return ResponseEntity.ok(dto);
+    public UserDto update(@RequestBody UserWithRelationIdsDto userWithRelationIdsDto) {
+        return userService.update(userWithRelationIdsDto);
     }
 
     @DeleteMapping("/{id}")
@@ -56,12 +53,11 @@ public class UserController {
 
     @GetMapping("/filtration")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<UserDto>> getByFiler(@RequestParam(defaultValue = "") String firstName,
+    public List<UserDto> getByFiler(@RequestParam(defaultValue = "") String firstName,
                                                     @RequestParam(defaultValue = "") String surname,
                                                     @RequestParam(defaultValue = "") String telephone,
                                                     @RequestParam(defaultValue = "1") int start,
                                                     @RequestParam(defaultValue = "3") int max) {
-        List<UserDto> users = userService.getByFiler(firstName, surname, telephone, start, max);
-        return ResponseEntity.ok(users);
+        return userService.getByFiler(firstName, surname, telephone, start, max);
     }
 }

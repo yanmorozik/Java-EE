@@ -27,31 +27,27 @@ public class CredentialController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<CredentialDto> create(@RequestBody CredentialDto credentialDto) {
-        CredentialDto dto = credentialService.create(credentialDto);
-        return ResponseEntity.ok(dto);
+    public CredentialDto create(@RequestBody CredentialDto credentialDto) {
+        return credentialService.create(credentialDto);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<CredentialDto> getById(@PathVariable Long id) throws NotFoundException {
-        CredentialDto dto = credentialService.getById(id);
-        return ResponseEntity.ok(dto);
+    public CredentialDto getById(@PathVariable Long id) throws NotFoundException {
+        return credentialService.getById(id);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<List<CredentialDto>> getAll(@RequestParam(defaultValue = "1") int start,
+    public List<CredentialDto> getAll(@RequestParam(defaultValue = "1") int start,
                                                       @RequestParam(defaultValue = "3") int max) {
-        List<CredentialDto> credentials= credentialService.getAll(start,max);
-        return ResponseEntity.ok(credentials);
+        return credentialService.getAll(start,max);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<CredentialDto> update(@RequestBody CredentialDto credentialDto) {
-        CredentialDto dto = credentialService.update(credentialDto);
-        return ResponseEntity.ok(dto);
+    public CredentialDto update(@RequestBody CredentialDto credentialDto) {
+        return credentialService.update(credentialDto);
     }
 
     @DeleteMapping("/{id}")

@@ -27,31 +27,27 @@ public class PublisherController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<PublisherDto> create(@RequestBody PublisherDto publisherDto) {
-        PublisherDto dto = publisherService.create(publisherDto);
-        return ResponseEntity.ok(dto);
+    public PublisherDto create(@RequestBody PublisherDto publisherDto) {
+        return publisherService.create(publisherDto);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<PublisherDto> getById(@PathVariable Long id) throws NotFoundException {
-        PublisherDto dto = publisherService.getById(id);
-        return ResponseEntity.ok(dto);
+    public PublisherDto getById(@PathVariable Long id) throws NotFoundException {
+        return publisherService.getById(id);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<PublisherDto>> getAll(@RequestParam(defaultValue = "1") int start,
+    public List<PublisherDto> getAll(@RequestParam(defaultValue = "1") int start,
                                                      @RequestParam(defaultValue = "3") int max) {
-        List<PublisherDto> publishers = publisherService.getAll(start, max);
-        return ResponseEntity.ok(publishers);
+        return publisherService.getAll(start, max);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<PublisherDto> update(@RequestBody PublisherDto publisherDto) {
-        PublisherDto dto = publisherService.update(publisherDto);
-        return ResponseEntity.ok(dto);
+    public PublisherDto update(@RequestBody PublisherDto publisherDto) {
+        return publisherService.update(publisherDto);
     }
 
     @DeleteMapping("/{id}")
@@ -63,11 +59,10 @@ public class PublisherController {
 
     @GetMapping("/filtration")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<PublisherDto>> getByFiler(@RequestParam(defaultValue = "") String namePublisher,
+    public List<PublisherDto> getByFiler(@RequestParam(defaultValue = "") String namePublisher,
                                                          @RequestParam(defaultValue = "") String telephone,
                                                          @RequestParam(defaultValue = "1") int start,
                                                          @RequestParam(defaultValue = "3") int max) {
-        List<PublisherDto> publishers = publisherService.getByFiler(namePublisher, telephone, start, max);
-        return ResponseEntity.ok(publishers);
+        return publisherService.getByFiler(namePublisher, telephone, start, max);
     }
 }

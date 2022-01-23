@@ -6,6 +6,7 @@ import eu.senla.library.api.repository.GenreRepository;
 import eu.senla.library.api.repository.LanguageRepository;
 import eu.senla.library.api.repository.PublisherRepository;
 import eu.senla.library.api.service.BookService;
+import eu.senla.library.api.service.GenreService;
 import eu.senla.library.converter.BookConverterWithBookDto;
 import eu.senla.library.converter.BookConverterWithBookWithRelationIdsDto;
 import eu.senla.library.dto.BookDto;
@@ -18,6 +19,7 @@ import eu.senla.library.model.Language;
 import eu.senla.library.model.Publisher;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
@@ -37,6 +39,9 @@ public class BookServiceImpl implements BookService {
     private final GenreRepository genreRepository;
     private final PublisherRepository publisherRepository;
     private final LanguageRepository languageRepository;
+    //инжектится проксу уже
+    //private final BookService bookService;
+    private final GenreService genreService;
 
     @Transactional
     @Override
@@ -49,6 +54,8 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto getById(Long id) throws NotFoundException {
         Book response = bookRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
+        //создание 2 транзакций
+        genreService.getAll(2,2);
         return bookConverter.convert(response);
     }
 

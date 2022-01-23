@@ -27,31 +27,27 @@ public class GenreController{
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<GenreDto> create(@RequestBody GenreDto genreDto) {
-        GenreDto dto = genreService.create(genreDto);
-        return ResponseEntity.ok(dto);
+    public GenreDto create(@RequestBody GenreDto genreDto) {
+        return genreService.create(genreDto);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<GenreDto> getById(@PathVariable Long id) throws NotFoundException {
-        GenreDto dto = genreService.getById(id);
-        return ResponseEntity.ok(dto);
+    public GenreDto getById(@PathVariable Long id) throws NotFoundException {
+        return genreService.getById(id);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<GenreDto>> getAll(@RequestParam(defaultValue = "1") int start,
+    public List<GenreDto> getAll(@RequestParam(defaultValue = "1") int start,
                                                  @RequestParam(defaultValue = "3") int max) {
-        List<GenreDto> genres = genreService.getAll(start,max);
-        return ResponseEntity.ok(genres);
+        return genreService.getAll(start,max);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<GenreDto> update(@RequestBody GenreDto genreDto) {
-        GenreDto dto = genreService.update(genreDto);
-        return ResponseEntity.ok(dto);
+    public GenreDto update(@RequestBody GenreDto genreDto) {
+        return genreService.update(genreDto);
     }
 
     @DeleteMapping("/{id}")
@@ -63,11 +59,10 @@ public class GenreController{
 
     @GetMapping("/filtration")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<GenreDto>> getByFiler(@RequestParam(defaultValue = "") String nameGenre,
+    public List<GenreDto> getByFiler(@RequestParam(defaultValue = "") String nameGenre,
                                                      @RequestParam(defaultValue = "1") int start,
                                                      @RequestParam(defaultValue = "3") int max) {
-        List<GenreDto> genres = genreService.getByFiler(nameGenre,start,max);
-        return ResponseEntity.ok(genres);
+        return genreService.getByFiler(nameGenre,start,max);
     }
 
 }

@@ -27,31 +27,27 @@ public class LanguageController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<LanguageDto> create(@RequestBody LanguageDto languageDto) {
-        LanguageDto dto = languageService.create(languageDto);
-        return ResponseEntity.ok(dto);
+    public LanguageDto create(@RequestBody LanguageDto languageDto) {
+        return languageService.create(languageDto);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<LanguageDto> getById(@PathVariable Long id) throws NotFoundException {
-        LanguageDto dto = languageService.getById(id);
-        return ResponseEntity.ok(dto);
+    public LanguageDto getById(@PathVariable Long id) throws NotFoundException {
+        return languageService.getById(id);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<LanguageDto>> getAll(@RequestParam(defaultValue = "1") int start,
+    public List<LanguageDto> getAll(@RequestParam(defaultValue = "1") int start,
                                                     @RequestParam(defaultValue = "3") int max) {
-        List<LanguageDto> languages=languageService.getAll(start,max);
-        return ResponseEntity.ok(languages);
+        return languageService.getAll(start,max);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<LanguageDto> update(@RequestBody LanguageDto languageDto) {
-        LanguageDto dto = languageService.update(languageDto);
-        return ResponseEntity.ok(dto);
+    public LanguageDto update(@RequestBody LanguageDto languageDto) {
+        return languageService.update(languageDto);
     }
 
     @DeleteMapping("/{id}")
@@ -63,10 +59,9 @@ public class LanguageController {
 
     @GetMapping("/filtration")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<LanguageDto>> getByFiler(@RequestParam(defaultValue = "") String nameLanguage,
+    public List<LanguageDto> getByFiler(@RequestParam(defaultValue = "") String nameLanguage,
                                                         @RequestParam(defaultValue = "1") int start,
                                                         @RequestParam(defaultValue = "3") int max) {
-        List<LanguageDto> languages = languageService.getByFiler(nameLanguage,start,max);
-        return ResponseEntity.ok(languages);
+        return languageService.getByFiler(nameLanguage,start,max);
     }
 }

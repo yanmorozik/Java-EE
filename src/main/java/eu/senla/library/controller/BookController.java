@@ -20,31 +20,27 @@ public class BookController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<BookDto> create(@RequestBody BookWithRelationIdsDto bookWithRelationIdsDto) {
-        BookDto dto = bookService.create(bookWithRelationIdsDto);
-        return ResponseEntity.ok(dto);
+    public BookDto create(@RequestBody BookWithRelationIdsDto bookWithRelationIdsDto) {
+        return bookService.create(bookWithRelationIdsDto);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<BookDto> getById(@PathVariable Long id) throws NotFoundException {
-        BookDto dto = bookService.getById(id);
-        return ResponseEntity.ok(dto);
+    public BookDto getById(@PathVariable Long id) throws NotFoundException {
+        return bookService.getById(id);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<BookDto>> getAll(@RequestParam(defaultValue = "1") int start,
+    public List<BookDto> getAll(@RequestParam(defaultValue = "1") int start,
                                                 @RequestParam(defaultValue = "3") int max) {
-        List<BookDto> books = bookService.getAll(start, max);
-        return ResponseEntity.ok(books);
+        return bookService.getAll(start, max);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<BookDto> update(@RequestBody BookWithRelationIdsDto bookWithRelationIdsDto) {
-        BookDto dto = bookService.update(bookWithRelationIdsDto);
-        return ResponseEntity.ok(dto);
+    public BookDto update(@RequestBody BookWithRelationIdsDto bookWithRelationIdsDto) {
+        return bookService.update(bookWithRelationIdsDto);
     }
 
     @DeleteMapping("/{id}")
@@ -56,7 +52,7 @@ public class BookController {
 
     @GetMapping("/filtration")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<BookDto>> getByFiler(@RequestParam(defaultValue = "") String name,
+    public List<BookDto> getByFiler(@RequestParam(defaultValue = "") String name,
                                                     @RequestParam(defaultValue = "") String description,
                                                     @RequestParam(defaultValue = "0") String minNumberOfPage,
                                                     @RequestParam(defaultValue = "9999999") String maxNumberOfPage,
@@ -66,7 +62,7 @@ public class BookController {
                                                     @RequestParam(defaultValue = "9999999") String maxNumberOfCopies,
                                                     @RequestParam(defaultValue = "1") int start,
                                                     @RequestParam(defaultValue = "3") int max) {
-        List<BookDto> books = bookService.getByFiler(
+        return bookService.getByFiler(
                 name,
                 description,
                 minNumberOfPage,
@@ -77,7 +73,5 @@ public class BookController {
                 maxNumberOfCopies,
                 start,
                 max);
-        return ResponseEntity.ok(books);
     }
-
 }

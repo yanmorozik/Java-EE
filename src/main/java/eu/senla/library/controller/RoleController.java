@@ -27,31 +27,27 @@ public class RoleController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<RoleDto> create(@RequestBody RoleDto roleDto) {
-        RoleDto dto = roleService.create(roleDto);
-        return ResponseEntity.ok(dto);
+    public RoleDto create(@RequestBody RoleDto roleDto) {
+        return roleService.create(roleDto);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<RoleDto> getById(@PathVariable Long id) throws NotFoundException {
-        RoleDto dto = roleService.getById(id);
-        return ResponseEntity.ok(dto);
+    public RoleDto getById(@PathVariable Long id) throws NotFoundException {
+        return roleService.getById(id);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<RoleDto>> getAll(@RequestParam(defaultValue = "1") int start,
+    public List<RoleDto> getAll(@RequestParam(defaultValue = "1") int start,
                                                 @RequestParam(defaultValue = "3") int max) {
-        List<RoleDto> roles = roleService.getAll(start, max);
-        return ResponseEntity.ok(roles);
+        return roleService.getAll(start, max);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<RoleDto> update(@RequestBody RoleDto roleDto) {
-        RoleDto dto = roleService.update(roleDto);
-        return ResponseEntity.ok(dto);
+    public RoleDto update(@RequestBody RoleDto roleDto) {
+        return roleService.update(roleDto);
     }
 
     @DeleteMapping("/{id}")

@@ -7,7 +7,9 @@ import eu.senla.library.dto.AuthorDto;
 import eu.senla.library.exception.NotFoundException;
 import eu.senla.library.model.Author;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
@@ -22,7 +24,7 @@ public class AuthorServiceImpl implements AuthorService {
     private final AuthorRepository authorRepository;
     private final AuthorConverter authorConverter;
 
-    @Transactional
+    @Transactional(isolation = Isolation.DEFAULT)
     @Override
     public AuthorDto create(AuthorDto authorDto) {
         Author author = authorConverter.convert(authorDto);

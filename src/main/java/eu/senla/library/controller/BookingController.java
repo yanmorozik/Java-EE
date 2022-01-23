@@ -28,9 +28,8 @@ public class BookingController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<BookingDto> create(@RequestBody BookingWithRelationIdsDto bookingWithRelationIdsDto) {
-        BookingDto dto = bookingService.create(bookingWithRelationIdsDto);
-        return ResponseEntity.ok(dto);
+    public BookingDto create(@RequestBody BookingWithRelationIdsDto bookingWithRelationIdsDto) {
+        return bookingService.create(bookingWithRelationIdsDto);
     }
 
     @GetMapping("/{id}")
@@ -42,17 +41,15 @@ public class BookingController {
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<BookingDto>> getAll(@RequestParam(defaultValue = "1") int start,
+    public List<BookingDto> getAll(@RequestParam(defaultValue = "1") int start,
                                                    @RequestParam(defaultValue = "3") int max) {
-        List<BookingDto> bookings = bookingService.getAll(start, max);
-        return ResponseEntity.ok(bookings);
+        return bookingService.getAll(start, max);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<BookingDto> update(@RequestBody BookingWithRelationIdsDto bookingWithRelationIdsDto) {
-        BookingDto dto = bookingService.update(bookingWithRelationIdsDto);
-        return ResponseEntity.ok(dto);
+    public BookingDto update(@RequestBody BookingWithRelationIdsDto bookingWithRelationIdsDto) {
+        return bookingService.update(bookingWithRelationIdsDto);
     }
 
     @DeleteMapping("/{id}")
@@ -64,7 +61,7 @@ public class BookingController {
 
     @GetMapping("/filtration")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<BookingDto>> getByFiler(@RequestParam(defaultValue = "1") String startYear,
+    public List<BookingDto> getByFiler(@RequestParam(defaultValue = "1") String startYear,
                                                        @RequestParam(defaultValue = "1") String startMonth,
                                                        @RequestParam(defaultValue = "1") String startDay,
                                                        @RequestParam(defaultValue = "1") String startHour,
@@ -76,7 +73,7 @@ public class BookingController {
                                                        @RequestParam(defaultValue = "59") String endMinute,
                                                        @RequestParam(defaultValue = "1") int start,
                                                        @RequestParam(defaultValue = "3") int max) {
-        List<BookingDto> bookings = bookingService.getByFiler(startYear,
+        return bookingService.getByFiler(startYear,
                 startMonth,
                 startDay,
                 startHour,
@@ -88,6 +85,5 @@ public class BookingController {
                 endMinute,
                 start,
                 max);
-        return ResponseEntity.ok(bookings);
     }
 }

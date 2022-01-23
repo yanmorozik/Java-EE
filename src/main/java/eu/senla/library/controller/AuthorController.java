@@ -27,31 +27,27 @@ public class AuthorController {
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<AuthorDto> create(@RequestBody AuthorDto authorDto) {
-        AuthorDto dto = authorService.create(authorDto);
-        return ResponseEntity.ok(dto);
+    public AuthorDto create(@RequestBody AuthorDto authorDto) {
+        return authorService.create(authorDto);
     }
 
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<AuthorDto> getById(@PathVariable Long id) throws NotFoundException {
-        AuthorDto dto = authorService.getById(id);
-        return ResponseEntity.ok(dto);
+    public AuthorDto getById(@PathVariable Long id) throws NotFoundException {
+        return authorService.getById(id);
     }
 
     @GetMapping
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<AuthorDto>> getAll(@RequestParam(defaultValue = "1") int start,
-                                                  @RequestParam(defaultValue = "3") int max) {
-        List<AuthorDto> authors = authorService.getAll(start, max);
-        return ResponseEntity.ok(authors);
+    public List<AuthorDto> getAll(@RequestParam(defaultValue = "1") int start,
+                                  @RequestParam(defaultValue = "3") int max) {
+        return authorService.getAll(start, max);
     }
 
     @PutMapping
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public ResponseEntity<AuthorDto> update(@RequestBody AuthorDto authorDto) {
-        AuthorDto dto = authorService.update(authorDto);
-        return ResponseEntity.ok(dto);
+    public AuthorDto update(@RequestBody AuthorDto authorDto) {
+        return authorService.update(authorDto);
     }
 
     @DeleteMapping("/{id}")
@@ -63,11 +59,10 @@ public class AuthorController {
 
     @GetMapping("/filtration")
     @PreAuthorize("hasRole('ROLE_USER')")
-    public ResponseEntity<List<AuthorDto>> getByFiler(@RequestParam(defaultValue = "") String firstName,
-                                                      @RequestParam(defaultValue = "") String surname,
-                                                      @RequestParam(defaultValue = "1") int start,
-                                                      @RequestParam(defaultValue = "3") int max) {
-        List<AuthorDto> authors = authorService.getByFiler(firstName, surname, start, max);
-        return ResponseEntity.ok(authors);
+    public List<AuthorDto> getByFiler(@RequestParam(defaultValue = "") String firstName,
+                                      @RequestParam(defaultValue = "") String surname,
+                                      @RequestParam(defaultValue = "1") int start,
+                                      @RequestParam(defaultValue = "3") int max) {
+        return authorService.getByFiler(firstName, surname, start, max);
     }
 }
