@@ -10,4 +10,9 @@ public class LanguageRepositoryImpl extends AbstractRepositoryImpl<Language> imp
     public LanguageRepositoryImpl() {
         super(Language.class);
     }
+
+    @Override
+    protected String getNameGraph() {
+        return "languageEntityGraph";
+    }
 }

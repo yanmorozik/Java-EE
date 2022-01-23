@@ -10,4 +10,9 @@ public class GenreRepositoryImpl extends AbstractRepositoryImpl<Genre> implement
     public GenreRepositoryImpl() {
         super(Genre.class);
     }
+
+    @Override
+    protected String getNameGraph() {
+        return "genreEntityGraph";
+    }
 }

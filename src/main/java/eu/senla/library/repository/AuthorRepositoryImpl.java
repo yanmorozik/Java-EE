@@ -24,4 +24,10 @@ public class AuthorRepositoryImpl extends AbstractRepositoryImpl<Author> impleme
         query.where(criteriaBuilder.equal(rows.get(Author_.firstName), name));
         return entityManager.createQuery(query).getSingleResult();
     }
+
+    @Override
+    protected String getNameGraph() {
+        return "authorEntityGraph";
+    }
+
 }

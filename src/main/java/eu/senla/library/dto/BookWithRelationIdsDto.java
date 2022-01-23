@@ -1,17 +1,15 @@
 package eu.senla.library.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookDto {
+public class BookWithRelationIdsDto {
 
     private Long id;
 
@@ -25,12 +23,12 @@ public class BookDto {
 
     private Integer numberOfCopies;
 
-    private List<AuthorDto> authors;
+    private List<Long> authorIds;
 
-    private GenreDto genre;
+    private Long genreId;
 
-    private List<PublisherDto> publishers;
+    private List<Long> publisherIds;
 
-    private LanguageDto language;
+    private Long languageId;
 
 }

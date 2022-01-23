@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class PublisherConverter extends Converter<Publisher,PublisherDto>{
+public class PublisherConverter extends Converter<Publisher, PublisherDto> {
     public PublisherConverter(ModelMapper modelMapper) {
         super(modelMapper);
     }

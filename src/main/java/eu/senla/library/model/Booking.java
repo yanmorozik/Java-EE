@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
 
@@ -21,6 +22,8 @@ import java.time.LocalDateTime;
 @Table(name = "booking")
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedEntityGraph(name = "bookingEntityGraph",
+        includeAllAttributes = true)
 public class Booking extends BaseEntity{
     @Column(name="start_time")
     private LocalDateTime startTime;
@@ -29,10 +32,10 @@ public class Booking extends BaseEntity{
     private LocalDateTime endTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "book_id", nullable = false)
+    @JoinColumn(name = "book_id")
     private Book book;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id")
     private User user;
 }

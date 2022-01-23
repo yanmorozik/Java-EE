@@ -25,4 +25,9 @@ public class RoleRepositoryImpl extends AbstractRepositoryImpl<Role> implements 
         query.where(criteriaBuilder.equal(root.get(Role_.nameRole), name));
         return entityManager.createQuery(query).getSingleResult();
     }
+
+    @Override
+    protected String getNameGraph() {
+        return "with-users";
+    }
 }

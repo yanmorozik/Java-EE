@@ -11,9 +11,11 @@ public interface AuthorService {
 
     AuthorDto getById(Long id) throws NotFoundException;
 
-    List<AuthorDto> getAll();
+    List<AuthorDto> getAll(int start, int max);
 
     AuthorDto update(AuthorDto authorDto);
 
     void deleteById(Long id);
+
+    List<AuthorDto> getByFiler(String firstName, String surname, int start, int max);
 }

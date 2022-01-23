@@ -22,13 +22,25 @@ public class UserRepositoryImpl extends AbstractRepositoryImpl<User> implements 
 
     @Override
     public User findByUsername(String name) {
-        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
-        final CriteriaQuery<User> query = criteriaBuilder.createQuery(User.class);
-        final Root<User> root = query.from(User.class);
-        final Root<Credential> rootCred = query.from(Credential.class);
+        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Credential> credentialCriteriaQuery = builder.createQuery(Credential.class);
+        final Root<Credential> rootCred = credentialCriteriaQuery.from(Credential.class);
+        credentialCriteriaQuery.select(rootCred).where(builder.equal(rootCred.get(Credential_.login), name));
+        Credential credential = entityManager.createQuery(credentialCriteriaQuery).getSingleResult();
+
+        CriteriaQuery<User> query = builder.createQuery(User.class);
+        Root<User> root = query.from(User.class);
+
 
         root.fetch(User_.credential, JoinType.INNER);
-        query.select(root).where(criteriaBuilder.equal(rootCred.get(Credential_.login), name));
-        return entityManager.createQuery(query).getResultList().stream().findFirst().orElse(null);
+        query.select(root).where(builder.equal(root.get(User_.credential), credential));
+
+        return entityManager.createQuery(query).getSingleResult();
+    }
+
+
+    @Override
+    protected String getNameGraph() {
+        return "userEntityGraph";
     }
 }

@@ -30,17 +30,17 @@ public class CredentialServiceImpl implements CredentialService {
         return credentialConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public CredentialDto getById(Long id) throws NotFoundException {
         Credential response = credentialRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return credentialConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
-    public List<CredentialDto> getAll() {
-        List<Credential> credentials = credentialRepository.findAll();
+    public List<CredentialDto> getAll(int start,int max) {
+        List<Credential> credentials = credentialRepository.findAll(start,max);
         return credentialConverter.convert(credentials);
     }
 

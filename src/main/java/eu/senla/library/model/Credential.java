@@ -6,12 +6,12 @@ import lombok.Setter;
 import lombok.ToString;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.OneToOne;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Getter
 @Setter
@@ -20,15 +20,14 @@ import javax.persistence.Transient;
 @Table(name = "credentials")
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedEntityGraph(name = "credentialEntityGraph",
+        includeAllAttributes = true)
 public class Credential extends BaseEntity {
     @Column
     private String login;
 
     @Column
     private String password;
-
-    @Transient
-    private String passwordConfirm;
 
     @OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
     private User user;

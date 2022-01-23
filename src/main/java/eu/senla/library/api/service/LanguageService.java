@@ -11,9 +11,12 @@ public interface LanguageService {
 
     LanguageDto getById(Long id) throws NotFoundException;
 
-    List<LanguageDto> getAll();
+    List<LanguageDto> getAll(int start, int max);
 
     LanguageDto update(LanguageDto languageDto);
 
     void deleteById(Long id);
+
+    List<LanguageDto> getByFiler(String nameLanguage, int start, int max);
+
 }

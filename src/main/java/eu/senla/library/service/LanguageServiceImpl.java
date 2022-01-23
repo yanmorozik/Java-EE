@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,17 +30,17 @@ public class LanguageServiceImpl implements LanguageService {
         return languageConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public LanguageDto getById(Long id) throws NotFoundException {
         Language response = languageRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return languageConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
-    public List<LanguageDto> getAll() {
-        List<Language> languages = languageRepository.findAll();
+    public List<LanguageDto> getAll(int start,int max) {
+        List<Language> languages = languageRepository.findAll(start,max);
         return languageConverter.convert(languages);
     }
 
@@ -54,4 +57,30 @@ public class LanguageServiceImpl implements LanguageService {
     public void deleteById(Long id) {
         languageRepository.deleteById(id);
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<LanguageDto> getByFiler(String nameLanguage,int start, int max) {
+
+        LanguageDto filter = LanguageDto.builder().nameLanguage(nameLanguage).build();
+        List<Language> languages = languageRepository.findAll(start, max);
+        List<LanguageDto> languagesProtocols = languageConverter.convert(languages);
+        List<Function<LanguageDto, String>> comparingFields = Collections.singletonList(LanguageDto::getNameLanguage);
+        return filter(languagesProtocols, filter, comparingFields);
+
+    }
+
+    private List<LanguageDto> filter(List<LanguageDto> allProtocols, LanguageDto filter,
+                                        List<Function<LanguageDto, String>> comparingFields) {
+        return allProtocols.stream()
+                .filter(protocol -> test(protocol, filter, comparingFields))
+                .collect(Collectors.toList());
+    }
+
+    private boolean test(LanguageDto protocol, LanguageDto filter,
+                                List<Function<LanguageDto, String>> comparingFields) {
+        return comparingFields.stream()
+                .allMatch(func -> func.apply(protocol).contains(func.apply(filter)));
+    }
+
 }

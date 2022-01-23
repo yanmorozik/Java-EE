@@ -5,8 +5,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.security.core.AuthenticationException;
 
 import java.nio.file.AccessDeniedException;
 
@@ -22,9 +24,13 @@ public class GlobalControllerAdvice {
     }
 
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<String> notFoundException(AccessDeniedException accessDeniedException){
-        logger.error(accessDeniedException.getLocalizedMessage(), accessDeniedException);
-        return new ResponseEntity<>(accessDeniedException.getLocalizedMessage(), HttpStatus.NOT_FOUND);
+    public ResponseEntity<String> exception(AccessDeniedException e) {
+        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.UNAUTHORIZED);//??? потому что ошибка генерируется на русском языке и postman не может её перевести на английский
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<String> exception(AuthenticationException e) {
+        return new ResponseEntity<>(e.getLocalizedMessage(), HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(Exception.class)

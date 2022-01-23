@@ -6,8 +6,9 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class AuthorConverter extends Converter<Author,AuthorDto>{
+public class AuthorConverter extends Converter<Author, AuthorDto> {
     public AuthorConverter(ModelMapper modelMapper) {
         super(modelMapper);
     }
+
 }

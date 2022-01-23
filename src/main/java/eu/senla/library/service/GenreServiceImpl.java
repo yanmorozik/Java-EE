@@ -10,7 +10,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -27,17 +30,17 @@ public class GenreServiceImpl implements GenreService {
         return genreConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public GenreDto getById(Long id) throws NotFoundException {
         Genre response = genreRepository.findById(id).orElseThrow(() -> new NotFoundException(id));
         return genreConverter.convert(response);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
-    public List<GenreDto> getAll() {
-        List<Genre> genres = genreRepository.findAll();
+    public List<GenreDto> getAll(int start,int max) {
+        List<Genre> genres = genreRepository.findAll(start,max);
         return genreConverter.convert(genres);
     }
 
@@ -53,5 +56,30 @@ public class GenreServiceImpl implements GenreService {
     @Override
     public void deleteById(Long id) {
         genreRepository.deleteById(id);
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<GenreDto> getByFiler(String nameGenre,int start, int max) {
+
+        GenreDto filter = GenreDto.builder().nameGenre(nameGenre).build();
+        List<Genre> genres = genreRepository.findAll(start,max);
+        List<GenreDto> genresProtocols = genreConverter.convert(genres);
+        List<Function<GenreDto, String>> comparingFields = Collections.singletonList(GenreDto::getNameGenre);
+        return filter(genresProtocols, filter, comparingFields);
+
+    }
+
+    private List<GenreDto> filter(List<GenreDto> allProtocols, GenreDto filter,
+                                         List<Function<GenreDto, String>> comparingFields) {
+        return allProtocols.stream()
+                .filter(protocol -> test(protocol, filter, comparingFields))
+                .collect(Collectors.toList());
+    }
+
+    private boolean test(GenreDto protocol, GenreDto filter,
+                                List<Function<GenreDto, String>> comparingFields) {
+        return comparingFields.stream()
+                .allMatch(func -> func.apply(protocol).contains(func.apply(filter)));
     }
 }

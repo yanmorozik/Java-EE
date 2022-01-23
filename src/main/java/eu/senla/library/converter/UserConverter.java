@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserConverter extends Converter<User,UserDto> {
+public class UserConverter extends Converter<User, UserDto> {
     public UserConverter(ModelMapper modelMapper) {
         super(modelMapper);
     }

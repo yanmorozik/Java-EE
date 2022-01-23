@@ -1,17 +1,15 @@
 package eu.senla.library.dto;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Data
-@Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookingDto {
+public class BookingWithRelationIdsDto {
 
     private Long id;
 
@@ -19,7 +17,7 @@ public class BookingDto {
 
     private LocalDateTime endTime;
 
-    private BookWithBookingDto book;
+    private Long bookId;
 
-    private UserWithBookingDto user;
+    private Long userId;
 }

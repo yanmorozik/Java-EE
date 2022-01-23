@@ -1,19 +1,31 @@
 package eu.senla.library.api.service;
 
 import eu.senla.library.dto.BookDto;
+import eu.senla.library.dto.BookWithRelationIdsDto;
 import eu.senla.library.exception.NotFoundException;
 
 import java.util.List;
 
 public interface BookService {
 
-    BookDto create(BookDto bookDto);
+    BookDto create(BookWithRelationIdsDto bookWithRelationIdsDto);
 
     BookDto getById(Long id) throws NotFoundException;
 
-    List<BookDto> getAll();
+    List<BookDto> getAll(int start, int max);
 
-    BookDto update(BookDto bookDto);
+    BookDto update(BookWithRelationIdsDto bookWithRelationIdsDto);
 
     void deleteById(Long id);
+
+    List<BookDto> getByFiler(String name,
+                             String description,
+                             String minNumberOfPage,
+                             String maxNumberOfPage,
+                             String minYearOfPublishing,
+                             String maxYearOfPublishing,
+                             String minNumberOfCopies,
+                             String maxNumberOfCopies,
+                             int start,
+                             int max);
 }

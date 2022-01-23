@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BookingConverter extends Converter<Booking,BookingDto>{
+public class BookingConverter extends Converter<Booking, BookingDto> {
     public BookingConverter(ModelMapper modelMapper) {
         super(modelMapper);
     }

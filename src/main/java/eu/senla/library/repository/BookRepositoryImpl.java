@@ -10,4 +10,10 @@ public class BookRepositoryImpl extends AbstractRepositoryImpl<Book> implements 
     public BookRepositoryImpl() {
         super(Book.class);
     }
+
+    @Override
+    protected String getNameGraph() {
+        return "bookEntityGraph";
+    }
+
 }

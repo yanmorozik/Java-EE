@@ -12,7 +12,4 @@ public class CredentialDto {
     private String login;
 
     private String password;
-
-    private String passwordConfirm;
-
 }

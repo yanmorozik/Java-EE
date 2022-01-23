@@ -10,4 +10,9 @@ public class BookingRepositoryImpl extends AbstractRepositoryImpl<Booking> imple
     public BookingRepositoryImpl() {
         super(Booking.class);
     }
+
+    @Override
+    protected String getNameGraph() {
+        return "bookingEntityGraph";
+    }
 }

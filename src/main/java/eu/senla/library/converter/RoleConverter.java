@@ -6,7 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 @Component
-public class RoleConverter extends Converter<Role,RoleDto>{
+public class RoleConverter extends Converter<Role, RoleDto> {
     public RoleConverter(ModelMapper modelMapper) {
         super(modelMapper);
     }

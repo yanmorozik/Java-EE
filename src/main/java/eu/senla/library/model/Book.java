@@ -2,22 +2,23 @@ package eu.senla.library.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import lombok.NoArgsConstructor;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.JoinTable;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedEntityGraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.CascadeType;
-
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -26,6 +27,8 @@ import java.util.List;
 @Table(name = "books")
 @AllArgsConstructor
 @NoArgsConstructor
+@NamedEntityGraph(name = "bookEntityGraph",
+        includeAllAttributes = true)
 public class Book extends BaseEntity {
     @Column(name = "name_book")
     private String nameBook;
@@ -43,29 +46,43 @@ public class Book extends BaseEntity {
     private Integer numberOfCopies;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "genre_id", nullable = false)
+    @JoinColumn(name = "genre_id")
     private Genre genre;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "language_id", nullable = false)
+    @JoinColumn(name = "language_id")
     private Language language;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST}
+    )
     @JoinTable(
             name = "book_author",
-            joinColumns = {@JoinColumn(name = "author_id")},
-            inverseJoinColumns = {@JoinColumn(name = "book_id")}
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "author_id")}
     )
-    private List<Author> authors;
+    private Set<Author> authors = new HashSet<>();
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.ALL})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST}
+    )
     @JoinTable(
             name = "book_publisher",
-            joinColumns = {@JoinColumn(name = "publisher_id")},
-            inverseJoinColumns = {@JoinColumn(name = "book_id")}
+            joinColumns = {@JoinColumn(name = "book_id")},
+            inverseJoinColumns = {@JoinColumn(name = "publisher_id")}
     )
-    private List<Publisher> publishers;
+    private Set<Publisher> publishers = new HashSet<>();
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
-    private List<Booking> bookings;
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "book", cascade = {
+            CascadeType.DETACH,
+            CascadeType.MERGE,
+            CascadeType.REFRESH,
+            CascadeType.PERSIST})
+    private Set<Booking> bookings = new HashSet<>();
 }

@@ -11,9 +11,12 @@ public interface PublisherService {
 
     PublisherDto getById(Long id) throws NotFoundException;
 
-    List<PublisherDto> getAll();
+    List<PublisherDto> getAll(int start, int max);
 
     PublisherDto update(PublisherDto publisherDto);
 
     void deleteById(Long id);
+
+    List<PublisherDto> getByFiler(String namePublisher, String telephone, int start, int max);
+
 }

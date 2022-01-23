@@ -18,14 +18,17 @@ public class CredentialRepositoryImpl extends AbstractRepositoryImpl<Credential>
     }
 
     @Override
-    public Credential findByLogin(String login){
-        CriteriaBuilder builder = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Credential> query = builder.createQuery(Credential.class);
-        Root<Credential> root = query.from(Credential.class);
+    protected String getNameGraph() {
+        return "credentialEntityGraph";
+    }
 
-        root.fetch(Credential_.user, JoinType.INNER);
+    @Override
+    public Credential findByLogin(String login) {
+        final CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        final CriteriaQuery<Credential> query = criteriaBuilder.createQuery(Credential.class);
+        final Root<Credential> root = query.from(Credential.class);
         query.select(root);
-        query.where(builder.equal(root.get(Credential_.login), login));
+        query.where(criteriaBuilder.equal(root.get(Credential_.login), login));
         return entityManager.createQuery(query).getSingleResult();
     }
 }
